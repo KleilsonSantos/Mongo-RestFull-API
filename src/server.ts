@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import connect from "./config/db";
-import { Logger } from "./config/loggers";
 import { router } from "./routers/router";
+import { Logger } from "./config/loggers";
 import { morganMiddleware } from "./middlewares/morganMiddleware";
 import express, { NextFunction, Request, Response } from "express";
 
@@ -45,4 +46,3 @@ const startServer = () => {
     Logger.info(`🚀 Server running on ${localhost}:${port}${apiUrl}`);
   });
 };
-
