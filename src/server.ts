@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
-
-import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import { morganMiddleware } from "./middlewares/morganMiddleware";
 import { Logger } from "./config/loggers";
+import { morganMiddleware } from "./middlewares/morganMiddleware";
+import express, { NextFunction, Request, Response } from "express";
 
 // Load environment variables
 dotenv.config();
@@ -40,13 +39,12 @@ async function connect() {
   const dbDockerUri:string = `${dbDocker}`
   try {
     await mongoose.connect(dbDockerUri);
-    console.log("Connected with success to MongoDB!");
+    Logger.info("Connected with success to MongoDB!");
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
+    Logger.error("Error connecting to MongoDB:", error);
     process.exit(1);
   }
 }
-
 
 // Get all movies
 async function getMovies() {
@@ -66,7 +64,7 @@ async function createMovie(){
     poster: "https://m.media-amazon.com/images/M/MV5BMjA0NzE1Njg4OV5BMl5BanBnXkFtZTgwODA0NjQ3MTE@._V1_SX300.jpg",
   })
   await movie.save();
-  console.log("Movie created with success!");
+  Logger.info("Movie created with success!");
 }
 
 // Routes
@@ -81,6 +79,7 @@ app.post(
     }
   }
 );
+
 // Get all movies
 app.get(
   apiUrl + "/movies",
@@ -101,5 +100,5 @@ app.get(
 // Initialize server on port
 app.listen(process.env.PORT, () => {
   connect();
-  console.log(`Server is running on port ${port}`);
+  Logger.info(`Server is running on port ${port}`);
 });
