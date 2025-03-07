@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
+
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import { morganMiddleware } from "./middlewares/morganMiddleware";
+import { Logger } from "./config/loggers";
 
 // Load environment variables
 dotenv.config();
@@ -14,6 +17,8 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morganMiddleware);
 
 // Create schema
 const schema: any = new mongoose.Schema({
