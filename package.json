@@ -1,0 +1,44 @@
+{
+  "name": "mongorestapi-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KleilsonSantos/Owner-avatar-MongoRestAPI-Express.git"
+  },
+  "keywords": [
+    "MongoRestAPI",
+    "Express",
+    "NodeJS",
+    "MongoDB",
+    "Mongoose"
+  ],
+  "author": "Kleilson Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KleilsonSantos/Owner-avatar-MongoRestAPI-Express/issues"
+  },
+  "homepage": "https://github.com/KleilsonSantos/Owner-avatar-MongoRestAPI-Express#readme",
+  "dependencies": {
+    "config": "^3.3.12",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.12.1",
+    "morgan": "^1.10.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.5",
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.9",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2"
+  }
+}
