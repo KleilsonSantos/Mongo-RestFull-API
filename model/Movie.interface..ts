@@ -1,4 +1,4 @@
-export interface MovieInput {
+export interface IMovie {
   title: string;
   rating: number;
   description: string;
