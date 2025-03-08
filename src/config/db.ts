@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Logger } from "./loggers";
+import { Logger } from "./logger";
 
 // Connect to database
 async function connect() {
@@ -12,15 +12,15 @@ async function connect() {
 
   try {
     const connection = mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 5000, // Timeout para evitar travamento
-      socketTimeoutMS: 45000, // Evita conexões penduradas
+      serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     });
 
     Logger.info("✅ Database connected successfully.");
     return connection;
   } catch (error) {
     Logger.error(`❌ Database connection error: ${error}`);
-    throw error; // Não usa process.exit(1), apenas lança erro
+    throw error; // Throw error to stop the application
   }
 }
 
