@@ -1,8 +1,12 @@
-import { Logger } from "../config/loggers";
+import { Logger } from "../config/logger";
 import { MovieModel } from "../model/Movie";
 import { Request, Response, NextFunction } from "express";
 
-const createMovie = async (req: Request, res: Response, next: NextFunction) => {
+const createMovie = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const movieData = req.body;
     if (!movieData) {
@@ -24,7 +28,7 @@ const getMovieById = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const movieId = req.params.id;
     const movie = await MovieModel.findById(movieId);
@@ -44,7 +48,7 @@ const updateMovieById = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const movieId = req.params.id;
     const movieData = req.body;
@@ -65,7 +69,7 @@ const getAllMovies = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const movies = await MovieModel.find();
 
@@ -84,7 +88,7 @@ const deleteMovieById = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const movieId = req.params.id;
     const movie = await MovieModel.findById(String(movieId));

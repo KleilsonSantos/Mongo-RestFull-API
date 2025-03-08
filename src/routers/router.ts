@@ -5,7 +5,7 @@ import {
   getAllMovies,
   getMovieById,
   updateMovieById,
-} from "../controllers/movieControlller";
+} from "../controllers/movie-controlller";
 
 // Create a router object
 const router = express.Router();
