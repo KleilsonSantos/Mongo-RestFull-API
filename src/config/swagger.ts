@@ -7,15 +7,16 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API Node + Express + MongoDB",
-      version: "1.0.1",
+      title:
+        "API Node + Express + MongoDB + Mongoose + TypeScript + JWT + Swagger + Docker",
+      version: "1.0.2",
       description: "Documentação da API",
     },
   },
   apis: ["./src/routers/*.ts", "./src/controllers/*.ts"],
 };
 
-const swaggerSpec = swaggerJsDoc(options);
+const swaggerSpec: object = swaggerJsDoc(options);
 
 const setupSwagger = (app: Express) => {
   app.use("/api/v1/api-docs", swaggerAuthMiddleware); // 🔒 Authenticate Middleware

@@ -1,6 +1,13 @@
+import dotenv from "dotenv";
 import { Logger } from "../config/logger";
 import { MovieModel } from "../model/Movie";
 import { Request, Response, NextFunction } from "express";
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Get JWT_SECRET from environment variables
+const secret = process.env.JWT_SECRET;
 
 const createMovie = async (
   req: Request,
@@ -31,7 +38,7 @@ const getMovieById = async (
 ): Promise<void> => {
   try {
     const movieId = req.params.id;
-    const movie = await MovieModel.findById(movieId);
+    const movie = await MovieModel.findById(movieId).lean();
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });
@@ -59,12 +66,15 @@ const updateMovieById = async (
       res.status(404).json({ message: "Movie not found" });
     }
 
-    Logger.info("✅ Movie updated:", updatedMovie);
-    res.status(200).json({ data: { movie: updatedMovie } });
+    const movie = await MovieModel.findById(movieId).lean();
+
+    Logger.info("✅ Movie updated:", movie);
+    res.status(200).json({ data: { movie: movie } });
   } catch (error) {
     next(error);
   }
 };
+
 const getAllMovies = async (
   req: Request,
   res: Response,
@@ -91,7 +101,7 @@ const deleteMovieById = async (
 ): Promise<void> => {
   try {
     const movieId = req.params.id;
-    const movie = await MovieModel.findById(String(movieId));
+    const movie = await MovieModel.findById(String(movieId)).lean();
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });

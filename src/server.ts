@@ -3,12 +3,13 @@ import connect from "./config/db";
 import { Logger } from "./config/logger";
 import { router } from "./routers/router";
 import { morganMiddleware } from "./middlewares/morgan-middleware";
-import { generateToken, Payload, UserRole } from "./utils/generate-token";
+import { generateToken, UserRole } from "./utils/generate-token";
 import express, { Express, NextFunction, Request, Response } from "express";
 
 // Load environment variables
 dotenv.config();
 
+// Get environment variables
 const port: string | number = process.env.PORT || 3000;
 const apiUrl: string | undefined = process.env.API_URL || "/api/v1";
 const localhost: string | undefined = process.env.LOCALHOST || "localhost";
