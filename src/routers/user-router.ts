@@ -184,6 +184,7 @@
  *                 type: array
  *                 items:
  *                   type: string
+ *                 type: integer
  *               poster:
  *                 type: string
  *     responses:
@@ -224,6 +225,7 @@
  *                 type: array
  *                 items:
  *                   type: string
+ *                 type: integer
  *               poster:
  *                 type: string
  *     responses:
