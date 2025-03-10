@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import connect from "./config/db";
 import { Logger } from "./config/logger";
 import { router } from "./routers/router";
 import { morganMiddleware } from "./middlewares/morgan-middleware";
+import { generateToken, UserRole } from "./utils/generate-token";
 import express, { Express, NextFunction, Request, Response } from "express";
 
 // Load environment variables
@@ -45,5 +45,11 @@ app.use(apiUrl, router);
 const startServer = (): void => {
   app.listen(port, () => {
     Logger.info(`🚀 Server running on ${localhost}:${port}${apiUrl}`);
+    Logger.info(`🔑 Token: 
+      ${generateToken({
+        id: "123",
+        email: "user@example.com",
+        role: UserRole.ADMIN,
+      })}`);
   });
 };

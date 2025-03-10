@@ -63,6 +63,74 @@
 
 /**
  * @swagger
+ * /api/v1/users/{id}:
+ *   get:
+ *     summary: Retorna um usuário específico por ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Detalhes do usuário
+ *       404:
+ *         description: Usuário não encontrado
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   put:
+ *     summary: Atualiza um usuário existente
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [user, admin]
+ *     responses:
+ *       200:
+ *         description: Usuário atualizado com sucesso
+ *       404:
+ *         description: Usuário não encontrado
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   delete:
+ *     summary: Exclui um usuário pelo ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuário deletado com sucesso
+ *       404:
+ *         description: Usuário não encontrado
+ */
+
+/**
+ * @swagger
  * /api/v1/movies:
  *   get:
  *     summary: Retorna todos os filmes
@@ -113,6 +181,9 @@
  *                 type: number
  *                 format: float
  *               stars:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *                 type: integer
  *               poster:
  *                 type: string
@@ -151,6 +222,9 @@
  *                 type: number
  *                 format: float
  *               stars:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *                 type: integer
  *               poster:
  *                 type: string
