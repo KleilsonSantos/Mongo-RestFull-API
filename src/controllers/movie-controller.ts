@@ -1,6 +1,13 @@
+import dotenv from "dotenv";
 import { Logger } from "../config/logger";
 import { MovieModel } from "../model/Movie";
 import { Request, Response, NextFunction } from "express";
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Get JWT_SECRET from environment variables
+const secret = process.env.JWT_SECRET;
 
 const createMovie = async (
   req: Request,
@@ -14,7 +21,7 @@ const createMovie = async (
     }
 
     const movie = await MovieModel.create(movieData);
-    Logger.info("Creating movie", movie);
+    Logger.info("✅ Creating movie", movie);
 
     res
       .status(201)
@@ -31,13 +38,13 @@ const getMovieById = async (
 ): Promise<void> => {
   try {
     const movieId = req.params.id;
-    const movie = await MovieModel.findById(movieId);
+    const movie = await MovieModel.findById(movieId).lean();
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });
     }
 
-    Logger.info("Getting movie by id", movie);
+    Logger.info("✅ Getting movie by id", movie);
     res.status(200).json({ data: { movie } });
   } catch (error) {
     next(error);
@@ -59,12 +66,15 @@ const updateMovieById = async (
       res.status(404).json({ message: "Movie not found" });
     }
 
-    Logger.info("Movie updated:", updatedMovie);
-    res.status(200).json({ data: { movie: updatedMovie } });
+    const movie = await MovieModel.findById(movieId).lean();
+
+    Logger.info("✅ Movie updated:", movie);
+    res.status(200).json({ data: { movie: movie } });
   } catch (error) {
     next(error);
   }
 };
+
 const getAllMovies = async (
   req: Request,
   res: Response,
@@ -77,7 +87,7 @@ const getAllMovies = async (
       res.status(404).json({ message: "No movies found" });
     }
 
-    Logger.info("Movies retrieved:", movies);
+    Logger.info("✅ Movies retrieved:", movies);
     res.status(200).json({ data: { movies } });
   } catch (error) {
     next(error);
@@ -91,14 +101,14 @@ const deleteMovieById = async (
 ): Promise<void> => {
   try {
     const movieId = req.params.id;
-    const movie = await MovieModel.findById(String(movieId));
+    const movie = await MovieModel.findById(String(movieId)).lean();
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });
     }
 
     await MovieModel.findByIdAndDelete(movieId);
-    Logger.info("Movie deleted:", movie);
+    Logger.info("✅ Movie deleted:", movie);
 
     res
       .status(200)
