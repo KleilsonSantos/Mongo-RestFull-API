@@ -18,7 +18,20 @@
 Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar avatares de proprietários.  
 Ela permite operações CRUD (Create, Read, Update, Delete) de usuários e filmes, além de autenticação JWT.
 
----
+## 📌 **Funcionalidades**
+
+- **Autenticação JWT**: Usuários podem se autenticar e obter um token JWT para acessar recursos protegidos.
+- **Usuários**: Criação, leitura, atualização e exclusão de usuários.
+- **Filmes**: Criação, leitura, atualização e exclusão de filmes.
+- **Documentação Swagger**: Documentação detalhada da API.
+- **Docker**: Ambiente de desenvolvimento com Docker.
+- **TypeScript**: Código de alta qualidade com tipagem estática.
+- **MongoDB**: Banco de dados NoSQL para armazenamento de dados.
+- **Mongoose**: ORM para interagir com o MongoDB.
+- **Winston**: Gerenciamento de logs.
+- **Morgan**: Registro de solicitações HTTP.
+- **Docker Compose**: Configuração de ambiente de desenvolvimento com Docker.
+- **Logger**: Registro de logs detalhados.
 
 ## ⚙️ **Configuração**
 
@@ -40,45 +53,36 @@ DB_URI=mongodb+srv://seu_usuario:sua_senha@cluster.mongodb.net/seu_banco?retryWr
 ```
 
 ## Estrutura do Projeto
-
-📦 meu-projeto
-├── 📂 src
-│ ├── 📂 config # Configurações globais do projeto (como conexão com banco de dados)
-│ │ ├── db.ts # Configuração do MongoDB (Mongoose)
-│ │ ├── logger.ts # Configuração do Morgan e Winston para logs
-│ │ ├── swagger.ts # Configuração do Swagger para documentação
-│ │
-│ ├── 📂 controllers # Controladores (lógica de negócios para cada recurso)
-│ │ ├── user-controller.ts # CRUD de usuários
-│ │ ├── movie-controller.ts # CRUD de filmes
-│ │
-│ ├── 📂 enum # Controladores (lógica de negócios para cada recurso)
-│ │ ├── UserRole.enum # CRUD de usuários
-│ │
-│ ├── 📂 middlewares # Middlewares globais e específicos
-│ │ ├── authMiddleware.ts # Middleware de autenticação JWT
-│ │ ├── morgan-middleware.ts # Middleware para tratamento de erros
-│ │ ├── swaggerAuth.ts # Middleware para proteger a rota do Swagger
-│ │
-│ ├── 📂 models # Modelos do banco de dados (Mongoose)
-│ │ ├── User.ts # Modelo de usuário
-│ │ ├── Movie.ts # Modelo de filmes
-│ │ ├── Payload.interface.ts # Modelo de payload JWT
-│ │
-│ ├── 📂 routes # Rotas separadas por contexto
-│ │ ├── router.ts # Indexador de rotas
-│ │ ├── user-router.ts # Rotas do swagger para usuários e filmes
-│ │
-│ ├── 📂 utils # Utilitários e helpers
-│ │ ├── generate-token.ts # Geração e validação de tokens JWT
-│ │
-│ ├── server.ts # Inicialização do servidor
-│
-├── .env # Variáveis de ambiente
-├── .gitignore # Arquivos a serem ignorados pelo Git
-├── package.json # Dependências e scripts do projeto
-├── tsconfig.json # Configuração do TypeScript
-├── README.md # Documentação do projeto
+meu-projeto
+├──  src
+│   ├──  config
+│   │   ├── db.ts
+│   │   ├── logger.ts
+│   │   ├── swagger.ts
+│   ├──  controllers
+│   │   ├── user-controller.ts
+│   │   ├── movie-controller.ts
+│   ├──  enum
+│   │   ├── UserRole.enum
+│   ├──  middlewares
+│   │   ├── authMiddleware.ts
+│   │   ├── morgan-middleware.ts
+│   │   ├── swaggerAuth.ts
+│   ├──  models
+│   │   ├── User.ts
+│   │   ├── Movie.ts
+│   │   ├── Payload.interface.ts
+│   ├──  routes
+│   │   ├── router.ts
+│   │   ├── user-router.ts
+│   ├──  utils
+│   │   ├── generate-token.ts
+│   ├── server.ts
+├── .env
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── README.md
 
 O projeto possui os seguintes arquivos:
 
@@ -164,26 +168,6 @@ docker-compose up -d
     up → Sobe os containers
     -d → Roda em background
 
-## 🚀 Configurando o Banco de Dados
-
-Antes de executar o projeto, configure o banco de dados.
-
-Para conectar a API ao **MongoDB Atlas**, siga os passos abaixo:
-
-### 📌 Pré-requisitos:
-
-- Possuir uma conta no **MongoDB Atlas** e um **cluster** configurado.
-- Criar uma variável de ambiente `MONGODB_URI_ATLAS` contendo a string de conexão.
-
-### ⚙️ Configurando o `.env`:
-
-Crie um arquivo `.env` na raiz do projeto e adicione a seguinte variável:
-
-````env
-MONGODB_URI_ATLAS=mongodb+srv://seu_usuario:senha@cluster.mongodb.net/seu_banco?retryWrites=true&w=majority
-
-
-
 ## 📜 Configuração de Logger
 
 Para garantir um monitoramento eficaz e um **debugging** mais eficiente, utilizamos o **Winston**, uma biblioteca de logging robusta e flexível para **Node.js**.
@@ -227,7 +211,7 @@ npm install winston
 4. Utilize o logger para registrar logs:
 5. O logger padrão para o projeto ser utilizado na pasta `src/config/logger.ts`
 
-⚙️ Configuração Automática:
+## ⚙️ Configuração Automática:
 
     O logger cria automaticamente a pasta logs/ caso ela não exista.
     No modo de desenvolvimento, os logs são exibidos no console com cores para facilitar a leitura.
@@ -321,4 +305,3 @@ Ferramentas utilizadas para desenvolvimento e tipagem:
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhe
-````
