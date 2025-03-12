@@ -15,7 +15,7 @@
 
 ## 📌 **Descrição**
 
-Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar avatares de proprietários.  
+Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar filmes e usuários.  
 Ela permite operações CRUD (Create, Read, Update, Delete) de usuários e filmes, além de autenticação JWT.
 
 ## 📌 **Funcionalidades**
@@ -84,7 +84,7 @@ meu-projeto
 ├── tsconfig.json
 └── README.md
 
-O projeto possui os seguintes arquivos:
+### O projeto possui os seguintes arquivos:
 
 - `package.json`: Arquivo de configuração do projeto.
 - `tsconfig.json`: Arquivo de configuração do TypeScript.
@@ -222,13 +222,13 @@ npm install winston
 Para usar o Logger dentro do projeto, basta importá-lo e chamar os métodos conforme necessário.
 import { Logger } from "./config/logger";
 
-Logger.info("🚀 Servidor iniciado com sucesso!");
-Logger.warn("⚠️ Isso é um aviso importante!");
-Logger.error("❌ Ocorreu um erro crítico no sistema!");
-Logger.debug("🔧 Debugging detalhado para fins de desenvolvimento!");
-Logger.http("📡 Requisição HTTP recebida com sucesso!");
-Logger.exceptions("❗️ Exceção nao tratada!");
-Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
+- Logger.info("🚀 Servidor iniciado com sucesso!");
+- Logger.warn("⚠️ Isso é um aviso importante!");
+- Logger.error("❌ Ocorreu um erro crítico no sistema!");
+- Logger.debug("🔧 Debugging detalhado para fins de desenvolvimento!");
+- Logger.http("📡 Requisição HTTP recebida com sucesso!");
+- Logger.exceptions("❗️ Exceção nao tratada!");
+- Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
 
 ## 📜 Configuração do Swagger
 
