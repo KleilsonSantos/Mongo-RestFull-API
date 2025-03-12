@@ -10,44 +10,30 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [14, 16, 18]
+        node-version: [14.x, 16.x, 18.x]
+
+    runs-on: ${{ matrix.os }}
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-  continuos-integration:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
       - name: Install dependencies
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-          cache: "npm"
-        run: |
-          npm install
+        run: npm install
 
       - name: Build project
-        run: |
-          npm run build
+        run: npm run build
 
       - name: Run tests
-        run: |
-          npm test
+        run: npm test
 
       - name: Notify on failure
         if: failure()
@@ -60,6 +46,7 @@ jobs:
               repo: context.repo.repo,
               body: "🚨 O pipeline falhou!"
             })
+
       - name: Notify on success
         if: success()
         uses: actions/github-script@v6
@@ -71,10 +58,3 @@ jobs:
               repo: context.repo.repo,
               body: "🎉 O pipeline passou!"
             })
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
