@@ -53,6 +53,7 @@ DB_URI=mongodb+srv://seu_usuario:sua_senha@cluster.mongodb.net/seu_banco?retryWr
 ```
 
 ## Estrutura do Projeto
+```plaintext
 meu-projeto
 ├──  src
 │   ├──  config
@@ -83,7 +84,7 @@ meu-projeto
 ├── package.json
 ├── tsconfig.json
 └── README.md
-
+```
 O projeto possui os seguintes arquivos:
 
 - `package.json`: Arquivo de configuração do projeto.
@@ -173,12 +174,12 @@ docker-compose up -d
 Para garantir um monitoramento eficaz e um **debugging** mais eficiente, utilizamos o **Winston**, uma biblioteca de logging robusta e flexível para **Node.js**.
 
 ### 🔥 Recursos do Logger:
-
+```plaintext
 ✅ **Geração de logs detalhados (info, warn, error, debug, http)**
 ✅ **Armazenamento de logs em arquivos separados**
 ✅ **Saída colorida no console durante o desenvolvimento**
 ✅ **Registros de exceções e rejeições de promessas**
-
+```
 ### 📌 Pré-requisitos:
 
 Certifique-se de instalar o **Winston** no projeto antes de utilizá-lo:
@@ -186,7 +187,7 @@ Certifique-se de instalar o **Winston** no projeto antes de utilizá-lo:
 🏗️ Estrutura dos Logs:
 
 Os logs são armazenados na pasta logs/, e separados por nível de severidade:
-
+```plaintext
 📂 logs/
 ├── all.log # Todos os logs
 ├── error.log # Erros críticos
@@ -196,7 +197,7 @@ Os logs são armazenados na pasta logs/, e separados por nível de severidade:
 ├── http.log # Logs de requisições HTTP
 ├── exceptions.log # Logs de exceções não tratadas
 ├── rejections.log # Logs de rejeições de Promises
-
+```
 ### 🚀 Como configurar o Logger:
 
 Para configurar o logger, siga as instruções abaixo:
@@ -221,7 +222,7 @@ npm install winston
 
 Para usar o Logger dentro do projeto, basta importá-lo e chamar os métodos conforme necessário.
 import { Logger } from "./config/logger";
-
+```plaintext
 Logger.info("🚀 Servidor iniciado com sucesso!");
 Logger.warn("⚠️ Isso é um aviso importante!");
 Logger.error("❌ Ocorreu um erro crítico no sistema!");
@@ -229,7 +230,7 @@ Logger.debug("🔧 Debugging detalhado para fins de desenvolvimento!");
 Logger.http("📡 Requisição HTTP recebida com sucesso!");
 Logger.exceptions("❗️ Exceção nao tratada!");
 Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
-
+```
 ## 📜 Configuração do Swagger
 
 Para configurar o Swagger, execute o seguinte comando:
