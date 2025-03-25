@@ -15,7 +15,7 @@
 
 ## 📌 **Descrição**
 
-Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar avatares de proprietários.  
+Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar filmes e usuários.  
 Ela permite operações CRUD (Create, Read, Update, Delete) de usuários e filmes, além de autenticação JWT.
 
 ## 📌 **Funcionalidades**
@@ -85,7 +85,8 @@ meu-projeto
 ├── tsconfig.json
 └── README.md
 ```
-O projeto possui os seguintes arquivos:
+
+### O projeto possui os seguintes arquivos:
 
 - `package.json`: Arquivo de configuração do projeto.
 - `tsconfig.json`: Arquivo de configuração do TypeScript.
@@ -231,6 +232,7 @@ Logger.http("📡 Requisição HTTP recebida com sucesso!");
 Logger.exceptions("❗️ Exceção nao tratada!");
 Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
 ```
+
 ## 📜 Configuração do Swagger
 
 Para configurar o Swagger, execute o seguinte comando:
