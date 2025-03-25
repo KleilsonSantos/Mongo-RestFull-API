@@ -53,6 +53,7 @@ DB_URI=mongodb+srv://seu_usuario:sua_senha@cluster.mongodb.net/seu_banco?retryWr
 ```
 
 ## Estrutura do Projeto
+```plaintext
 meu-projeto
 ├──  src
 │   ├──  config
