@@ -2,7 +2,8 @@
  * @swagger
  * /api/v1/login:
  *   post:
- *     summary: Realiza o login do usuário
+ *     summary: 🔐 User login
+ *     description: Allows users to log in using their email and password.
  *     requestBody:
  *       required: true
  *       content:
@@ -16,16 +17,17 @@
  *                 type: string
  *     responses:
  *       200:
- *         description: Login bem-sucedido
+ *         description: ✅ Login successful
  *       400:
- *         description: Email ou senha inválidos
+ *         description: ❌ Invalid email or password
  */
 
 /**
  * @swagger
  * /api/v1/create:
  *   post:
- *     summary: Cria um novo usuário
+ *     summary: 🆕 Create a new user
+ *     description: Allows registration of a new user with a role (admin/user).
  *     requestBody:
  *       required: true
  *       content:
@@ -42,40 +44,34 @@
  *                 enum: [user, admin]
  *     responses:
  *       201:
- *         description: Usuário criado com sucesso
+ *         description: ✅ User created successfully
  *       400:
- *         description: Erro na criação do usuário
+ *         description: ❌ Error creating user
  */
 
 /**
  * @swagger
  * /api/v1/users:
- *   post:
- *     summary: Retorna todos os usuários (somente admin pode acessar)
+ *   get:
+ *     summary: 👥 Get all users (Admin only)
+ *     description: Returns a list of all registered users. Only accessible by admin users.
  *     responses:
  *       200:
- *         description: Lista de usuários
+ *         description: 📋 List of users
  *       403:
- *         description: Acesso negado, apenas administradores
+ *         description: ❌ Access denied, admin only
  *       404:
- *         description: Nenhum usuário encontrado
+ *         description: ❌ No users found
  */
 
 /**
  * @swagger
- * /api/v1/movies:
+<<<<<<< Updated upstream
+=======
+ * /api/v1/users/{id}:
  *   get:
- *     summary: Retorna todos os filmes
- *     responses:
- *       200:
- *         description: Lista de filmes
- */
-
-/**
- * @swagger
- * /api/v1/movies/{id}:
- *   get:
- *     summary: Retorna um filme específico por ID
+ *     summary: 🔍 Get user by ID
+ *     description: Fetches user details by their unique ID.
  *     parameters:
  *       - name: id
  *         in: path
@@ -84,16 +80,100 @@
  *           type: string
  *     responses:
  *       200:
- *         description: Detalhes do filme
+ *         description: ✅ User details retrieved
  *       404:
- *         description: Filme não encontrado
+ *         description: ❌ User not found
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   put:
+ *     summary: ✏️ Update user details
+ *     description: Modifies an existing user's details like email, password, or role.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [user, admin]
+ *     responses:
+ *       200:
+ *         description: ✅ User updated successfully
+ *       404:
+ *         description: ❌ User not found
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   delete:
+ *     summary: 🗑️ Delete a user
+ *     description: Removes a user from the system by their ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: ✅ User deleted successfully
+ *       404:
+ *         description: ❌ User not found
+ */
+
+/**
+ * @swagger
+>>>>>>> Stashed changes
+ * /api/v1/movies:
+ *   get:
+ *     summary: 🎬 Get all movies
+ *     description: Fetches a list of all available movies.
+ *     responses:
+ *       200:
+ *         description: 🎞️ List of movies retrieved
+ */
+
+/**
+ * @swagger
+ * /api/v1/movies/{id}:
+ *   get:
+ *     summary: 🔍 Get movie by ID
+ *     description: Fetches details of a specific movie using its ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: ✅ Movie details retrieved
+ *       404:
+ *         description: ❌ Movie not found
  */
 
 /**
  * @swagger
  * /api/v1/movies:
  *   post:
- *     summary: Cria um novo filme
+ *     summary: 🎬 Add a new movie
+ *     description: Creates a new movie entry with details like title, description, director, etc.
  *     requestBody:
  *       required: true
  *       content:
@@ -118,14 +198,15 @@
  *                 type: string
  *     responses:
  *       201:
- *         description: Filme criado com sucesso
+ *         description: ✅ Movie added successfully
  */
 
 /**
  * @swagger
  * /api/v1/movies/{id}:
  *   put:
- *     summary: Atualiza um filme existente
+ *     summary: ✏️ Update movie details
+ *     description: Updates the details of an existing movie.
  *     parameters:
  *       - name: id
  *         in: path
@@ -156,16 +237,17 @@
  *                 type: string
  *     responses:
  *       200:
- *         description: Filme atualizado com sucesso
+ *         description: ✅ Movie updated successfully
  *       404:
- *         description: Filme não encontrado
+ *         description: ❌ Movie not found
  */
 
 /**
  * @swagger
  * /api/v1/movies/{id}:
  *   delete:
- *     summary: Exclui um filme pelo ID
+ *     summary: 🗑️ Delete a movie
+ *     description: Removes a movie entry from the database by its ID.
  *     parameters:
  *       - name: id
  *         in: path
@@ -174,7 +256,7 @@
  *           type: string
  *     responses:
  *       200:
- *         description: Filme deletado com sucesso
+ *         description: ✅ Movie deleted successfully
  *       404:
- *         description: Filme não encontrado
+ *         description: ❌ Movie not found
  */
