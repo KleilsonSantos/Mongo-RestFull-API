@@ -1,36 +1,35 @@
-name: CI/CD Pipeline - development
+# name: CI/CD Pipeline - development
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+# jobs:
+#   build:
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest]
+#         node-version: [18.x]
 
-jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+#     runs-on: ${{ matrix.os }}
 
-    runs-on: ${{ matrix.os }}
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
+#       - name: Build project
+#         run: npm run build
 
       #- name: Run tests
       #  run: npm test
