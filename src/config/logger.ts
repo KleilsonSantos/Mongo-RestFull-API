@@ -12,6 +12,7 @@ const isDevelopment = env === 'development';
 
 // 📁 Create logs directory if not exists
 const logDir = 'logs';
+
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
@@ -68,6 +69,33 @@ const transports: winston.transport[] = [
 ];
 
 // 💻 Add console transport only for development with colorized output
+winston.addColors({
+  error: "red",
+  warn: "yellow",
+  info: "green",
+  http: "magenta",
+  debug: "cyan",
+});
+
+// Define log format
+const baseFormat = winston.format.combine(
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+  winston.format.printf(
+    (info) => `${info.timestamp} ${info.level}: ${info.message}`
+  )
+);
+
+// Define transports
+const transports: winston.transport[] = [
+  new winston.transports.File({ filename: path.join(logDir, "all.log") }),
+  new winston.transports.File({ filename: path.join(logDir, "error.log"), level: "error" }),
+  new winston.transports.File({ filename: path.join(logDir, "debug.log"), level: "debug" }),
+  new winston.transports.File({ filename: path.join(logDir, "info.log"), level: "info" }),
+  new winston.transports.File({ filename: path.join(logDir, "warn.log"), level: "warn" }),
+  new winston.transports.File({ filename: path.join(logDir, "http.log"), level: "http" }),
+];
+
+// Add console transport only for development with colorized output
 if (isDevelopment) {
   transports.push(
     new winston.transports.Console({
