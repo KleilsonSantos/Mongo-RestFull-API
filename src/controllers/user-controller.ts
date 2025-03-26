@@ -1,51 +1,51 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import { Logger } from "../config/logger";
-import { UserModel } from "../model/User";
-import { UserRole } from "../enum/UserRole.enum";
-import { Payload } from "../model/Payload.interface";
-import { validationResult } from "express-validator";
-import { Request, Response, NextFunction } from "express";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { Logger } from '../config/logger';
+import { Payload } from '../model/Payload.interface';
+import { UserRole } from '../enum/UserRole.enum';
+import { UserModel } from '../model/User';
+import { validationResult } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
 
-// Get JWT_SECRET and JWT_EXPIRES_IN from environment variables
+// 🔑 Get JWT_SECRET and JWT_EXPIRES_IN from environment variables
 const JWT_SECRET: string | undefined = process.env.JWT_SECRET!;
-const JWT_EXPIRES_IN: string | undefined = process.env.JWT_EXPIRES_IN || "1h";
+const JWT_EXPIRES_IN: string | undefined = process.env.JWT_EXPIRES_IN || '1h';
 
-// Check if JWT_SECRET and JWT_EXPIRES_IN are defined
+// ⚠️ Check if JWT_SECRET and JWT_EXPIRES_IN are defined
 if (!JWT_SECRET || !JWT_EXPIRES_IN) {
   Logger.error(
-    "❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables"
+    '❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables',
   );
   throw new Error(
-    "JWT_SECRET or JWT_EXPIRES_IN not found in environment variables"
+    'JWT_SECRET or JWT_EXPIRES_IN not found in environment variables',
   );
 }
 
-// Create a new user
+// 👤 Create a new user
 const createUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const { email, password, role } = req.body;
     Logger.info(`🔑 Create User`);
 
-    // Validate user data
+    // 📝 Validate user data
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      Logger.error("❌ Validation errors:", errors.array());
+      Logger.error('❌ Validation errors:', errors.array());
       res.status(400).json({ errors: errors.array() });
     }
 
-    // Check if user already exists
+    // 🔍 Check if user already exists
     const existingUser = await UserModel.findOne({ email }).lean();
     if (existingUser) {
-      Logger.info("✅ User already exists", existingUser);
-      res.status(400).json({ message: "User already exists" });
+      Logger.info('✅ User already exists', existingUser);
+      res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash password before saving it
+    // 🔒 Hash password before saving it
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const userData = {
@@ -54,37 +54,37 @@ const createUser = async (
       role,
     };
 
-    // Create user
+    // 💾 Create user
     const user = await UserModel.create(userData);
 
-    Logger.info("✅ Creating user", user);
+    Logger.info('✅ Creating user', user);
     res
       .status(201)
-      .json({ message: "User created with success!", data: { user } });
+      .json({ message: 'User created with success!', data: { user } });
   } catch (error) {
     next(error);
   }
 };
 
-// Login user
+// 🚪 Login user
 const userLogin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const { email, password } = req.body;
-    Logger.info("🔑 Login started");
+    Logger.info('🔑 Login started');
 
     if (!email || !password) {
-      Logger.error("❌ Email and password are required");
-      res.status(400).json({ message: "Email and password are required" });
+      Logger.error('❌ Email and password are required');
+      res.status(400).json({ message: 'Email and password are required' });
     }
 
     const user = await UserModel.findOne({ email });
     if (!user || !user.password) {
-      Logger.error("❌ User or password not found");
-      res.status(401).json({ message: "Invalid email or password" });
+      Logger.error('❌ User or password not found');
+      res.status(401).json({ message: 'Invalid email or password' });
       return;
     }
 
@@ -94,20 +94,22 @@ const userLogin = async (
       role: user.role! as UserRole,
     };
 
+    // 🔑 Compare passwords
     const isMatch = await bcrypt.compare(password, user!.password);
     if (!isMatch) {
-      Logger.error("❌ Invalid email or password");
-      res.status(401).json({ message: "Invalid email or password" });
+      Logger.error('❌ Invalid email or password');
+      res.status(401).json({ message: 'Invalid email or password' });
     }
 
+    // 🎫 Generate JWT token
     const token = jwt.sign(payload, JWT_SECRET, {
       expiresIn: Number(JWT_EXPIRES_IN),
     });
 
-    Logger.info("✅ Login successful");
+    Logger.info('✅ Login successful');
 
     res.status(200).json({
-      message: "✅ Login successful",
+      message: '✅ Login successful',
       token,
     });
   } catch (error) {
@@ -115,20 +117,21 @@ const userLogin = async (
   }
 };
 
+// 👤 Get user by ID
 const getUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const userId = req.params.id;
     const user = await UserModel.findById(userId).lean();
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
     }
 
-    Logger.info("✅ Getting User by id", user);
+    Logger.info('✅ Getting User by id', user);
 
     res.status(200).json({ data: { user } });
   } catch (error) {
@@ -136,10 +139,11 @@ const getUserById = async (
   }
 };
 
+// 🔄 Update user by ID
 const updateUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const userId = req.params.id;
@@ -148,12 +152,12 @@ const updateUserById = async (
     const updatedUser = await UserModel.findByIdAndUpdate(userId, userData);
 
     if (!updatedUser) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
     }
 
     const user = await UserModel.findById(userId).lean();
 
-    Logger.info("✅ Movie updated:", user);
+    Logger.info('✅ Movie updated:', user);
 
     res.status(200).json({ data: { user: user } });
   } catch (error) {
@@ -161,27 +165,28 @@ const updateUserById = async (
   }
 };
 
+// 👥 Get all users
 const getAllUsers = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const userRole = req.body;
     if (userRole.role !== UserRole.ADMIN) {
-      Logger.error("❌ Access denied, role mismatch. Only admins are allowed.");
+      Logger.error('❌ Access denied, role mismatch. Only admins are allowed.');
       res.status(403).json({
-        message: "Access denied, role mismatch. Only admins are allowed.",
+        message: 'Access denied, role mismatch. Only admins are allowed.',
       });
     }
 
     const users = await UserModel.find();
     if (users.length === 0) {
-      Logger.error("❌ No users found");
-      res.status(404).json({ message: "No users found" });
+      Logger.error('❌ No users found');
+      res.status(404).json({ message: 'No users found' });
     }
 
-    Logger.info("✅ Users found");
+    Logger.info('✅ Users found');
 
     res.status(200).json({ data: { users } });
   } catch (error) {
@@ -189,26 +194,27 @@ const getAllUsers = async (
   }
 };
 
+// 🗑️ Delete user by ID
 const deleteUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const userId = req.params.id;
     const user = await UserModel.findById(String(userId)).lean();
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
     }
 
     await UserModel.findByIdAndDelete(userId);
 
-    Logger.info("✅ User deleted:", user);
+    Logger.info('✅ User deleted:', user);
 
     res
       .status(200)
-      .json({ message: "User deleted successfully", data: { user } });
+      .json({ message: 'User deleted successfully', data: { user } });
   } catch (error) {
     next(error);
   }
