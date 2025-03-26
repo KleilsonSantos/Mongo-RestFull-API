@@ -1,10 +1,18 @@
+# 📦 Docker Compose version
 version: "3.8"
+
+# 🛠️ Services configuration
 services:
+  # 💾 MongoDB service
   mongodb:
     image: mongo
+    # 🌐 Port mapping
     ports:
       - "27017:27017"
+    # 📁 Volume mapping for data persistence
     volumes:
       - mongo-data:/data/db
+
+# 📁 Volumes definition
 volumes:
   mongo-data:
