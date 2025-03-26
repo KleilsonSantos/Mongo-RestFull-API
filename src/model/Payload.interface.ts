@@ -1,4 +1,4 @@
-import { UserRole } from "../enum/UserRole.enum";
+import { UserRole } from '../enum/UserRole.enum';
 
 export interface Payload {
   id: string;
