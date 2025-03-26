@@ -1,33 +1,25 @@
-import { model, Schema, Document } from "mongoose";
+import { model, Schema } from 'mongoose';
 
-// Interface for User
-interface IUser extends Document {
-  email: string;
-  password: string;
-  role: string;
+// 👤 Interface for User model
+interface User {
+  email: string;  // 📧 User email (must be unique)
+  password: string; // 🔒 User password
+  role: string; // 🏷️ User role (admin or user)
 }
 
-// Define User Schema
-const userSchema = new Schema<IUser>(
+// 🏗️ Define User Schema
+const userSchema = new Schema<User>(
   {
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ["admin", "user"], default: "user" },
+    email: { type: String, required: true, unique: true }, // 📧 Email (required & unique)
+    password: { type: String, required: true }, // 🔐 Password (required)
+    role: { type: String, enum: ['admin', 'user'], default: 'user' }, // 👑 Role (default: user)
   },
   {
-    timestamps: true,
-  }
+    timestamps: true, // ⏳ Automatically adds createdAt & updatedAt fields
+  },
 );
 
-// Remove password from response
-userSchema.set("toJSON", {
-  transform: (_doc, ret) => {
-    delete ret.password;
-    return ret;
-  },
-});
+// 🗄️ Create User model
+const UserModel = model<User>('User', userSchema);
 
-// Create User model
-const UserModel = model<IUser>("User", userSchema);
-
-export { UserModel, IUser };
+export { UserModel, User }; // 📤 Export User model and interface
