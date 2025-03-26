@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { Logger } from "../config/logger";
 import { Request, Response, NextFunction } from "express";
 import { Payload } from "../model/Payload.interface";
-//import "../types/express";
 
 // Load environment variables
 dotenv.config();

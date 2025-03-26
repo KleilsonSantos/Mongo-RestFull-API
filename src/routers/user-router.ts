@@ -66,8 +66,6 @@
 
 /**
  * @swagger
-<<<<<<< Updated upstream
-=======
  * /api/v1/users/{id}:
  *   get:
  *     summary: 🔍 Get user by ID
@@ -139,7 +137,6 @@
 
 /**
  * @swagger
->>>>>>> Stashed changes
  * /api/v1/movies:
  *   get:
  *     summary: 🎬 Get all movies
@@ -193,6 +190,9 @@
  *                 type: number
  *                 format: float
  *               stars:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *                 type: integer
  *               poster:
  *                 type: string
@@ -232,6 +232,9 @@
  *                 type: number
  *                 format: float
  *               stars:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *                 type: integer
  *               poster:
  *                 type: string
