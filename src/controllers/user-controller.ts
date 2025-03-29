@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Logger } from '../config/logger';
 import { Payload } from '../model/Payload.interface';
-import { UserRole } from '../enum/UserRole.enum';
+import { UserRole } from '../enum/user-role.enum';
 import { UserModel } from '../model/User';
 import { validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';

@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { Logger } from '../config/logger';
 import { Payload } from '../model/Payload.interface';
-import { UserRole } from '../enum/UserRole.enum';
+import { UserRole } from '../enum/user-role.enum';
 
 // Load environment variables
 dotenv.config();
