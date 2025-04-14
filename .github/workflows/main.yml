@@ -1,59 +1,59 @@
-# name: CI/CD Pipeline - development
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
+name: CI/CD Pipeline - development
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   build:
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest]
-#         node-version: [18.x]
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [18.x]
 
-#     runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: ${{ matrix.node-version }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
 
-#       - name: Install dependencies
-#         run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#       - name: Build project
-#         run: npm run build
+      - name: Build project
+        run: npm run build
 
-      #- name: Run tests
-      #  run: npm test
+      - name: Run tests
+        run: npm test
 
-      # - name: Notify on failure
-      #   if: failure()
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: "🚨 O pipeline falhou!"
-      #       })
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ github.event.pull_request.number }},
+              owner: ${{ github.repository_owner }},
+              repo: ${{ github.event.repository.name }},
+              body: "🚨 O pipeline falhou!"
+            })
 
-      # - name: Notify on success
-      #   if: success()
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: "🎉 O pipeline passou!"
-      #       })
+      - name: Notify on success
+        if: success()
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ github.event.pull_request.number }},
+              owner: ${{ github.repository_owner }},
+              repo: ${{ github.event.repository.name }},
+              body: "🎉 O pipeline passou!"
+            })

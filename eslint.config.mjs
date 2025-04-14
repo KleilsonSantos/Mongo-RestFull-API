@@ -1,45 +1,37 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import importPlugin from "eslint-plugin-import";
-import prettierConfig from "eslint-config-prettier";
-import prettierPlugin from "eslint-plugin-prettier";
+import js from '@eslint/js';
+import typescript from '@typescript-eslint/eslint-plugin';
+import parser from '@typescript-eslint/parser';
+import prettier from 'eslint-plugin-prettier';
 
 export default [
   {
-    ignores: ["node_modules/", "dist/", "coverage/"], // Arquivos ignorados
+    ignores: [
+      'dist',
+      'node_modules',
+      'coverage',
+      'build',
+      'public',
+      'deploy',
+      'dependency-check-bin',
+      'logs',
+    ],
   },
   {
-    files: ["**/*.{js,mjs,cjs,ts}"], // Aplicar regras apenas nestes arquivos
+    files: ['**/*.ts'],
     languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: "./tsconfig.json", // Certifique-se que esse arquivo existe e inclui todos os arquivos do projeto
-        ecmaVersion: "latest",
-        sourceType: "module",
-      },
-      globals: globals.node,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parser,
     },
     plugins: {
-      "@typescript-eslint": tseslint.plugin,
-      import: importPlugin,
-      prettier: prettierPlugin,
+      '@typescript-eslint': typescript,
+      prettier,
+      js,
     },
     rules: {
-      "no-console": "warn",
-      "prettier/prettier": "error",
-      "no-underscore-dangle": "off",
-      "import/prefer-default-export": "off",
-      "@typescript-eslint/no-unused-vars": ["error"],
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "ts": "never",
-          "js": "always"
-        }
-      ],
+      'prettier/prettier': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     },
   },
-  prettierConfig,
 ];

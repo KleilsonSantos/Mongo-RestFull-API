@@ -1,0 +1,11 @@
+#!/bin/sh
+echo ""
+echo "🎉 Pós-commit iniciado com sucesso! 🔧"
+
+# Exibir informações do último commit
+echo "🔎 Último commit realizado: $(git log -1 --pretty=format:'%h - %an - %s')"
+
+echo ""
+echo "✅ Pós-commit concluído! 🚀 Vamos continuar com o desenvolvimento."
+echo "🔄 Pronto para o próximo commit!"
+echo ""

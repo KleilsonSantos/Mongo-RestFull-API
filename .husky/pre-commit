@@ -1,0 +1,33 @@
+#!/bin/sh
+echo ""
+cd "$(git rev-parse --show-toplevel)"
+
+echo ""
+echo "Branch: $(git branch --show-current)"
+
+echo "Staged files:"
+git diff --cached --name-only
+
+echo ""
+echo "🐶 Husky: executando hook de pre-commit..."
+
+echo ""
+echo "🧪 Executando testes..."
+npm run test
+
+echo ""
+echo "🔍 Corrigindo problemas de lint automaticamente..."
+npm run lint
+
+echo ""
+echo "🎨 Formatando o código com Prettier (ou equivalente)..."
+npm run format
+
+echo ""
+echo "🔍  Verificando se há alterações no arquivo package.json..."
+tsx src/utils/package-sonar-sync.ts
+echo "✅ Arquivo package.json atualizado com sucesso."
+
+
+echo "✅ Tudo pronto! Finalizando pre-commit hook com sucesso."
+echo "🚀 Commit em andamento..."

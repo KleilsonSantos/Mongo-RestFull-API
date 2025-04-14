@@ -1,0 +1,25 @@
+#!/bin/bash
+echo ""
+echo "Testando configuração do Docker Compose..."
+docker-compose config -q
+echo ""
+if [ $? -eq 0 ]; then
+  echo "✅ Configuração do Docker Compose válida!"
+else
+  echo "❌ Configuração do Docker Compose inválida!"
+  exit 1
+fi
+
+# echo ""
+# echo "Subindo container do Portainer..."
+# docker-compose up -d
+# echo ""
+# if [ $? -eq 0 ]; then
+#   echo "✅ Container do Portainer iniciado com sucesso!"
+# else
+#   echo "❌ Falha ao iniciar o container do Portainer!"
+#   exit 1
+# fi
+# echo "🚀 Acessando o Portainer..."
+# echo "🌐 Acesse 👉 http://localhost:9000 para acessar o Portainer 🧭"
+# echo ""
