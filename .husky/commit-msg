@@ -1,0 +1,23 @@
+#!/bin/sh
+echo ""
+echo "🌟 Validando mensagem de commit! ✍️"
+
+# Definir regex para validar mensagens de commit
+REGEX="^([🎉✨🚀🐛💄📦🔧📝📚🧪🔒💥🔥🎨♻️🧹💬🌐⚙️✅🔖🔁⏪⏩📈📉🌱👷🚧🔍🔧🧪🗃️🗑️⚠️♿️🔇🔊🔄🛠️📤📥📅🗓️])*\s?(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([a-zA-Z0-9_-]+\))?: .{5,}$"
+
+
+# Capturar a mensagem de commit
+MESSAGE=$(cat "$1")
+
+# Validar a mensagem de commit
+if ! echo "$MESSAGE" | grep -Eq "$REGEX"; then
+  echo "❌ Mensagem de commit inválida!"
+  echo "🔍 Certifique-se de seguir este formato:"
+  echo "   feat: Descrição clara do recurso (exemplo)"
+  echo "   fix: Descrição do erro corrigido (exemplo)"
+  echo "📝 Observação: A mensagem deve ter pelo menos 5 caracteres após o tipo."
+  exit 1
+fi
+
+echo "✅ Mensagem de commit validada com sucesso! 🚀"
+echo "🔄 Continuando com o commit..."
