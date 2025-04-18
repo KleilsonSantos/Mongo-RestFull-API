@@ -1,6 +1,4 @@
 // 📦 webpack.config.js
-import fs from 'fs'; // 📂 Manipulação de arquivos
-import dotenv from 'dotenv'; // 🌐 Carrega variáveis de ambiente
 import path from 'path'; // 🗂️ Manipulação de caminhos
 import webpack from 'webpack'; // 🧰 Plugins Webpack
 import HtmlWebpackPlugin from 'html-webpack-plugin'; // 🌐 Gera o index.html
@@ -8,7 +6,6 @@ import { fileURLToPath } from 'url'; // 🔗 Suporte para ES Modules
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'; // 🧹 Limpa a pasta dist
 
 // 🌍 Carrega variáveis de ambiente do .env
-dotenv.config();
 
 // 📍 Resolvendo __dirname em ES Modules
 const __filename = fileURLToPath(import.meta.url);

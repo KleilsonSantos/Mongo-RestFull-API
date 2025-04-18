@@ -1,13 +1,8 @@
-import { Logger } from '../config/logger';
+import Logger from '../config/logger';
 import { Request, Response, NextFunction } from 'express';
 
 // 🚨 Error handling middleware
-const errorHandles = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const errorHandles = (err: Error, req: Request, res: Response, next: NextFunction) => {
   // 💥 Log unhandled errors
   Logger.error('Unhandled error:', err);
   // ⚠️ Send generic 500 Internal Server Error response

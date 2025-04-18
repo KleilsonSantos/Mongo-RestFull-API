@@ -1,5 +1,4 @@
-# Mongo Rest API 🚀 *(Em Desenvolvimento 🚧)*
-
+# Mongo Rest API 🚀 _(Em Desenvolvimento 🚧)_
 
 ![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white) 🍃
 ![Express](https://img.shields.io/badge/-Express-000000?style=for-the-badge&logo=express&logoColor=white) 🚂
@@ -54,6 +53,7 @@ DB_URI=mongodb+srv://seu_usuario:sua_senha@cluster.mongodb.net/seu_banco?retryWr
 ```
 
 ## Estrutura do Projeto
+
 ```plaintext
 meu-projeto
 ├──  src
@@ -176,12 +176,14 @@ docker-compose up -d
 Para garantir um monitoramento eficaz e um **debugging** mais eficiente, utilizamos o **Winston**, uma biblioteca de logging robusta e flexível para **Node.js**.
 
 ### 🔥 Recursos do Logger:
+
 ```plaintext
 ✅ **Geração de logs detalhados (info, warn, error, debug, http)**
 ✅ **Armazenamento de logs em arquivos separados**
 ✅ **Saída colorida no console durante o desenvolvimento**
 ✅ **Registros de exceções e rejeições de promessas**
 ```
+
 ### 📌 Pré-requisitos:
 
 Certifique-se de instalar o **Winston** no projeto antes de utilizá-lo:
@@ -189,6 +191,7 @@ Certifique-se de instalar o **Winston** no projeto antes de utilizá-lo:
 🏗️ Estrutura dos Logs:
 
 Os logs são armazenados na pasta logs/, e separados por nível de severidade:
+
 ```plaintext
 📂 logs/
 ├── all.log # Todos os logs
@@ -200,6 +203,7 @@ Os logs são armazenados na pasta logs/, e separados por nível de severidade:
 ├── exceptions.log # Logs de exceções não tratadas
 ├── rejections.log # Logs de rejeições de Promises
 ```
+
 ### 🚀 Como configurar o Logger:
 
 Para configurar o logger, siga as instruções abaixo:
@@ -224,6 +228,7 @@ npm install winston
 
 Para usar o Logger dentro do projeto, basta importá-lo e chamar os métodos conforme necessário.
 import { Logger } from "./config/logger";
+
 ```plaintext
 Logger.info("🚀 Servidor iniciado com sucesso!");
 Logger.warn("⚠️ Isso é um aviso importante!");
@@ -260,26 +265,26 @@ A documentação da API está disponível em http://localhost:3000/api/v1/api-do
 
 ### 🧑‍💻 Usuários
 
-| Método  | Rota                | Descrição                 |
-|---------|---------------------|---------------------------|
+| Método     | Rota                | Descrição                |
+| ---------- | ------------------- | ------------------------ |
 | **POST**   | `/api/v1/login`     | Login do usuário         |
-| **POST**   | `/api/v1/create`    | Criar usuário           |
-| **GET**    | `/api/v1/users`     | Listar usuários         |
-| **GET**    | `/api/v1/users/:id` | Buscar usuário por ID   |
+| **POST**   | `/api/v1/create`    | Criar usuário            |
+| **GET**    | `/api/v1/users`     | Listar usuários          |
+| **GET**    | `/api/v1/users/:id` | Buscar usuário por ID    |
 | **PUT**    | `/api/v1/users/:id` | Atualizar usuário por ID |
-| **DELETE** | `/api/v1/users/:id` | Deletar usuário por ID  |
+| **DELETE** | `/api/v1/users/:id` | Deletar usuário por ID   |
 
 ## 📌 Endpoints
 
 ### 🎬 Filmes
 
-| Método  | Rota                 | Descrição               |
-|---------|----------------------|-------------------------|
-| **POST**   | `/api/v1/movies`      | Criar novo filme       |
-| **GET**    | `/api/v1/movies`      | Listar filmes         |
-| **GET**    | `/api/v1/movies/:id`  | Buscar filme por ID   |
-| **PUT**    | `/api/v1/movies/:id`  | Atualizar filme por ID |
-| **DELETE** | `/api/v1/movies/:id`  | Deletar filme por ID  |
+| Método     | Rota                 | Descrição              |
+| ---------- | -------------------- | ---------------------- |
+| **POST**   | `/api/v1/movies`     | Criar novo filme       |
+| **GET**    | `/api/v1/movies`     | Listar filmes          |
+| **GET**    | `/api/v1/movies/:id` | Buscar filme por ID    |
+| **PUT**    | `/api/v1/movies/:id` | Atualizar filme por ID |
+| **DELETE** | `/api/v1/movies/:id` | Deletar filme por ID   |
 
 ## 📦 Dependências
 
@@ -304,7 +309,6 @@ Ferramentas utilizadas para desenvolvimento e tipagem:
 - **@types/node**: `^22.13.9` – Tipagens para Node.js
 - **ts-node-dev**: `^2.0.0` – Reinicialização automática do servidor em TypeScript
 - **typescript**: `^5.8.2` – Compilador TypeScript
-
 
 ## Licença
 

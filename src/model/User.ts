@@ -1,14 +1,9 @@
 import { model, Schema } from 'mongoose';
 
 // 👤 Interface for User model
-interface User {
-  email: string;  // 📧 User email (must be unique)
-  password: string; // 🔒 User password
-  role: string; // 🏷️ User role (admin or user)
-}
 
 // 🏗️ Define User Schema
-const userSchema = new Schema<User>(
+const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true }, // 📧 Email (required & unique)
     password: { type: String, required: true }, // 🔐 Password (required)
@@ -20,6 +15,6 @@ const userSchema = new Schema<User>(
 );
 
 // 🗄️ Create User model
-const UserModel = model<User>('User', userSchema);
+const UserModel = model('User', userSchema);
 
-export { UserModel, User }; // 📤 Export User model and interface
+export default UserModel; // 📤 Export User model and interface

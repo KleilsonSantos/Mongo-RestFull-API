@@ -21,6 +21,13 @@ export default {
   reporters: [
     'default',
     [
+      'jest-html-reporter',
+      {
+        outputDirectory: 'coverage/jest-html-reporter',
+        outputName: 'jest-html-reporter.html',
+      },
+    ],
+    [
       'jest-sonar',
       {
         outputDirectory: 'coverage/sonar-report',
@@ -28,4 +35,8 @@ export default {
       },
     ],
   ],
+  fakeTimers: {
+    enableGlobally: false,
+  },
+  setupFiles: ['<rootDir>/src/config/load-env.ts'],
 };

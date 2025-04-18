@@ -1,6 +1,6 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import swaggerAuthMiddleware from '../middlewares/swaggerAuthMiddleware';
+import swaggerAuthMiddleware from '../middlewares/auth-middleware';
 import { Express } from 'express';
 
 // ⚙️ Swagger options configuration
@@ -8,8 +8,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title:
-        'API Node + Express + MongoDB + Mongoose + TypeScript + JWT + Swagger + Docker',
+      title: 'API Node + Express + MongoDB + Mongoose + TypeScript + JWT + Swagger + Docker',
       version: '1.0.2',
       description: 'API Documentation',
     },

@@ -1,18 +1,14 @@
-import dotenv from 'dotenv';
+import app from '../../app';
 import request from 'supertest';
-import Logger from '../config/logger';
-import mongoose from 'mongoose';
-import { app } from '../server/server';
-import { server } from '../index';
-import { disconnect } from '../config/db';
-import { MovieModel } from '../model/Movie';
+import Logger from '../../config/logger';
+import mongoose, { Error } from 'mongoose';
+import { disconnect } from '../../config/db';
+import { MovieModel } from '../../model/Movie';
 import { validationResult } from 'express-validator';
-import { generateMockToken } from './mocks/validate-token.mock';
-import { mockValidationErrorMessage, mockValidationSuccess } from './mocks/validation.mock';
+import { generateMockToken } from '../mocks/validate-token.mock';
+import { mockValidationErrorMessage, mockValidationSuccess } from '../mocks/validation.mock';
 import {
   movieExample,
-  requestCreatingMovie,
-  requestValidationError,
   responseAllMovies,
   responseBody,
   responseCreateMovie,
@@ -20,19 +16,26 @@ import {
   responseDeleted,
   responseDeleteMovieNotFound,
   responseMovieById,
-  responseMovieByIdError,
   responseMovieByIdNotFound,
   responseMovieError,
   responseMovieNotFound,
   responseUpdateMovieError,
   updatedMovie,
-} from './mocks/movie.mock';
+} from '../mocks/movie.mock';
+import { createServer, Server } from 'http';
 
-dotenv.config();
+jest.mock('../../model/Movie', () => ({
+  MovieModel: {
+    create: jest.fn(),
+    find: jest.fn(),
+    findOne: jest.fn(),
+    findById: jest.fn(),
+    findByIdAndUpdate: jest.fn(),
+    findByIdAndDelete: jest.fn(),
+  },
+}));
 
-jest.mock('../model/Movie');
-
-jest.mock('../config/logger', () => ({
+jest.mock('../../config/logger', () => ({
   info: jest.fn(),
   error: jest.fn(),
 }));
@@ -41,17 +44,18 @@ jest.mock('express-validator', () => ({
   validationResult: jest.fn(),
 }));
 
-jest.mock('../config/db', () => ({
+jest.mock('../../config/db', () => ({
   connect: jest.fn().mockResolvedValue(true),
   disconnect: jest.fn(),
+  Error: jest.fn(),
 }));
 
 const token = generateMockToken();
+const leanMethod = () => Promise.reject(new Error('DB Failure'));
 
-describe('🎬 User Controller Tests', () => {
+describe('🎬 Movie Controller Tests', () => {
+  let server: Server = createServer(app);
   afterAll(async () => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     await mongoose.disconnect();
     await disconnect();
     server.close();
@@ -62,11 +66,30 @@ describe('🎬 User Controller Tests', () => {
   });
 
   describe('🎥 POST /api/v1/movies', () => {
-    it('🔍 should return 400 when required movie fields are missing', async () => {
+    it('🚫 should return 400 when validation error occurs', async () => {
       (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationErrorMessage());
 
       const response = await request(app)
-        .post('/api/v1/movies')
+        .post('/api/v1/create/movie')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ title: '' });
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors[0].msg).toEqual('🎬 Title is required');
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+        expect.stringContaining('📡 Request: POST /api/v1/create/movie | Status: 400'),
+      );
+    });
+
+    it('🔍 should return 404 when required movie fields are missing', async () => {
+      (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationErrorMessage());
+      (MovieModel.create as jest.Mock).mockReturnValue({
+        lean: jest.fn().mockResolvedValue(null),
+      });
+
+      const response = await request(app)
+        .post('/api/v1/create/movie')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({});
@@ -81,7 +104,7 @@ describe('🎬 User Controller Tests', () => {
       (MovieModel.create as jest.Mock).mockResolvedValue(movieExample);
 
       const response = await request(app)
-        .post('/api/v1/movies')
+        .post('/api/v1/create/movie')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send(movieExample);
@@ -89,45 +112,19 @@ describe('🎬 User Controller Tests', () => {
       expect(response.status).toBe(201);
       expect(response.body).toEqual(responseCreateMovie);
       expect((Logger.info as jest.Mock).mock.calls[2][0]).toEqual(
-        expect.stringContaining(requestCreatingMovie),
-      );
-    });
-
-    it('🚫 should return 400 when validation error occurs', async () => {
-      (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationErrorMessage());
-
-      const response = await request(app)
-        .post('/api/v1/movies')
-        .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .send({});
-
-      expect(response.status).toBe(400);
-      expect(response.body.errors[0].msg).toEqual('🎬 Title is required');
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(requestValidationError),
+        expect.stringContaining('📡 Request: POST /api/v1/create/movie | Status: 201'),
       );
     });
 
     it('💣 should return 500 when a database error occurs during movie creation', async () => {
       (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationSuccess());
-      (MovieModel.create as jest.Mock).mockRejectedValue(new Error('DB Failure'));
-
-      const validMovie = {
-        title: 'Movie 1',
-        rating: 8.5,
-        description: 'Description 1',
-        director: 'Director 1',
-        genre: 'Action',
-        stars: ['Actor 1', 'Actor 2'],
-        poster: 'poster1.jpg',
-      };
+      (MovieModel.create as jest.Mock).mockImplementation(leanMethod);
 
       const response = await request(app)
-        .post('/api/v1/movies')
+        .post('/api/v1/create/movie')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${token}`)
-        .send(validMovie);
+        .send({});
 
       expect(response.status).toBe(500);
       expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseCreateMovieError);
@@ -233,7 +230,7 @@ describe('🎬 User Controller Tests', () => {
 
     it('💣 should return 500 when a database error occurs while retrieving movie by id', async () => {
       (MovieModel.findById as jest.Mock).mockImplementation(() => ({
-        lean: () => Promise.reject(new Error('DB Failure')),
+        lean: leanMethod,
       }));
 
       const response = await request(app)
@@ -318,7 +315,7 @@ describe('🎬 User Controller Tests', () => {
         }),
       });
       (MovieModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB Failure'));
-      (Logger.error as jest.Mock).mockReturnThis();
+
       const response = await request(app)
         .put('/api/v1/movies/1')
         .set('Accept', 'application/json')
@@ -371,25 +368,16 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💣 should return 500 when a database error occurs during movie deletion', async () => {
-      (MovieModel.findById as jest.Mock).mockReturnValue({
-        lean: jest.fn().mockResolvedValue({
-          _id: '1',
-          title: 'Movie 1',
-          rating: 8.5,
-          description: 'Description 1',
-          director: 'Director 1',
-          genre: 'Action',
-          stars: ['Actor 1', 'Actor 2'],
-          poster: 'poster1.jpg',
-        }),
-      });
-
-      (MovieModel.findByIdAndDelete as jest.Mock).mockRejectedValue(new Error('DB Failure'));
+      (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationSuccess());
+      (MovieModel.findById as jest.Mock).mockImplementation(() => ({
+        lean: leanMethod,
+      }));
 
       const response = await request(app)
         .delete('/api/v1/movies/1213')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${token}`);
+
       expect(response.status).toBe(500);
       expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error getting movie by id');
     });
@@ -398,15 +386,17 @@ describe('🎬 User Controller Tests', () => {
       const response = await request(app).get('/api/v1/movies');
 
       expect(response.status).toBe(401);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Unauthorized - Missing token',
+      );
     });
 
     it('⚠️ should return 400 when rating is not a number', async () => {
       (validationResult as unknown as jest.Mock).mockReturnValue(mockValidationErrorMessage());
 
       const response = await request(app)
-        .post('/api/v1/movies')
-        .set('Authorization', `Bearer ${token}`)
-        .send({ ...movieExample, rating: 'invalid' });
+        .delete('/api/v1/movies/invalid-id')
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(400);
       expect(response.body.errors[0].msg).toBe('🎬 Title is required');

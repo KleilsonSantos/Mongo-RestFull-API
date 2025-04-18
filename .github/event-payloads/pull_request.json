@@ -1,0 +1,25 @@
+{
+  "pull_request": {
+    "number": 37,
+    "title": "Fix: Ajustes no CI/CD",
+    "user": {
+      "login": "KleilsonSantos"
+    },
+    "head": {
+      "ref": "feature/fix-ci"
+    },
+    "base": {
+      "ref": "main"
+    }
+  },
+  "repository": {
+    "name": "MongoRestAPI-Express",
+    "full_name": "KleilsonSantos/MongoRestAPI-Express",
+    "owner": {
+      "login": "KleilsonSantos"
+    }
+  },
+  "sender": {
+    "login": "KleilsonSantos"
+  }
+}
