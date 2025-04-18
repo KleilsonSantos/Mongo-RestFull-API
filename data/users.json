@@ -1,0 +1,53 @@
+[
+    {
+      "email": "alice.santos@example.com",
+      "password": "senha123",
+      "role": "admin"
+    },
+    {
+      "email": "bruno.lima@example.com",
+      "password": "segredo456",
+      "role": "user"
+    },
+    {
+      "email": "carla.oliveira@example.com",
+      "password": "pass789",
+      "role": "moderator"
+    },
+    {
+      "email": "daniel.souza@example.com",
+      "password": "123senha",
+      "role": "user"
+    },
+    {
+      "email": "elena.martins@example.com",
+      "password": "mypassword",
+      "role": "admin"
+    },
+    {
+      "email": "fabio.rodrigues@example.com",
+      "password": "senha321",
+      "role": "user"
+    },
+    {
+      "email": "gabriela.ferreira@example.com",
+      "password": "securepass",
+      "role": "moderator"
+    },
+    {
+      "email": "henrique.almeida@example.com",
+      "password": "senha456",
+      "role": "user"
+    },
+    {
+      "email": "isabela.costa@example.com",
+      "password": "pass123",
+      "role": "admin"
+    },
+    {
+      "email": "joao.pereira@example.com",
+      "password": "senha789",
+      "role": "user"
+    }
+  ]
+  

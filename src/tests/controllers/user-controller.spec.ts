@@ -118,7 +118,7 @@ describe('🎬 User Controller Tests', () => {
     });
   });
 
-   describe('🎞️ GET /api/v1/users', () => {
+  describe('🎞️ GET /api/v1/users', () => {
     it('✅ should return 200 and list all users', async () => {
       (UserModel.findOne as jest.Mock).mockResolvedValue(userExample);
       console.log('Mock UserModel.find result:', await UserModel.find());
@@ -167,7 +167,7 @@ describe('🎬 User Controller Tests', () => {
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
         expect.stringContaining('📡 Request: GET /api/v1/users | Status: 404'),
       );
-     });
+    });
 
     it('💥 should return 500 when a database error occurs while retrieving users', async () => {
       (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
@@ -348,116 +348,116 @@ describe('🎬 User Controller Tests', () => {
         '❌ Email and password are required',
       );
     });
-  it('🔒 should return 401 when no token is provided', async () => {
-    process.env.JWT_EXPIRES_IN = '1h';
-    (UserModel.findOne as jest.Mock).mockReturnValue('');
-    const response = await request(app)
-      .post('/api/v1/login')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        email: 'elena.martins@example.com',
-        password: ENV['MOCK_PASSWORD_USER'],
-        role: 'admin',
-      });
-    expect(response.status).toBe(401);
-  });
-  it('🔒 should return 401 isMatch passwor', async () => {
-    process.env.JWT_EXPIRES_IN = '1h';
-    process.env.JWT_SECRET = 'my-secret';
-    (UserModel.findOne as jest.Mock).mockReturnValue(userExample);
-    (bcrypt.compare as jest.Mock).mockReturnValue(false);
-
-    const response = await request(app)
-      .post('/api/v1/login')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        email: 'elena.martins@example.com',
-        password: ENV['MOCK_PASSWORD_USER'],
-        role: 'admin',
-      });
-
-    expect(response.status).toBe(401);
-    expect(response.body).toEqual({
-      message: 'Invalid email or password',
+    it('🔒 should return 401 when no token is provided', async () => {
+      process.env.JWT_EXPIRES_IN = '1h';
+      (UserModel.findOne as jest.Mock).mockReturnValue('');
+      const response = await request(app)
+        .post('/api/v1/login')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          email: 'elena.martins@example.com',
+          password: ENV['MOCK_PASSWORD_USER'],
+          role: 'admin',
+        });
+      expect(response.status).toBe(401);
     });
-    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
-  });
-  it('🔒 should return 200 when login is successful', async () => {
-    (UserModel.findOne as jest.Mock).mockReturnValue(userExample);
-    (bcrypt.compare as jest.Mock).mockReturnValue(true);
+    it('🔒 should return 401 isMatch passwor', async () => {
+      process.env.JWT_EXPIRES_IN = '1h';
+      process.env.JWT_SECRET = 'my-secret';
+      (UserModel.findOne as jest.Mock).mockReturnValue(userExample);
+      (bcrypt.compare as jest.Mock).mockReturnValue(false);
 
-    const response = await request(app)
-      .post('/api/v1/login')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        email: 'elena.martins@example.com',
-        password: ENV['MOCK_PASSWORD_USER'],
-        role: 'admin',
+      const response = await request(app)
+        .post('/api/v1/login')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          email: 'elena.martins@example.com',
+          password: ENV['MOCK_PASSWORD_USER'],
+          role: 'admin',
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toEqual({
+        message: 'Invalid email or password',
       });
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({
-      message: '✅ Login successful',
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
     });
-    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
-  });
-  it('🔒 should return 500 when a database error occurs during login', async () => {
-    (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
-    const response = await request(app)
-      .post('/api/v1/login')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        email: 'elena.martins@example.com',
-        password: ENV['MOCK_PASSWORD_USER'],
-        role: 'admin',
+    it('🔒 should return 200 when login is successful', async () => {
+      (UserModel.findOne as jest.Mock).mockReturnValue(userExample);
+      (bcrypt.compare as jest.Mock).mockReturnValue(true);
+
+      const response = await request(app)
+        .post('/api/v1/login')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          email: 'elena.martins@example.com',
+          password: ENV['MOCK_PASSWORD_USER'],
+          role: 'admin',
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        message: '✅ Login successful',
       });
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
+    });
+    it('🔒 should return 500 when a database error occurs during login', async () => {
+      (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
+      const response = await request(app)
+        .post('/api/v1/login')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          email: 'elena.martins@example.com',
+          password: ENV['MOCK_PASSWORD_USER'],
+          role: 'admin',
+        });
 
-    expect(response.status).toBe(500);
-    expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error logging in');
-  });
-});
-
-describe('🔒 Validation of JWT_SECRET and JWT_EXPIRES_IN in POST /api/v1/login', () => {
-  const OLD_ENV = process.env;
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = {
-      ...OLD_ENV,
-      JWT_SECRET: '',
-      JWT_EXPIRES_IN: '',
-    };
-  });
-
-  afterEach(() => {
-    process.env = OLD_ENV;
-    jest.resetModules();
+      expect(response.status).toBe(500);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error logging in');
+    });
   });
 
-  it('⚠️ should log an error when JWT_SECRET or JWT_EXPIRES_IN are not defined', async () => {
-    const loggerErrorMock = jest.fn();
+  describe('🔒 Validation of JWT_SECRET and JWT_EXPIRES_IN in POST /api/v1/login', () => {
+    const OLD_ENV = process.env;
+    beforeEach(() => {
+      jest.resetModules();
+      process.env = {
+        ...OLD_ENV,
+        JWT_SECRET: '',
+        JWT_EXPIRES_IN: '',
+      };
+    });
 
-    jest.doMock('../../config/logger', () => ({
-      __esModule: true,
-      default: {
-        error: loggerErrorMock,
-        info: jest.fn(),
-      },
-    }));
+    afterEach(() => {
+      process.env = OLD_ENV;
+      jest.resetModules();
+    });
 
-    try {
-      await import('../../controllers/user-controller');
-    } catch (error) {
-      expect(error).toEqual(
-        new Error('JWT_SECRET or JWT_EXPIRES_IN not found in environment variables'),
+    it('⚠️ should log an error when JWT_SECRET or JWT_EXPIRES_IN are not defined', async () => {
+      const loggerErrorMock = jest.fn();
+
+      jest.doMock('../../config/logger', () => ({
+        __esModule: true,
+        default: {
+          error: loggerErrorMock,
+          info: jest.fn(),
+        },
+      }));
+
+      try {
+        await import('../../controllers/user-controller');
+      } catch (error) {
+        expect(error).toEqual(
+          new Error('JWT_SECRET or JWT_EXPIRES_IN not found in environment variables'),
+        );
+      }
+      expect(loggerErrorMock).toHaveBeenCalledWith(
+        '❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables',
       );
-    }
-    expect(loggerErrorMock).toHaveBeenCalledWith(
-      '❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables',
-    );
+    });
   });
-});
 });
