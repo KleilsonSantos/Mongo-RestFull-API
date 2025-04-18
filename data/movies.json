@@ -1,0 +1,93 @@
+[
+    {
+      "title": "Inception",
+      "rating": 8.8,
+      "description": "A thief who enters the dreams of others to steal secrets gets a new mission.",
+      "director": "Christopher Nolan",
+      "genre": "Sci-Fi",
+      "stars": ["Leonardo DiCaprio", "Elliot Page", "Tom Hardy"],
+      "poster": "https://example.com/posters/inception.jpg"
+    },
+    {
+      "title": "The Matrix",
+      "rating": 8.7,
+      "description": "A hacker discovers the reality he lives in is a simulation.",
+      "director": "The Wachowskis",
+      "genre": "Action",
+      "stars": ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+      "poster": "https://example.com/posters/matrix.jpg"
+    },
+    {
+      "title": "Interstellar",
+      "rating": 8.6,
+      "description": "A team travels through a wormhole in search of a new home for humanity.",
+      "director": "Christopher Nolan",
+      "genre": "Adventure",
+      "stars": ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+      "poster": "https://example.com/posters/interstellar.jpg"
+    },
+    {
+      "title": "Pulp Fiction",
+      "rating": 8.9,
+      "description": "The lives of two hitmen, a boxer, and others intertwine in tales of violence and redemption.",
+      "director": "Quentin Tarantino",
+      "genre": "Crime",
+      "stars": ["John Travolta", "Uma Thurman", "Samuel L. Jackson"],
+      "poster": "https://example.com/posters/pulpfiction.jpg"
+    },
+    {
+      "title": "The Dark Knight",
+      "rating": 9.0,
+      "description": "Batman must stop the Joker from plunging Gotham into chaos.",
+      "director": "Christopher Nolan",
+      "genre": "Action",
+      "stars": ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
+      "poster": "https://example.com/posters/darkknight.jpg"
+    },
+    {
+      "title": "Forrest Gump",
+      "rating": 8.8,
+      "description": "The life journey of a simple man with a big heart.",
+      "director": "Robert Zemeckis",
+      "genre": "Drama",
+      "stars": ["Tom Hanks", "Robin Wright", "Gary Sinise"],
+      "poster": "https://example.com/posters/forrestgump.jpg"
+    },
+    {
+      "title": "Fight Club",
+      "rating": 8.8,
+      "description": "An insomniac and a soap salesman form an underground fight club.",
+      "director": "David Fincher",
+      "genre": "Drama",
+      "stars": ["Brad Pitt", "Edward Norton", "Helena Bonham Carter"],
+      "poster": "https://example.com/posters/fightclub.jpg"
+    },
+    {
+      "title": "Gladiator",
+      "rating": 8.5,
+      "description": "A betrayed Roman general fights his way back to seek revenge.",
+      "director": "Ridley Scott",
+      "genre": "Action",
+      "stars": ["Russell Crowe", "Joaquin Phoenix", "Connie Nielsen"],
+      "poster": "https://example.com/posters/gladiator.jpg"
+    },
+    {
+      "title": "The Godfather",
+      "rating": 9.2,
+      "description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+      "director": "Francis Ford Coppola",
+      "genre": "Crime",
+      "stars": ["Marlon Brando", "Al Pacino", "James Caan"],
+      "poster": "https://example.com/posters/godfather.jpg"
+    },
+    {
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "rating": 8.8,
+      "description": "A hobbit sets out on a journey to destroy a powerful ring.",
+      "director": "Peter Jackson",
+      "genre": "Fantasy",
+      "stars": ["Elijah Wood", "Ian McKellen", "Orlando Bloom"],
+      "poster": "https://example.com/posters/lotr-fellowship.jpg"
+    }
+  ]
+  
