@@ -80,11 +80,13 @@ lib-cov/            # 🧪 Instrumented lib coverage
 # 🧬 Environment & Secrets
 # ======================================
 .env                # 🌱 Environment file
-.env.*              # 🌿 Other env variants
+!.env.*              # 🌿 Other env variants
 .env.local          # 🌿 Local override env
 .env.development.local
-.env.test.local
+!.env.test
+!.env.test.local
 .env.production.local
+.secrets
 
 # ======================================
 # 🔐 Lock Files (optional)

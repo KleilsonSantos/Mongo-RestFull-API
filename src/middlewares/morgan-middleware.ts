@@ -1,9 +1,7 @@
-import dotenv from 'dotenv';
 import morgan from 'morgan';
-import { Logger } from '../config/logger';
+import Logger from '../config/logger';
 
 // 🌍 Load environment variables from .env file
-dotenv.config();
 
 // 📝 Create a logger instance for HTTP requests
 const stream: morgan.StreamOptions = {
@@ -12,7 +10,7 @@ const stream: morgan.StreamOptions = {
 
 // 🔄 Function to skip logging in production environments
 const skip = (): boolean => {
-  const env = process.env.NODE_ENV || 'development'; // 🌎 Get environment variable
+  const env = process.env.NODE_ENV ?? 'development'; // 🌎 Get environment variable
   return env !== 'development'; // ⏭️ Skip logs unless in development mode
 };
 

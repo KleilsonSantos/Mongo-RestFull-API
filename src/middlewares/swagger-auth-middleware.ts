@@ -1,12 +1,12 @@
-import { Logger } from '../config/logger';
+import Logger from '../config/logger';
 import { Request, Response, NextFunction } from 'express';
 
 // 🔐 Middleware for securing Swagger UI
-const swaggerAuthMiddleware: (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => void = (req, res, next) => {
+const swaggerAuthMiddleware: (req: Request, res: Response, next: NextFunction) => void = (
+  req,
+  res,
+  next,
+) => {
   // 🛡️ Retrieve API key from request headers
   const apiKey = req.header('X-API-KEY');
   Logger.info('🔍 Middleware was triggered.');
