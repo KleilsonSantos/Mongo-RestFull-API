@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 
 // ⚙️ Load environment variables
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
   user?: Payload;
 }
 
@@ -42,7 +42,6 @@ const authMiddleware = (req: CustomRequest, res: Response, next: NextFunction): 
     req.user = decoded as Payload; // ⚠️ Certified user
     next(); // ✅ Call next middleware or route handler
   } catch (error) {
-    // ❌ Handle JWT verification errors
     Logger.error(`❌ JWT verification error: ${error}`);
     res.status(401).json({ message: 'Unauthorized - Invalid token' });
   }

@@ -1,5 +1,6 @@
 import express from 'express';
 import authMiddleware from '../middlewares/auth-middleware';
+import getAllMetrics from '../controllers/metrics-controller';
 import { metricsMiddleware } from '../middlewares/metrics-middleware';
 
 import {
@@ -40,5 +41,8 @@ router.get('/movies', authMiddleware, getAllMovies); // 🎥 Get all movies
 router.get('/movies/:id', authMiddleware, getMovieById); // 🔍 Get movie by ID
 router.put('/movies/:id', authMiddleware, updateMovieById); // ✏️ Update movie by ID
 router.delete('/movies/:id', authMiddleware, deleteMovieById); // 🗑️ Delete movie by ID
+
+// 📊 Metrics route
+router.get('/metrics', getAllMetrics);
 
 export { router };

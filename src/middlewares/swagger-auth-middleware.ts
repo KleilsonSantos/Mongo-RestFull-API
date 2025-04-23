@@ -13,7 +13,7 @@ const swaggerAuthMiddleware: (req: Request, res: Response, next: NextFunction) =
 
   // 🔑 Get Swagger API key from environment variables
   const swaggerApiKey: string | undefined = process.env.SWAGGER_API_KEY;
-
+  Logger.info(`🔑 SWAGGER_API_KEY: ${swaggerApiKey}`);
   // 🚨 Check if API key is configured
   if (!swaggerApiKey) {
     Logger.error('❌ SWAGGER_API_KEY not found in environment variables');
@@ -23,14 +23,19 @@ const swaggerAuthMiddleware: (req: Request, res: Response, next: NextFunction) =
 
   // 🔓 Decode the stored API key (Base64 to ASCII)
   const sw = Buffer.from(swaggerApiKey, 'base64').toString('ascii');
-
-  // ❌ Check if provided API key is missing or incorrect
   if (!apiKey || apiKey !== sw) {
     Logger.error('❌ Unauthorized Access to Swagger UI');
     res.status(403).json({ message: 'Unauthorized Access to Swagger UI' });
     return;
   }
+  const received = (apiKey ?? '').trim();
 
+  // ❌ Check if provided API key is missing or incorrect
+  if (!received || received !== sw) {
+    Logger.error('❌ Unauthorized Access to Swagger UI');
+    res.status(403).json({ message: 'Unauthorized Access to Swagger UI' });
+    return;
+  }
   // ✅ Authorized access granted
   Logger.info('✅ Authorized Access to Swagger UI');
 

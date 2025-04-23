@@ -4,7 +4,6 @@ import Logger from './logger';
 // 📌 Asynchronous function to connect to the MongoDB database
 async function connect() {
   const mongoUri: string | undefined = process.env.MONGODB_URI;
-
   // 🚨 Check if the environment variable is defined
   if (!mongoUri) {
     Logger.error('❌ MONGODB_URI is not defined in environment variables.');

@@ -31,7 +31,9 @@ export const metricsMiddleware = (req: Request, res: Response, next: NextFunctio
     const duration = (Date.now() - startTime) / 1000; // ⏱️ Calculate duration in seconds
 
     Logger.info(
-      `📡 Request: ${req.method} ${req.originalUrl} | Status: ${res.statusCode} | Duration: ${duration}s`,
+      Logger.info(
+        `📡 Request: ${req.method} ${req.originalUrl} | Status: ${res.statusCode} | Duration: ${duration}s`,
+      ),
     );
 
     // 📊 Increment HTTP request counter
@@ -55,7 +57,7 @@ export const metricsMiddleware = (req: Request, res: Response, next: NextFunctio
   next(); // 🚀 Proceed to next middleware
 };
 
-// 🔄 Periodically update memory usage metric
+// // 🔄 Periodically update memory usage metric
 if (process.env.NODE_ENV !== 'test') {
   setInterval(() => {
     const memoryUsage = process.memoryUsage().heapUsed; // 🧠 Get heap memory usage

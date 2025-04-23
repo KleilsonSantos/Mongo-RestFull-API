@@ -1,0 +1,16 @@
+# 🌐 Prometheus Configuration
+global:
+  scrape_interval: 15s # ⏱️ How often to scrape targets
+  evaluation_interval: 15s # ⏱️ How often to evaluate rules
+
+scrape_configs:
+  - job_name: 'prometheus' # 📊 Scrape Prometheus itself
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'mongo-rest-api' # 🚀 Scrape our API metrics
+    metrics_path: '/api/v1/metrics' # 📈 Path to metrics endpoint
+    static_configs:
+      - targets: ['172.17.0.1:3000'] # 🎯 API target
+        labels:
+          environment: 'development' # 🔧 Environment label

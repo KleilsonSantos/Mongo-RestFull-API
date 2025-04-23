@@ -1,8 +1,26 @@
 # 🛠️ Services configuration
 services:
+  mongo-rest-api:
+    image: santos/mongo-rest-api:1.0 # 📦 Image
+    container_name: mongo-rest-api # 🏷️ Container name
+    ports:
+      - '3000:3000' # 🌐 Port mapping
+    depends_on:
+      - mongo # 🔄 Depends on MongoDB service
+    env_file:
+      - .env.development # 📄 Environment file
+    environment:
+      - MONGODB_URI=${MONGODB_URI} # 🔑 MongoDB URI
+    volumes:
+      - .:/usr/src/app:delegated # 💾 Volume for data persistence
+    restart: unless-stopped # 🔁 Automatically restarts if it stops
+
   portainer:
     image: portainer/portainer-ce:latest # 📦 Portainer CE (Community Edition) image
-    container_name: portainer # 🏷️ Container name
+
+    env_file:
+      - .env.development # 📄 Environment file
+    container_name: portainer-mongo-rest-api # 🏷️ Container name
     restart: always # 🔁 Automatically restarts if it stops
     ports:
       - '9099:9000' # 🌐 Web access
@@ -17,32 +35,129 @@ services:
   # 💾 MongoDB service
   mongo:
     image: mongo
+    container_name: mongo-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
     # 🌐 Port mapping
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
-
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME} # 🔑 MongoDB admin username
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD} # 🔑 MongoDB admin password
+      - MONGODB_URI=${MONGODB_URI} # 🔑 MongoDB URI
+      - NODE_ENV=${NODE_ENV} # 🔑 Node environment
     # 📁 Volume mapping for data persistence
     volumes:
-      - mongo-data:/data/db
+      - mongo-data:/data/db # 💾 Volume for data persistence
   mongo-express:
-    image: mongo-express:1.0.0-alpha.4
-    container_name: mongo-express
-    restart: always
+    image: mongo-express:1.0.0-alpha.4 # 📦 Mongo Express image
+    container_name: mongo-express-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    restart: always # 🔁 Automatically restarts if it stops
     ports:
-      - "8081:8081"
+      - '8081:8081' # 🌐 Port mapping
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
-      ME_CONFIG_MONGODB_SERVER: mongo
+      - ME_CONFIG_MONGODB_ADMIN_USERNAME=${MONGO_INITDB_ROOT_USERNAME} # 🔑 MongoDB admin username
+      - ME_CONFIG_MONGODB_ADMIN_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD} # 🔑 MongoDB admin password
+      - ME_CONFIG_MONGODB_SERVER=${MONGO_INITDB_ROOT_USERNAME} # 🔑 MongoDB server
     depends_on:
-      - mongo
+      - mongo # 🔄 Depends on MongoDB service
+
+  prometheus:
+    image: prom/prometheus # 📦 Prometheus image
+    container_name: prometheus-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml # 💾 Volume for configuration
+    ports:
+      - '9090:9090' # 🌐 Port mapping
+
+  grafana:
+    image: grafana/grafana # 📦 Grafana image
+    container_name: grafana-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    ports:
+      - '3001:3000' # 🌐 Port mapping
+    volumes:
+      - grafana-storage:/var/lib/grafana # 💾 Volume for data persistence
+    extra_hosts:
+      - '172.17.0.1:host-gateway' # 🌐 Extra hosts
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER} # 🔑 Grafana admin user
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD} # 🔑 Grafana admin password
+      - GF_AUTH_DISABLE_LOGIN_FORM=${GF_AUTH_DISABLE_LOGIN_FORM} # 🔑 Disable login form
+      - GF_AUTH_ANONYMOUS_ENABLED=${GF_AUTH_ANONYMOUS_ENABLED} # 🔑 Enable anonymous access
+
+  # 🛠️ PostgreSQL for Sonar
+  postgres:
+    image: postgres:14 # 📦 PostgreSQL 14 image
+    container_name: postgres-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    ports:
+      - '5432:5432' # 🌐 Web access
+    restart: always # 🔁 Automatically restarts if it stops
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB} # 📦 Database name
+      POSTGRES_USER: ${POSTGRES_USER} # 👤 Database username
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # 🔑 Database password
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=en_US.UTF-8' # 🌍 Database encoding and locale
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256 # 🔐 Authentication method
+    volumes:
+      - postgres-mongo-rest-api-data:/var/lib/postgresql/data # 💾 Volume for data persistence
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    ports:
+      - "8088:80" # Porta para acessar o pgAdmin
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin-mongo-rest-api-data:/pgadmin4/servers.json
+  
+  sonar:
+    image: sonarqube:latest
+    container_name: sonar-mongo-rest-api # 🏷️ Container name
+    env_file:
+      - .env.development # 📄 Environment file
+    ports:
+      - '9000:9000'
+      - '9092:9092'
+    environment:
+      - SONAR_JDBC_URL=${SONAR_JDBC_URL} # 🐘 PostgreSQL connection URL
+      - SONAR_JDBC_USERNAME=${SONAR_JDBC_USERNAME} # 👤 Database username
+      - SONAR_JDBC_PASSWORD=${SONAR_JDBC_PASSWORD} # 🔑 Database password
+      - SONARQUBE_JVM_OPTIONS='-Xmx4G -Xms4G' # 📊 JVM memory configuration
+    volumes:
+      - sonar-mongo-rest-api-data:/opt/sonarqube/data # 💾 Volume for data persistence
+      - sonar-mongo-rest-api-logs:/opt/sonarqube/logs # 📜 Volume for logs
+      - sonar-mongo-rest-api-extensions:/opt/sonarqube/extensions # 📦 Volume for extensions
 
 # 📁 Volumes definition
-volumes:
-  mongo-data:
-    driver: local
-  portainer-data:
-    driver: local
+volumes: # 💾 Volumes for data persistence
+  mongo-data: # 💾 MongoDB data volume
+    driver: local # 💾 Local driver
+  portainer-data: # 💾 Portainer data volume
+    driver: local # 💾 Local driver
+  grafana-storage: # 💾 Grafana data volume
+    driver: local # 💾 Local driver
+  postgres-mongo-rest-api-data: # 💾 PostgreSQL data volume
+    driver: local # �� Local driver
+  sonar-mongo-rest-api-data: # 💾 Sonar data volume
+    driver: local # 💾 Local driver
+  sonar-mongo-rest-api-logs: # 💾 Sonar logs volume
+    driver: local # 💾 Local driver
+  sonar-mongo-rest-api-extensions: # 💾 Sonar extensions volume
+    driver: local # 💾 Local driver
+  pgadmin-mongo-rest-api-data: # 💾 pgAdmin data volume
+    driver: local # 💾 Local driver
