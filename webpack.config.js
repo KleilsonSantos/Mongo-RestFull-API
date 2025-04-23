@@ -1,41 +1,41 @@
 // 📦 webpack.config.js
-import path from 'path'; // 🗂️ Manipulação de caminhos
-import webpack from 'webpack'; // 🧰 Plugins Webpack
-import HtmlWebpackPlugin from 'html-webpack-plugin'; // 🌐 Gera o index.html
-import { fileURLToPath } from 'url'; // 🔗 Suporte para ES Modules
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'; // 🧹 Limpa a pasta dist
+import path from 'path'; // 🗂️ Path manipulation
+import webpack from 'webpack'; // 🧰 Webpack plugins
+import HtmlWebpackPlugin from 'html-webpack-plugin'; // 🌐 Generates index.html
+import { fileURLToPath } from 'url'; // 🔗 ES Modules support
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'; // 🧹 Cleans dist folder
 
-// 🌍 Carrega variáveis de ambiente do .env
+// 🌍 Load environment variables from .env
 
-// 📍 Resolvendo __dirname em ES Modules
+// 📍 Resolving __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  // 🚪 Pontos de entrada do app
+  // 🚪 App entry points
   entry: {
-    main: './src/server.ts', // 🎬 Entrada principal
-    //...(fs.existsSync('./src/vendor.js') && { vendor: './src/vendor.js' }), // 🧰 Dependências externas
+    main: './src/server.ts', // 🎬 Main entry
+    //...(fs.existsSync('./src/vendor.js') && { vendor: './src/vendor.js' }), // 🧰 External dependencies
   },
 
-  // 🏗️ Modo de build
+  // 🏗️ Build mode
   mode: 'production',
 
-  // 🐞 Mapas de código para debug
+  // 🐞 Source maps for debugging
   devtool: 'source-map',
 
-  // 💻 Dev Server com recarga automática
+  // 💻 Dev Server with auto-reload
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'), // 📂 Pasta de arquivos servidos
+      directory: path.join(__dirname, 'dist'), // 📂 Served files directory
     },
-    compress: true, // 🗜️ Compressão habilitada
-    port: 9000, // 🚪 Porta local
+    compress: true, // 🗜️ Compression enabled
+    port: 9000, // 🚪 Local port
     hot: true, // 🔥 Hot Module Replacement
-    watchFiles: ['src/index.html'], // 👈 👀 Observa mudanças no HTML!
+    watchFiles: ['src/index.html'], // 👈 👀 Watch HTML changes!
   },
 
-  // 🔄 Resolução automática de extensões e aliases
+  // 🔄 Automatic extension resolution and aliases
   resolve: {
     fallback: {
       'node-gyp': false,
@@ -48,26 +48,26 @@ export default {
       buffer: path.resolve('buffer/'),
       zlib: path.resolve('browserify-zlib'),
       crypto: path.resolve('crypto-browserify'),
-      fs: false, // Não é suportado no Webpack
+      fs: false, // Not supported in Webpack
       stream: path.resolve('stream-browserify'),
       querystring: path.resolve('querystring-es3'),
       http: path.resolve('stream-http'),
       https: path.resolve('https-browserify'),
       assert: path.resolve('assert'),
       process: path.resolve('process/browser'),
-    }, // 🔗 Suporte para módulos nativos
-    extensions: ['.js', '.ts'], // 📑 Extensões resolvidas
+    }, // 🔗 Native module support
+    extensions: ['.js', '.ts'], // 📑 Resolved extensions
     alias: {
-      '@': path.resolve(__dirname, 'src'), // 🧭 Atalho para src/
+      '@': path.resolve(__dirname, 'src'), // 🧭 Shortcut to src/
     },
   },
 
-  // ⚡ Otimização de bundle: separa dependências
+  // ⚡ Bundle optimization: separates dependencies
   optimization: {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/]/, // 🏢 Tudo que vem do node_modules
+          test: /[\\/]node_modules[\\/]/, // 🏢 Everything from node_modules
           name: 'vendors',
           chunks: 'all',
         },
@@ -75,12 +75,12 @@ export default {
     },
   },
 
-  // 🚫 Desativa avisos de performance
+  // 🚫 Disable performance warnings
   performance: {
     hints: false,
   },
 
-  // 🔧 Loaders (você pode adicionar aqui conforme necessário)
+  // 🔧 Loaders (you can add more here as needed)
   module: {
     rules: [
       {
@@ -138,32 +138,32 @@ export default {
     ],
   },
 
-  // 📤 Arquivos de saída do bundle
+  // 📤 Bundle output files
   output: {
-    filename: '[name].[contenthash].js', // 🧩 Nome com hash para cache busting
-    path: path.resolve(__dirname, 'dist'), // 📁 Pasta de destino
-    clean: true, // 🧽 Limpa a pasta antes do build
+    filename: '[name].[contenthash].js', // 🧩 Name with hash for cache busting
+    path: path.resolve(__dirname, 'dist'), // 📁 Destination folder
+    clean: true, // 🧽 Clean folder before build
   },
 
-  // 🧰 Plugins mágicos
+  // 🧰 Magic plugins
   plugins: [
-    new webpack.ContextReplacementPlugin(/express[\\/]lib/, false), // 🔧 Correção de express
+    new webpack.ContextReplacementPlugin(/express[\\/]lib/, false), // 🔧 Express fix
     new HtmlWebpackPlugin({
-      template: './src/index.html', // 📄 Template base
+      template: './src/index.html', // 📄 Base template
     }),
-    new CleanWebpackPlugin(), // 🧹 Limpa dist/
+    new CleanWebpackPlugin(), // 🧹 Clean dist/
     new webpack.DefinePlugin({
-      'process.env.NODE_PROD': JSON.stringify(process.env.NODE_), // 🔐 Variáveis de ambiente
+      'process.env.NODE_PROD': JSON.stringify(process.env.NODE_), // 🔐 Environment variables
     }),
     new webpack.ProvidePlugin({
-      $: 'jquery', // 🔗 jQuery global
+      $: 'jquery', // 🔗 Global jQuery
       jQuery: 'jquery',
     }),
-    new webpack.HotModuleReplacementPlugin(), // 🔥 HMR ativado
+    new webpack.HotModuleReplacementPlugin(), // 🔥 HMR enabled
     new webpack.IgnorePlugin({
       //resourceRegExp: /^.*$/,
       contextRegExp: /moment$/,
       resourceRegExp: /async_hooks|perf_hooks/,
-    }), // 🚫 Ignora moment.js
+    }), // 🚫 Ignore moment.js
   ],
 };

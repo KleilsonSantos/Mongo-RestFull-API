@@ -111,9 +111,7 @@ describe('🎬 Movie Controller Tests', () => {
 
       expect(response.status).toBe(201);
       expect(response.body).toEqual(responseCreateMovie);
-      expect((Logger.info as jest.Mock).mock.calls[2][0]).toEqual(
-        expect.stringContaining('📡 Request: POST /api/v1/create/movie | Status: 201'),
-      );
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('✅ Creating movie');
     });
 
     it('💣 should return 500 when a database error occurs during movie creation', async () => {
@@ -151,8 +149,8 @@ describe('🎬 Movie Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
-      expect((Logger.info as jest.Mock).mock.calls[2][0]).toEqual(
-        expect.stringContaining(responseAllMovies),
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+        expect.stringContaining('✅ Movies retrieved'),
       );
       expect(response.body).toEqual(responseBody);
     });

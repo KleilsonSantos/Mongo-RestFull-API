@@ -12,7 +12,4 @@ result.error
   ? Logger.error(`❌ Failed to load environment from ${envPath}`)
   : Logger.info(`✅ Loaded environment from: ${envPath}`);
 
-Logger.info(`✅ NODE_ENV: ${NODE_ENV}`);
-Logger.info(`✅ API_URL: ${process.env.API_URL}`);
-
 export default process.env;

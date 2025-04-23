@@ -1,5 +1,3 @@
-// 🌍 This declaration merges with the existing Express namespace globally
-// 🧠 It allows TypeScript to recognize custom properties on the Express Request object
 declare global {
   namespace Express {
     interface Request {

@@ -7,7 +7,27 @@ import UserModel from '../../model/User';
 import { disconnect } from '../../config/db';
 import { generateMockToken } from '../mocks/validate-token.mock';
 import { createServer, Server } from 'http';
-import { userExample, responseUsers } from '../mocks/user.mock';
+import {
+  userExample,
+  responseUsers,
+  responseAllUsers,
+  responseUpdateUser,
+  responseLoginError,
+  responseUsersError,
+  responseDeleteUser,
+  responseGlobalError,
+  responseLoginStarted,
+  responseUsersNotFound,
+  responseUsersForbidden,
+  responseDeleteUserError,
+  responseCreateUserError,
+  responseUserAlreadyExists,
+  responseUserByIdNotFound,
+  responseUpdateUserGlobalError,
+  responseUserMissingCredentials,
+  responseUserById,
+  responseJwtEnvMissing,
+} from '../mocks/user.mock';
 
 jest.mock('bcrypt', () => ({
   hash: jest.fn(),
@@ -65,10 +85,6 @@ describe('🎬 User Controller Tests', () => {
     jest.clearAllMocks();
   });
 
-  afterEach(() => {
-    //jest.resetAllMocks();
-  });
-
   describe('🎥 POST /api/v1/user', () => {
     it('🚫 should return 400 when validation fails', async () => {
       (UserModel.findOne as jest.Mock).mockResolvedValue({});
@@ -79,7 +95,7 @@ describe('🎬 User Controller Tests', () => {
         .send({});
 
       expect(response.status).toBe(400);
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('✅ User already exists');
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(responseUserAlreadyExists);
     });
 
     it('✅ should return 201 when a new user is successfully created', async () => {
@@ -114,14 +130,13 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error creating user');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseCreateUserError);
     });
   });
 
   describe('🎞️ GET /api/v1/users', () => {
     it('✅ should return 200 and list all users', async () => {
       (UserModel.findOne as jest.Mock).mockResolvedValue(userExample);
-      console.log('Mock UserModel.find result:', await UserModel.find());
 
       (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
 
@@ -133,7 +148,7 @@ describe('🎬 User Controller Tests', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ data: { users: responseUsers } });
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('✅ Users found'),
+        expect.stringContaining(responseAllUsers),
       );
     });
 
@@ -150,7 +165,7 @@ describe('🎬 User Controller Tests', () => {
         message: 'Access denied, role mismatch. Only admins are allowed.',
       });
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('📡 Request: GET /api/v1/users | Status: 403'),
+        expect.stringContaining(responseUsersForbidden),
       );
     });
 
@@ -165,7 +180,7 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(404);
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('📡 Request: GET /api/v1/users | Status: 404'),
+        expect.stringContaining(responseUsersNotFound),
       );
     });
 
@@ -180,7 +195,7 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(500);
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('📡 Request: GET /api/v1/users | Status: 500'),
+        expect.stringContaining(responseUsersError),
       );
     });
   });
@@ -197,7 +212,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toContain('✅ Getting User by id');
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toContain(responseUserById);
     });
 
     it('🔍 should return 404 when retrieving a user by non-existent id', async () => {
@@ -212,7 +227,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(404);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ User not found');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseUserByIdNotFound);
     });
 
     it('💣 should return 500 when a database error occurs while retrieving user by id', async () => {
@@ -227,7 +242,7 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(500);
       expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('🔥 Global error handler'),
+        expect.stringContaining(responseGlobalError),
       );
     });
   });
@@ -268,7 +283,7 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(200);
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('✅ Movie updated'),
+        expect.stringContaining(responseUpdateUser),
       );
     });
 
@@ -284,7 +299,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error updating user');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseUpdateUserGlobalError);
     });
   });
 
@@ -303,7 +318,7 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(200);
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining('✅ User deleted'),
+        expect.stringContaining(responseDeleteUser),
       );
     });
 
@@ -318,7 +333,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(404);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ User not found');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseUserByIdNotFound);
     });
 
     it('💣 should return 500 when a database error occurs during user deletion', async () => {
@@ -330,7 +345,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error deleting user');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseDeleteUserError);
     });
   });
 
@@ -344,9 +359,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(400);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-        '❌ Email and password are required',
-      );
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseUserMissingCredentials);
     });
     it('🔒 should return 401 when no token is provided', async () => {
       process.env.JWT_EXPIRES_IN = '1h';
@@ -382,7 +395,7 @@ describe('🎬 User Controller Tests', () => {
       expect(response.body).toEqual({
         message: 'Invalid email or password',
       });
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(responseLoginStarted);
     });
     it('🔒 should return 200 when login is successful', async () => {
       (UserModel.findOne as jest.Mock).mockReturnValue(userExample);
@@ -402,7 +415,7 @@ describe('🎬 User Controller Tests', () => {
       expect(response.body).toEqual({
         message: '✅ Login successful',
       });
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual('🔑 Login started');
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(responseLoginStarted);
     });
     it('🔒 should return 500 when a database error occurs during login', async () => {
       (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
@@ -417,7 +430,7 @@ describe('🎬 User Controller Tests', () => {
         });
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual('❌ Error logging in');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseLoginError);
     });
   });
 
@@ -455,9 +468,7 @@ describe('🎬 User Controller Tests', () => {
           new Error('JWT_SECRET or JWT_EXPIRES_IN not found in environment variables'),
         );
       }
-      expect(loggerErrorMock).toHaveBeenCalledWith(
-        '❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables',
-      );
+      expect(loggerErrorMock).toHaveBeenCalledWith(responseJwtEnvMissing);
     });
   });
 });

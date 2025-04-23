@@ -6,7 +6,9 @@ import { Payload } from '../model/Payload.interface';
 import { UserRole } from '../enum/user-role.enum';
 import { Request, Response, NextFunction } from 'express';
 
-const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
+const JWT_SECRET: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
+const JWT_EXPIRES_IN: jwt.SignOptions['expiresIn'] = process.env
+  .JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'];
 
 if (!JWT_SECRET || !JWT_EXPIRES_IN) {
   Logger.error('❌ JWT_SECRET or JWT_EXPIRES_IN not found in environment variables');
@@ -45,12 +47,16 @@ const createUser = async (req: Request, res: Response, next: NextFunction): Prom
 
     // 💾 Create user
     const user = await UserModel.create(userData);
+    const options: jwt.SignOptions = { expiresIn: JWT_EXPIRES_IN ?? '1h' };
+    const token = jwt.sign(userData, JWT_SECRET, options);
+    Logger.info('🔑 Generating JWT token:', token);
 
     Logger.info('✅ Creating user', user);
-    res.status(201).json({ message: 'User created with success!', data: { user } });
+    res.status(201).json({ message: 'User created with success!', data: { user }, token: token });
   } catch (error) {
     Logger.error('❌ Error creating user', error);
-    res.status(500).json({ message: '❌ Internal Server Error' });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ message: '❌ Internal Server Error', error: errorMessage });
     next(error);
   }
 };
@@ -94,7 +100,7 @@ const updateUserById = async (req: Request, res: Response, next: NextFunction): 
     const resolveUser = Promise.resolve(UserModel.findById(userId).lean());
     const user = await resolveUser;
 
-    Logger.info('✅ Movie updated:', user);
+    Logger.info('✅ User updated:', user);
     res.status(200).json({ data: { user: user } });
   } catch (error) {
     Logger.error('❌ Error updating user', error);
@@ -198,9 +204,10 @@ const userLogin = async (req: Request, res: Response, next: NextFunction): Promi
 
     // 🎫 Generate JWT token
     const token = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: Number(JWT_EXPIRES_IN),
+      expiresIn: JWT_EXPIRES_IN,
     });
 
+    Logger.info('🔑 Generating JWT token:', token);
     Logger.info('✅ Login successful');
     res.status(200).json({
       message: '✅ Login successful',

@@ -8,7 +8,6 @@ Thumbs.db           # 🪟 Windows thumbnail cache
 # 📦 Dependency Directories
 # ======================================
 node_modules/       # 📦 Node.js dependencies
-jspm_packages/      # 📦 JSPM dependencies
 bower_components/   # 📦 Bower dependencies
 web_modules/        # 📦 Snowpack dependencies
 dependency-check-bin # 📦 Dependency-Check CLI
@@ -41,8 +40,6 @@ lerna-debug.log*    # 🛠️ Lerna debug logs
 dist/               # 🚀 Production build
 build/              # 🏭 Compiled output
 out/                # 🧳 Next.js export directory
-.nuxt/              # 🗃️ Nuxt build directory
-.vuepress/dist      # 📰 VuePress build directory
 .docusaurus/        # 📚 Docusaurus generated files
 .serverless/        # ☁️ Serverless framework output
 
@@ -52,20 +49,15 @@ out/                # 🧳 Next.js export directory
 .cache/             # 🧠 General cache (used by various tools)
 .parcel-cache/      # 📦 Parcel cache
 .grunt/             # 🧱 Grunt intermediate storage
-.rpt2_cache/        # ⚙️ Microbundle cache
-.rts2_cache_*/      # ⚙️ Microbundle cache variants
 .pnp.*              # 📦 Yarn Plug'n'Play files
 .yarn/cache/        # 🧶 Yarn cache
 .yarn/unplugged/    # 🔌 Yarn unplugged packages
 .yarn/build-state.yml
 .yarn/install-state.gz
-.eslintcache        # ✅ ESLint cache
-.stylelintcache     # 🎨 Stylelint cache
 lib-cov/            # 🧪 Instrumented lib coverage
-.pnpm-debug.log*    # 📦 pnpm debug logs
 .dynamodb/          # 📂 Local DynamoDB files
 .fusebox/           # 🔥 FuseBox cache
-.tern-port          # 🧠 TernJS port file
+.tern-port          # 🔗 TernJS port file
 
 # ======================================
 # 🧠 IDE & Editor Files
@@ -80,11 +72,10 @@ lib-cov/            # 🧪 Instrumented lib coverage
 # 🧬 Environment & Secrets
 # ======================================
 .env                # 🌱 Environment file
-!.env.*              # 🌿 Other env variants
 .env.local          # 🌿 Local override env
 .env.development.local
-!.env.test
-!.env.test.local
+.env.test
+.env.test.local
 .env.production.local
 .secrets
 
@@ -102,9 +93,9 @@ yarn.lock           # 🧶 yarn lock file
 # ======================================
 # 🐳 Docker
 # ======================================
-volumes/                        # 📦 Persisted volumes
-portainer_data/                 # 📊 Portainer volume
-docker-compose.override.yml     # 🧩 Override files
+volumes/            # 📦 Persisted volumes
+portainer_data/     # 📊 Portainer volume
+docker-compose.override.yml # 🧩 Override files
 
 # ======================================
 # 🔍 Diagnostic Reports
@@ -114,11 +105,9 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json  # 🧾 Node diagnostic reports
 # ======================================
 # 🧠 Linting & Analysis Tools
 # ======================================
-.scannerwork/       # 🔍 SonarLint config
-.sonarlint/         # 🧠 SonarLint lock/config
-node_modules
 
-#  ======================================
+# ======================================
 # 📁 Backup
 # ======================================
-.backup_projectts/    # 📁 Backup projects
+node_modules
+node_modules

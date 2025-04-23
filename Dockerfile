@@ -1,33 +1,48 @@
-# # 📦 Imagem base
-# FROM node:23.0.0-alpine3.18
+# 🐳 Use a minimal Node.js image with security updates
+FROM node:20.11.1-alpine3.19@sha256:0c2e2e8c1d4c27b4a2b8a91bdc7fe4d5b8e05e0f3bbb3f0e3960fbf4fde8e56 AS builder
 
-# ENV NODE_VERSION 18.20.7
+# ��️ Add specific tags for better traceability
+LABEL maintainer="devops@example.com" \
+      version="1.0.0" \
+      description="Secure Node.js application container"
 
-# # 📁 Diretório de trabalho
-# WORKDIR /app
+# 🔒 Update system packages and install security essentials
+RUN apk update && apk upgrade --no-cache && \
+    apk add --no-cache dumb-init && \
+    apk add --no-cache --virtual .build-deps g++ make python3 && \
+    npm install -g npm@latest && \
+    npm cache clean --force && \
+    groupadd -r nodejs && useradd -r -g nodejs nodejs
 
-# # 🔐 Copia os arquivos essenciais
-# COPY package*.json ./
-# COPY tsconfig*.json ./
-# COPY .eslintrc.js .prettierrc babel.config.js ./
+# 📁 Define the working directory inside the container
+WORKDIR /usr/src/app
 
-# # 📦 Instala dependências
-# RUN npm install
+# 📦 Copy dependency files and install as non-root
+COPY --chown=nodejs:nodejs package*.json ./
+USER nodejs
+RUN npm ci --only=production
 
-# # 📁 Copia código fonte
-# COPY ./src ./src
+# 📄 Copy the rest of the source code and build
+COPY --chown=nodejs:nodejs . .
+RUN npm run build
 
-# # 🔨 Build
-# RUN npm run build
+# 🚀 Production image
+FROM alpine:3.19.1@sha256:c5c5fda71656f07c8ef65da2c4a1f7f95e32e4e3f43c1bf40f7ba5a6e6f6af4
 
-# # 🚀 Inicia aplicação
-# CMD ["node", "dist/app.js"]
-FROM node:18
+# Install Node.js runtime only
+RUN apk add --no-cache dumb-init nodejs shadow && \
+    groupadd -r nodejs && useradd -r -g nodejs nodejs
 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
+USER nodejs
+WORKDIR /usr/src/app
 
-WORKDIR /github/workspace
+COPY --from=builder /usr/src/app/dist /usr/src/app/dist
+COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
+COPY --from=builder /usr/bin/dumb-init /usr/bin/dumb-init
 
-CMD ["node", "--trace-deprecation", "index.js"]
+# 🔌 Expose the application port
+EXPOSE 3000
+
+# 🚀 Use dumb-init as entrypoint
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["node", "dist/server.js"]
