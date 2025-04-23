@@ -187,10 +187,6 @@ Para rodar o servidor, execute o seguinte comando:
 npm run dev
 ```
 
-## 🐳 **Configuração com Docker**
-
-```
-
 ## 🐳 Configuração do Docker
 
 Para facilitar a execução do banco de dados **MongoDB** em um ambiente isolado, utilizamos **Docker** e **Docker Compose**.
@@ -198,10 +194,11 @@ Para facilitar a execução do banco de dados **MongoDB** em um ambiente isolado
 ### ⚙️ Configuração do `docker-compose.yml`:
 
 O arquivo `docker-compose.yml` já está configurado para subir um contêiner com o **MongoDB**. Ele contém:
-
-✅ **Imagem oficial do MongoDB**
-✅ **Mapeamento de portas (`27017:27017`)**
-✅ **Persistência de dados via `volumes`**
+```
+✅ Imagem oficial do MongoDB
+✅ Mapeamento de portas (`27017:27017`)
+✅ Persistência de dados via `volumes`
+```
 
 ### 📌 Pré-requisitos:
 
@@ -218,6 +215,7 @@ O arquivo `docker-compose.yml` já está configurado para subir um contêiner co
 ```bash
 docker build -t mongo-rest-api .
 docker-compose up -d
+```
 
 ### 🏗️ 3. Rodar o Servidor
 
@@ -473,7 +471,7 @@ As métricas estão disponíveis em:
 | Método     | Rota                | Descrição                |
 | ---------- | ------------------- | ------------------------ |
 | **POST**   | `/api/v1/login`     | Login do usuário         |
-| **POST**   | `/api/v1/create`    | Criar usuário            |
+| **POST**   | `/api/v1/create/user`    | Criar usuário            |
 | **GET**    | `/api/v1/users`     | Listar usuários          |
 | **GET**    | `/api/v1/users/:id` | Buscar usuário por ID    |
 | **PUT**    | `/api/v1/users/:id` | Atualizar usuário por ID |
@@ -485,7 +483,7 @@ As métricas estão disponíveis em:
 
 | Método     | Rota                 | Descrição              |
 | ---------- | -------------------- | ---------------------- |
-| **POST**   | `/api/v1/movies`     | Criar novo filme       |
+| **POST**   | `/api/v1/create/movie`     | Criar novo filme       |
 | **GET**    | `/api/v1/movies`     | Listar filmes          |
 | **GET**    | `/api/v1/movies/:id` | Buscar filme por ID    |
 | **PUT**    | `/api/v1/movies/:id` | Atualizar filme por ID |
