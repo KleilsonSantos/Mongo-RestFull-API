@@ -58,8 +58,6 @@ jobs:
     name: 🔍 SonarQube Analysis
     needs: test
     runs-on: ubuntu-latest
-    env:
-      ACT: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,14 +66,14 @@ jobs:
         with:
           node-version: 20
       - name: 🔧 Setup SonarScanner
-        uses: sonarsource/sonarcloud-github-action@v4
+        uses: sonarsource/sonarcloud-github-action@v3
   
       - name: 📝 Save Test Results
-        if: ${{ env.ACT != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: coverage/lcov-report
+          overwrite: true
 
   webpack:
     name: 📦 Webpack Build
