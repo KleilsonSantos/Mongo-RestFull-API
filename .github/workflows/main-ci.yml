@@ -50,6 +50,7 @@ jobs:
         with:
           name: coverage-report
           path: coverage/
+          overwrite: true
 
   sonar:
     name: 🔍 SonarQube Analysis
