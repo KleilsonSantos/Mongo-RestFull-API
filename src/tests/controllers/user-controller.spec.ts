@@ -27,7 +27,16 @@ import {
   responseUserMissingCredentials,
   responseUserById,
   responseJwtEnvMissing,
+  userAdmin,
 } from '../mocks/user.mock';
+
+jest.mock('../../enum/user-role.enum.ts', () => ({
+  UserRole: {
+    ADMIN: 'admin',
+    USER: 'user',
+    MODERATOR: 'moderator',
+  },
+}));
 
 jest.mock('bcrypt', () => ({
   hash: jest.fn(),
@@ -136,7 +145,7 @@ describe('🎬 User Controller Tests', () => {
 
   describe('🎞️ GET /api/v1/users', () => {
     it('✅ should return 200 and list all users', async () => {
-      (UserModel.findOne as jest.Mock).mockResolvedValue(userExample);
+      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
 
       (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
 
@@ -170,7 +179,7 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('🔍 should return 404 when no users are found', async () => {
-      (UserModel.findOne as jest.Mock).mockResolvedValue(userExample);
+      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
       (UserModel.find as jest.Mock).mockResolvedValue([]);
 
       const response = await request(app)
