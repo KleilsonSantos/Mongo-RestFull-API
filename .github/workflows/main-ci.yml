@@ -38,8 +38,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18, 20]
-    env:
-      ACT: 'false'
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
@@ -48,7 +46,6 @@ jobs:
       - run: npm run test:coverage:sonar
 
       - name: ⬆️ Upload Coverage
-        if: ${{ env.ACT != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
