@@ -101,9 +101,9 @@ services:
       - '5432:5432' # 🌐 Web access
     restart: always # 🔁 Automatically restarts if it stops
     environment:
-      POSTGRES_DB: ${POSTGRES_DB} # 📦 Database name
-      POSTGRES_USER: ${POSTGRES_USER} # 👤 Database username
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # 🔑 Database password
+      POSTGRES_DB: sonarqube # 📦 Database name
+      POSTGRES_USER: postgres # 👤 Database username
+      POSTGRES_PASSWORD: postegres # 🔑 Database password
       POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=en_US.UTF-8' # 🌍 Database encoding and locale
       POSTGRES_HOST_AUTH_METHOD: scram-sha-256 # 🔐 Authentication method
     volumes:
@@ -134,9 +134,9 @@ services:
       - '9000:9000'
       - '9092:9092'
     environment:
-      - SONAR_JDBC_URL=${SONAR_JDBC_URL} # 🐘 PostgreSQL connection URL
-      - SONAR_JDBC_USERNAME=${SONAR_JDBC_USERNAME} # 👤 Database username
-      - SONAR_JDBC_PASSWORD=${SONAR_JDBC_PASSWORD} # 🔑 Database password
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres-mongo-rest-api:5432/sonarqube # 🐘 PostgreSQL connection URL
+      - SONAR_JDBC_USERNAME=sonarqube # 👤 Database username
+      - SONAR_JDBC_PASSWORD=sonarqube # 🔑 Database password
       - SONARQUBE_JVM_OPTIONS='-Xmx4G -Xms4G' # 📊 JVM memory configuration
     volumes:
       - sonar-mongo-rest-api-data:/opt/sonarqube/data # 💾 Volume for data persistence

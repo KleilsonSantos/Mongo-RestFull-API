@@ -17,9 +17,6 @@ app.use(express.urlencoded({ extended: true })); // 🔄 Parse URL-encoded data
 app.use(morganMiddleware); // 📜 Log HTTP requests
 app.use(apiUrl, router); // 🌐 Use main router for API endpoints
 
-// 🔐 Load secrets
-//loadSecrets();
-
 // 📊 Swagger
 setupSwagger(app);
 

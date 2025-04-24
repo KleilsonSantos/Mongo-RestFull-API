@@ -1,5 +1,5 @@
 # 🐳 Use a minimal Node.js image with security updates
-FROM node:20.11.1-alpine3.19@sha256:0c2e2e8c1d4c27b4a2b8a91bdc7fe4d5b8e05e0f3bbb3f0e3960fbf4fde8e56 AS builder
+FROM node:18-alpine as builder
 
 # ��️ Add specific tags for better traceability
 LABEL maintainer="devops@example.com" \
@@ -7,27 +7,29 @@ LABEL maintainer="devops@example.com" \
       description="Secure Node.js application container"
 
 # 🔒 Update system packages and install security essentials
-RUN apk update && apk upgrade --no-cache && \
-    apk add --no-cache dumb-init && \
-    apk add --no-cache --virtual .build-deps g++ make python3 && \
-    npm install -g npm@latest && \
-    npm cache clean --force && \
-    groupadd -r nodejs && useradd -r -g nodejs nodejs
+# RUN apk update && apk upgrade --no-cache && \
+#     apk add --no-cache dumb-init && \
+#     apk add --no-cache --virtual .build-deps g++ make python3 && \
+#     npm install -g npm@latest && \
+#     npm cache clean --force && \
+#     groupadd -r nodejs && useradd -r -g nodejs nodejs
 
 # 📁 Define the working directory inside the container
 WORKDIR /usr/src/app
 
 # 📦 Copy dependency files and install as non-root
-COPY --chown=nodejs:nodejs package*.json ./
-USER nodejs
-RUN npm ci --only=production
+# COPY --chown=nodejs:nodejs package*.json ./
+# USER nodejs
+# RUN npm ci --only=development
 
 # 📄 Copy the rest of the source code and build
 COPY --chown=nodejs:nodejs . .
+USER nodejs
 RUN npm run build
 
 # 🚀 Production image
-FROM alpine:3.19.1@sha256:c5c5fda71656f07c8ef65da2c4a1f7f95e32e4e3f43c1bf40f7ba5a6e6f6af4
+FROM alpine:3.19.1
+
 
 # Install Node.js runtime only
 RUN apk add --no-cache dumb-init nodejs shadow && \
