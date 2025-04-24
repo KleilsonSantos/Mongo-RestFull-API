@@ -5,9 +5,6 @@ cd "$(git rev-parse --show-toplevel)"
 echo ""
 echo "Branch: $(git branch --show-current)"
 
-echo "Staged files:"
-git diff --cached --name-only
-
 echo ""
 echo "🐶 Husky: executando hook de pre-commit..."
 

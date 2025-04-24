@@ -37,7 +37,7 @@ lerna-debug.log*    # 🛠️ Lerna debug logs
 # ======================================
 # 🛠️ Build & Compiled Output
 # ======================================
-dist/               # 🚀 Production build
+dist/*               # 🚀 Production build
 build/              # 🏭 Compiled output
 out/                # 🧳 Next.js export directory
 .docusaurus/        # 📚 Docusaurus generated files

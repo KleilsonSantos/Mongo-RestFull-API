@@ -4,8 +4,13 @@ const ENV = process.env;
 
 export const userExample = {
   email: 'admin@gmail.com',
-  password: ENV['MOCK_PASSWORD_USER'],
-  role: ENV['MOCK_ROLE_2'],
+  password: 'Test@123',
+  role: 'user',
+};
+export const userAdmin = {
+  email: 'admin@gmail.com',
+  password: 'Test@123',
+  role: 'admin',
 };
 
 export const responseUser = {
@@ -15,13 +20,13 @@ export const responseUser = {
 export const responseUsers = [
   {
     email: 'admin@gmail.com',
-    password: ENV['MOCK_PASSWORD_USER'],
-    role: ENV['MOCK_ROLE_1'],
+    password: 'Test@123',
+    role: 'admin',
   },
   {
-    email: 'user@gmail.com',
-    password: ENV['MOCK_PASSWORD_USER'],
-    role: ENV['MOCK_ROLE_3'],
+    email: 'moderator@gmail.com',
+    password: 'Test@123',
+    role: 'moderator',
   },
 ];
 
