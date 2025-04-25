@@ -22,7 +22,9 @@ npm run format
 
 echo ""
 echo "🔍  Verificando se há alterações no arquivo package.json..."
-tsx src/utils/package-sonar-sync.ts
+tsx src/utils/package-version.ts
+
+echo ""
 echo "✅ Arquivo package.json atualizado com sucesso."
 
 
