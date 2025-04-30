@@ -10,6 +10,8 @@ jobs:
   build:
     name: 🔧 TypeScript Build
     runs-on: ubuntu-latest
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
     strategy:
       matrix:
         node-version: [18.x]
