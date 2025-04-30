@@ -156,4 +156,5 @@ describe('📦 Version Checker', () => {
       expect(exitSpy).toHaveBeenCalledWith(1);
     });
   });
+  
 });
