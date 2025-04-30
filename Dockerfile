@@ -6,21 +6,8 @@ LABEL maintainer="devops@example.com" \
       version="1.0.0" \
       description="Secure Node.js application container"
 
-# 🔒 Update system packages and install security essentials
-# RUN apk update && apk upgrade --no-cache && \
-#     apk add --no-cache dumb-init && \
-#     apk add --no-cache --virtual .build-deps g++ make python3 && \
-#     npm install -g npm@latest && \
-#     npm cache clean --force && \
-#     groupadd -r nodejs && useradd -r -g nodejs nodejs
-
 # 📁 Define the working directory inside the container
 WORKDIR /usr/src/app
-
-# 📦 Copy dependency files and install as non-root
-# COPY --chown=nodejs:nodejs package*.json ./
-# USER nodejs
-# RUN npm ci --only=development
 
 # 📄 Copy the rest of the source code and build
 COPY --chown=nodejs:nodejs . .
