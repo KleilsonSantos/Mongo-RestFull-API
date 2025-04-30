@@ -60,7 +60,9 @@ describe('🔌 MongoDB Connection', () => {
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS: 45000,
       });
-      expect(Logger.error).toHaveBeenCalledWith('❌ Database connection error: Error: Connection failed');
+      expect(Logger.error).toHaveBeenCalledWith(
+        '❌ Database connection error: Error: Connection failed',
+      );
     });
   });
 

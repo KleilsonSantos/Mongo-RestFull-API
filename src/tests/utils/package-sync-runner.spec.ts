@@ -8,11 +8,10 @@ jest.mock('../../config/logger', () => ({
 }));
 
 jest.mock('../../utils/check-package-version', () => ({
-    checkVersionMismatch: jest.fn(),
+  checkVersionMismatch: jest.fn(),
 }));
 
 describe('🚀 package-sync-runner', () => {
-
   describe('🔍 Run Async Package Version Catch Block', () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -31,24 +30,24 @@ describe('🚀 package-sync-runner', () => {
 
   describe('🔍 Run Async Package Version Execution as Main', () => {
     const OLD_ENV = process.env;
-  
+
     beforeEach(() => {
       jest.resetModules();
       process.env = { ...OLD_ENV };
     });
-  
+
     afterEach(() => {
       process.env = OLD_ENV;
       jest.resetModules();
     });
-  
+
     it('🚀 should execute runAsync when TEST_MAIN is set', async () => {
       (checkVersionMismatch as jest.Mock).mockResolvedValue(undefined);
-  
+
       process.env.TEST_MAIN = 'true';
-  
+
       const module = await import('../../utils/package-sync-runner');
-  
+
       expect(module).toBeDefined();
       expect(module.runAsyncPackageVersion).toBeDefined();
       expect(checkVersionMismatch).toHaveBeenCalled();

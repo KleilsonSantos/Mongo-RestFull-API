@@ -31,24 +31,24 @@ describe('🚀 sonar-sync-runner', () => {
 
   describe('🔍 Run Async Execution as Main', () => {
     const OLD_ENV = process.env;
-  
+
     beforeEach(() => {
       jest.resetModules();
       process.env = { ...OLD_ENV };
     });
-  
+
     afterEach(() => {
       process.env = OLD_ENV;
       jest.resetModules();
     });
-  
+
     it('🚀 should execute runAsync when TEST_MAIN is set', async () => {
       (synchronizeSonarVersion as jest.Mock).mockResolvedValue(undefined);
-  
+
       process.env.TEST_MAIN = 'true';
-  
+
       const module = await import('../../utils/sonar-sync-runner');
-  
+
       expect(module).toBeDefined();
       expect(module.runAsync).toBeDefined();
       expect(synchronizeSonarVersion).toHaveBeenCalled();
