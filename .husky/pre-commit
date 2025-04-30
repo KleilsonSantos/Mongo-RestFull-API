@@ -1,9 +1,9 @@
 #!/bin/sh
-echo ""
+echo "📂 Diretório do projeto:"
 cd "$(git rev-parse --show-toplevel)"
 
 echo ""
-echo "Branch: $(git branch --show-current)"
+echo "🌿 Branch atual: $(git branch --show-current)"
 
 echo ""
 echo "🐶 Husky: executando hook de pre-commit..."
@@ -22,7 +22,7 @@ npm run format
 
 echo ""
 echo "🔍  Verificando se há alterações no arquivo package.json..."
-tsx src/utils/package-version.ts
+tsx src/utils/package-sync-runner.ts
 
 echo ""
 echo "✅ Arquivo package.json atualizado com sucesso."
