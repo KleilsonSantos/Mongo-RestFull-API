@@ -12,7 +12,7 @@ async function connect() {
 
   try {
     // 🔄 Attempting to establish a connection to MongoDB
-    const connection = mongoose.connect(mongoUri, {
+    const connection = await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 5000, // ⏳ Maximum time to select a MongoDB server
       socketTimeoutMS: 45000, // ⏳ Timeout for socket communication with the database
     });
