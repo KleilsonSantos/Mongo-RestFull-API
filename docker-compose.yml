@@ -1,19 +1,19 @@
 # 🛠️ Services configuration
 services:
-  mongo-rest-api:
-    image: santos/mongo-rest-api:1.0 # 📦 Image
-    container_name: mongo-rest-api # 🏷️ Container name
-    ports:
-      - '3000:3000' # 🌐 Port mapping
-    depends_on:
-      - mongo # 🔄 Depends on MongoDB service
-    env_file:
-      - .env.development # 📄 Environment file
-    environment:
-      - MONGODB_URI=${MONGODB_URI} # 🔑 MongoDB URI
-    volumes:
-      - .:/usr/src/app:delegated # 💾 Volume for data persistence
-    restart: unless-stopped # 🔁 Automatically restarts if it stops
+  # mongo-rest-api:
+  #   image: santos/mongo-rest-api:1.0 # 📦 Image
+  #   container_name: mongo-rest-api # 🏷️ Container name
+  #   ports:
+  #     - '3000:3000' # 🌐 Port mapping
+  #   depends_on:
+  #     - mongo # 🔄 Depends on MongoDB service
+  #   env_file:
+  #     - .env.development # 📄 Environment file
+  #   environment:
+  #     - MONGODB_URI=${MONGODB_URI} # 🔑 MongoDB URI
+  #   volumes:
+  #     - .:/usr/src/app:delegated # 💾 Volume for data persistence
+  #   restart: unless-stopped # 🔁 Automatically restarts if it stops
 
   portainer:
     image: portainer/portainer-ce:latest # 📦 Portainer CE (Community Edition) image
