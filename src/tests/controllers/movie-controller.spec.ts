@@ -9,7 +9,6 @@ import { generateMockToken } from '../mocks/validate-token.mock';
 import { mockValidationErrorMessage, mockValidationSuccess } from '../mocks/validation.mock';
 import {
   movieExample,
-  responseAllMovies,
   responseBody,
   responseCreateMovie,
   responseCreateMovieError,
