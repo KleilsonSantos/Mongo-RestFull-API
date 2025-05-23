@@ -41,8 +41,8 @@ jobs:
       matrix:
         node-version: [18.x]
     env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        NODE_ENV: test
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
