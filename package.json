@@ -1,6 +1,6 @@
 {
   "name": "mongo-rest-api",
-  "version": "1.3.12",
+  "version": "1.4.0",
   "description": "MongoDB REST API - With Node.js, Express and TypeScript",
   "main": "index.js",
   "scripts": {
@@ -47,6 +47,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "browserify-zlib": "^0.2.0",
+    "chokidar": "^4.0.3",
     "config": "^3.3.12",
     "crypto-browserify": "^3.12.1",
     "dotenv": "^16.5.0",
