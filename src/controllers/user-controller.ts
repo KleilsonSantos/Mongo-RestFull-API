@@ -112,7 +112,11 @@ const updateUserById = async (req: Request, res: Response, next: NextFunction): 
 // 👥 Get all users
 const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const resultUser = Promise.resolve(UserModel.findOne({ email: req.body.email }));
+    if (typeof req.body.email !== 'string') {
+      res.status(400).json({ message: 'Email inválido.' });
+    }
+
+    const resultUser = Promise.resolve(UserModel.findOne({ email: { $eq: req.body.email } }));
     const user = await resultUser;
 
     if (user?.role !== UserRole.ADMIN) {
