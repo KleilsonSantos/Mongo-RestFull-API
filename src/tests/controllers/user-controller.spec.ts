@@ -140,82 +140,86 @@ describe('🎬 User Controller Tests', () => {
 
       expect(response.status).toBe(500);
       expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-        '❌ Error ID: ' + errorId + ' | POST /api/v1/create/user'
+        '❌ Error ID: ' + errorId + ' | POST /api/v1/create/user',
       );
     });
   });
 
   describe('🎞️ GET /api/v1/users', () => {
-    it('✅ should return 200 and list all users', async () => {
-      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
+  it('✅ should return 200 and list all users', async () => {
+    (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
+    (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
 
-      (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
+    const response = await request(app)
+      .get('/api/v1/users')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ email: userAdmin.email }); // 👈 obrigatório agora
 
-      const response = await request(app)
-        .get('/api/v1/users')
-        .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual({ data: { users: responseUsers } });
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(responseAllUsers),
-      );
-    });
-
-    it('❌ should return 403 when the user is not an admin', async () => {
-      (UserModel.findOne as jest.Mock).mockResolvedValue({});
-
-      const response = await request(app)
-        .get('/api/v1/users')
-        .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(403);
-      expect(response.body).toEqual({
-        message: 'Access denied, role mismatch. Only admins are allowed.',
-      });
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(responseUsersForbidden),
-      );
-    });
-
-    it('🔍 should return 404 when no users are found', async () => {
-      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
-      (UserModel.find as jest.Mock).mockResolvedValue([]);
-
-      const response = await request(app)
-        .get('/api/v1/users')
-        .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(404);
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(responseUsersNotFound),
-      );
-    });
-
-    it('💥 should return 500 when a database error occurs while retrieving users', async () => {
-      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
-      const errorId = Date.now();
-      
-      (Logger.error as jest.Mock).mockResolvedValue(() => {
-        throw new Error('Error ID: ' + errorId);
-      });
-      (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
-      (UserModel.find as jest.Mock).mockRejectedValue(leanMethod);
-
-      const response = await request(app)
-        .get('/api/v1/users')
-        .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-        '❌ Error ID: ' + errorId + ' | GET /api/v1/users'
-      );
-    });
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ data: { users: responseUsers } });
+    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+      expect.stringContaining(responseAllUsers),
+    );
   });
+
+  it('❌ should return 403 when the user is not an admin', async () => {
+    (UserModel.findOne as jest.Mock).mockResolvedValue({ role: 'USER' });
+
+    const response = await request(app)
+      .get('/api/v1/users')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ email: 'nao.admin@example.com' }); // 👈 obrigatório agora
+
+    expect(response.status).toBe(403);
+    expect(response.body).toEqual({
+      message: 'Access denied, role mismatch. Only admins are allowed.',
+    });
+    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+      expect.stringContaining(responseUsersForbidden),
+    );
+  });
+
+  it('🔍 should return 404 when no users are found', async () => {
+    (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
+    (UserModel.find as jest.Mock).mockResolvedValue([]);
+
+    const response = await request(app)
+      .get('/api/v1/users')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ email: userAdmin.email }); // 👈 obrigatório agora
+
+    expect(response.status).toBe(404);
+    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+      expect.stringContaining(responseUsersNotFound),
+    );
+  });
+
+  it('💥 should return 500 when a database error occurs while retrieving users', async () => {
+    jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+    const errorId = Date.now();
+
+    (Logger.error as jest.Mock).mockResolvedValue(() => {
+      throw new Error('Error ID: ' + errorId);
+    });
+    (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
+    (UserModel.find as jest.Mock).mockRejectedValue(leanMethod);
+
+    const response = await request(app)
+      .get('/api/v1/users')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ email: userAdmin.email }); // 👈 obrigatório agora
+
+    expect(response.status).toBe(500);
+    expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+      '❌ Error ID: ' + errorId + ' | GET /api/v1/users',
+    );
+  });
+});
+
 
   describe('🎯 GET /api/v1/users/:id', () => {
     it('🎯 should return 200 when retrieving a user by valid id', async () => {
@@ -264,9 +268,10 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | GET /api/v1/users/f3ed');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | GET /api/v1/users/f3ed',
+      );
     });
-    
   });
 
   describe('🔄 test-error /api/v1/test-error', () => {
@@ -275,10 +280,8 @@ describe('🎬 User Controller Tests', () => {
         .get('/api/v1/test-error')
         .set('Accept', 'application/json');
       expect(response.status).toBe(500);
-
     });
   });
-
 
   describe('📝 PUT /api/v1/users/:id', () => {
     it('🔍 should return 404 when updating a user by non-existent id', async () => {
@@ -323,7 +326,7 @@ describe('🎬 User Controller Tests', () => {
     it('💥 should return 500 when a database error occurs during user update', async () => {
       jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
       const errorId = Date.now();
-      
+
       (Logger.error as jest.Mock).mockResolvedValue(() => {
         throw new Error('Error ID: ' + errorId);
       });
@@ -338,7 +341,9 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | PUT /api/v1/users/1');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | PUT /api/v1/users/1',
+      );
     });
   });
 
@@ -378,7 +383,7 @@ describe('🎬 User Controller Tests', () => {
     it('💣 should return 500 when a database error occurs during user deletion', async () => {
       jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
       const errorId = Date.now();
-      
+
       (Logger.error as jest.Mock).mockResolvedValue(() => {
         throw new Error('Error ID: ' + errorId);
       });
@@ -390,7 +395,9 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | DELETE /api/v1/users/1213');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | DELETE /api/v1/users/1213',
+      );
     });
   });
 
@@ -465,12 +472,12 @@ describe('🎬 User Controller Tests', () => {
     it('🔒 should return 500 when a database error occurs during login', async () => {
       jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
       const errorId = Date.now();
-      
+
       (Logger.error as jest.Mock).mockResolvedValue(() => {
         throw new Error('Error ID: ' + errorId);
       });
       (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
-      
+
       const response = await request(app)
         .post('/api/v1/login')
         .set('Accept', 'application/json')
@@ -482,7 +489,9 @@ describe('🎬 User Controller Tests', () => {
         });
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | POST /api/v1/login');
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | POST /api/v1/login',
+      );
     });
   });
 
