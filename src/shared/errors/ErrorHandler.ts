@@ -1,12 +1,12 @@
 import Logger from '../../config/logger';
-import { sendToMonitoringService } from '../../shared/services/monitoringService';
+import { sendToMonitoringService } from '../services/monitoring.service';
 
-function isError(error: unknown): error is Error {
+export function isError(error: unknown): error is Error {
   return error instanceof Error;
 }
 
 export class ErrorHandler {
-  public static handle(error: unknown, shouldThrow: boolean = true): never {
+  public static handle(error: unknown, shouldThrow: boolean = true): void {
     const errorMessage = isError(error) ? error.message : String(error);
 
     Logger.error(`💥⚠️ ${errorMessage}`);
@@ -18,8 +18,6 @@ export class ErrorHandler {
     } else {
       Logger.info(`⚠️ Erro tratado: ${errorMessage}`);
     }
-
-    throw new Error('Unexpected flow in ErrorHandler');
   }
 
   private static sendToMonitoring(error: unknown) {

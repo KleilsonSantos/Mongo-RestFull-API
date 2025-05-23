@@ -12,18 +12,12 @@ import {
   responseUsers,
   responseAllUsers,
   responseUpdateUser,
-  responseLoginError,
-  responseUsersError,
   responseDeleteUser,
-  responseGlobalError,
   responseLoginStarted,
   responseUsersNotFound,
   responseUsersForbidden,
-  responseDeleteUserError,
-  responseCreateUserError,
   responseUserAlreadyExists,
   responseUserByIdNotFound,
-  responseUpdateUserGlobalError,
   responseUserMissingCredentials,
   responseUserById,
   responseJwtEnvMissing,
@@ -77,9 +71,9 @@ jest.mock('express-validator', () => ({
   validationResult: jest.fn(),
 }));
 
+const ENV = process.env;
 const token = generateMockToken();
 const leanMethod = () => Promise.reject(new Error('DB Failure'));
-const ENV = process.env;
 
 describe('🎬 User Controller Tests', () => {
   let server: Server = createServer(app);
@@ -131,7 +125,13 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💣 should return 500 when a database error occurs during user creation', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+
       (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
 
       const response = await request(app)
         .post('/api/v1/create/user')
@@ -139,7 +139,9 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseCreateUserError);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | POST /api/v1/create/user'
+      );
     });
   });
 
@@ -194,6 +196,12 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💥 should return 500 when a database error occurs while retrieving users', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+      
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
       (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
       (UserModel.find as jest.Mock).mockRejectedValue(leanMethod);
 
@@ -203,8 +211,8 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(responseUsersError),
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | GET /api/v1/users'
       );
     });
   });
@@ -240,9 +248,15 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💣 should return 500 when a database error occurs while retrieving user by id', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+
       (UserModel.findById as jest.Mock).mockImplementation(() => ({
         lean: leanMethod,
       }));
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
 
       const response = await request(app)
         .get('/api/v1/users/f3ed')
@@ -250,11 +264,21 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-        expect.stringContaining(responseGlobalError),
-      );
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | GET /api/v1/users/f3ed');
+    });
+    
+  });
+
+  describe('🔄 test-error /api/v1/test-error', () => {
+    it('💣 should return 500 testErrorMiddleware ', async () => {
+      const response = await request(app)
+        .get('/api/v1/test-error')
+        .set('Accept', 'application/json');
+      expect(response.status).toBe(500);
+
     });
   });
+
 
   describe('📝 PUT /api/v1/users/:id', () => {
     it('🔍 should return 404 when updating a user by non-existent id', async () => {
@@ -297,6 +321,12 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💥 should return 500 when a database error occurs during user update', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+      
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
       (UserModel.findById as jest.Mock).mockReturnValue({
         lean: jest.fn().mockResolvedValue(leanMethod),
       });
@@ -308,7 +338,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseUpdateUserGlobalError);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | PUT /api/v1/users/1');
     });
   });
 
@@ -346,6 +376,12 @@ describe('🎬 User Controller Tests', () => {
     });
 
     it('💣 should return 500 when a database error occurs during user deletion', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+      
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
       (UserModel.findById as jest.Mock).mockReturnValue(null);
 
       const response = await request(app)
@@ -354,7 +390,7 @@ describe('🎬 User Controller Tests', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseDeleteUserError);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | DELETE /api/v1/users/1213');
     });
   });
 
@@ -427,7 +463,14 @@ describe('🎬 User Controller Tests', () => {
       expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(responseLoginStarted);
     });
     it('🔒 should return 500 when a database error occurs during login', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+      
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
       (UserModel.findOne as jest.Mock).mockRejectedValue(leanMethod);
+      
       const response = await request(app)
         .post('/api/v1/login')
         .set('Accept', 'application/json')
@@ -439,7 +482,7 @@ describe('🎬 User Controller Tests', () => {
         });
 
       expect(response.status).toBe(500);
-      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(responseLoginError);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual( '❌ Error ID: ' + errorId + ' | POST /api/v1/login');
     });
   });
 

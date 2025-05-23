@@ -1,5 +1,5 @@
 import Logger from '../../config/logger';
-import swaggerAuthMiddleware from '../../middlewares/swagger-auth-middleware';
+import swaggerAuthMiddleware from '../../middlewares/swagger.middleware';
 import { Request, Response, NextFunction } from 'express';
 
 jest.mock('../../config/logger', () => ({

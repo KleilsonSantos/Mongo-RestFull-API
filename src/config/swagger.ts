@@ -1,6 +1,6 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import swaggerAuthMiddleware from '../middlewares/swagger-auth-middleware';
+import swaggerAuthMiddleware from '../middlewares/swagger.middleware';
 import { Express } from 'express';
 
 // ⚙️ Swagger options configuration
