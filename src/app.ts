@@ -1,9 +1,9 @@
 import './config/load-env';
-import Logger from './config/logger';
+import express from 'express';
 import setupSwagger from './config/swagger';
 import { router } from './routers/router';
-import { morganMiddleware } from './middlewares/morgan-middleware';
-import express, { NextFunction, Request, Response } from 'express';
+import { errorMiddleware } from './middlewares/error.middleware';
+import { morganMiddleware } from './middlewares/morgan.middleware';
 
 // 🌍 Get environment variables
 const apiUrl: string | undefined = process.env.API_URL ?? '/api/v1';
@@ -20,10 +20,8 @@ app.use(apiUrl, router); // 🌐 Use main router for API endpoints
 // 📊 Swagger
 setupSwagger(app);
 
+
 // ⚠️ Global Middleware error handling
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  Logger.error('🔥 Global error handler:', err);
-  res.status(500).json({ message: err.message || 'Internal Server Error' });
-});
+app.use(errorMiddleware);
 
 export default app;

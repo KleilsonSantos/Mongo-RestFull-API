@@ -13,8 +13,9 @@ async function setupJestConfig() {
     testEnvironment: 'node',
 
     // 📁 Define a raiz dos testes como a pasta "src"
-    roots: ['<rootDir>/src'],
+    roots: ['<rootDir>./src'],
 
+    
     // 📄 Extensões de arquivos que o Jest deve considerar
     moduleFileExtensions: ['ts', 'js'],
 
@@ -22,7 +23,7 @@ async function setupJestConfig() {
     transform: {
       '^.+\\.ts?$': ['ts-jest', { useESM: true }],
     },
-
+    
     // 📦 Extensões tratadas como módulos ES
     extensionsToTreatAsEsm: ['.ts'],
 
@@ -35,46 +36,48 @@ async function setupJestConfig() {
       '!src/**/*.d.ts', // Ignora arquivos de definição de tipos
       '!src/**/*.test.ts', // Ignora arquivos de teste
     ],
-
+    
     // 🗂️ Pasta onde será gerado o relatório de cobertura
     coverageDirectory: 'coverage',
-
+    
     // 🚫 Ignora arquivos/pastas específicos da cobertura
     coveragePathIgnorePatterns: [
       '/node_modules/',
       '<rootDir>/src/interfaces/',
       '<rootDir>/src/types/',
     ],
-
+    
     // 📰 Define os "reporters" para saída dos testes
     reporters: [
       'default', // Reporter padrão do Jest
       [
         'jest-html-reporter', // Gera relatório HTML
         {
-          outputDirectory: 'coverage/jest-html-reporter',
           outputName: 'jest-html-reporter.html',
         },
       ],
       [
         'jest-sonar', // Gera relatório SonarQube
         {
-          outputDirectory: 'coverage/sonar-report',
           outputName: 'sonar-report.xml',
         },
       ],
     ],
-
+    
     // ⏱️ Configurações relacionadas a fake timers do Jest
     fakeTimers: {
       enableGlobally: false,
     },
-
+    
     // ⚙️ Scripts que devem ser executados antes de inicializar os testes
     setupFiles: ['<rootDir>/src/config/load-env.ts'],
-    globalSetup: './src/tests/setup/globalSetup.ts',
-    globalTeardown: './src/tests/setup/globalTeardown.ts',
-    setupFilesAfterEnv: ['./src/tests/setup/jest.setup.ts'],
+    setupFilesAfterEnv: ['./src/setup/jest.setup.ts'],
+    
+    // 🧪 Config
+    testMatch: ['**/tests/**/*.test.ts', '**/?(*.)+(spec|test).ts'],
+    
+    // 🧪 Define o padrão de teste para arquivos TypeScript
+    testRegex: undefined,
   };
 }
 

@@ -4,7 +4,7 @@ import { Payload } from '../../model/Payload.interface';
 import { Response, NextFunction } from 'express';
 import { UserRole } from '../../enum/user-role.enum';
 import { generateMockToken } from '../mocks/validate-token.mock';
-import authMiddleware, { CustomRequest } from '../../middlewares/auth-middleware';
+import authMiddleware, { CustomRequest } from '../../middlewares/auth.middleware';
 jest.mock('jsonwebtoken', () => ({
   verify: jest.fn(),
   sign: jest.fn(),

@@ -30,7 +30,7 @@ meu-projeto
 │   │   ├── UserRole.enum
 │   ├──  middlewares
 │   │   ├── authMiddleware.ts
-│   │   ├── morgan-middleware.ts
+│   │   ├── morgan.middleware.ts
 │   │   ├── swaggerAuth.ts
 │   ├──  models
 │   │   ├── User.ts
@@ -156,7 +156,7 @@ SWAGGER_API_KEY=sua-api-key
 - `src/model/Payload.interface.ts`: Arquivo de configuração da interface Payload.
 - `src/routes/user-router.ts`: Arquivo de configuração das rotas de usuários.
 - `src/middlewares/authMiddleware.ts`: Arquivo de configuração do middleware de autenticação.
-- `src/middlewares/morgan-middleware.ts`: Arquivo de configuração do middleware de log.
+- `src/middlewares/morgan.middleware.ts`: Arquivo de configuração do middleware de log.
 - `src/config/db.ts`: Arquivo de configuração da conexão com o banco de dados.
 - `src/config/logger.ts`: Arquivo de configuração do logger.
 - `src/config/swagger.ts`: Arquivo de configuração do Swagger.
