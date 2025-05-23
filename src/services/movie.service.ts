@@ -12,6 +12,6 @@ export class MovieService {
 
   async createMovie(data: Movie): Promise<PartialMovie> {
     const movie = await MovieModel.create(data);
-    return movie.toObject();
+    return movie;
   }
 }

@@ -1,0 +1,7 @@
+{
+  "docwriter.style": "GoDoc",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "My Sonar Server",
+    "projectKey": "mongo-rest-api"
+  }
+}
