@@ -13,9 +13,9 @@ jest.mock('swagger-ui-express', () => ({
 jest.mock('swagger-jsdoc', () => jest.fn(() => ({ openapi: '3.0.0' })));
 
 // 🔥 Mock do middleware de autenticação
-jest.mock('../../middlewares/swagger-auth-middleware', () => jest.fn((req, res, next) => next()));
+jest.mock('../../middlewares/swagger.middleware', () => jest.fn((req, res, next) => next()));
 
-import swaggerAuthMiddleware from '../../middlewares/swagger-auth-middleware';
+import swaggerAuthMiddleware from '../../middlewares/swagger.middleware';
 
 describe('📄 setupSwagger', () => {
   let app: Partial<Express>;
