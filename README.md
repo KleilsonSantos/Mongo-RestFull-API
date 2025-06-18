@@ -187,7 +187,7 @@ Para configurar e rodar o projeto localmente, siga os passos abaixo:
 ### 1\. Clonar o Repositório
 
 ```bash
-git clone [https://github.com/KleilsonSantos/Mongo-RestFull-API.git](https://github.com/KleilsonSantos/Mongo-RestFull-API.git)
+git clone https://github.com/KleilsonSantos/Mongo-RestFull-API.git
 cd Mongo-RestFull-API
 ```
 
@@ -442,20 +442,17 @@ A adoção dessas práticas reflete:
 - Atrai recrutadores, contribuidores e parceiros.
 - Facilita o onboarding e a manutenção contínua.
 
-
 ## 📌 Próximos Passos (Sugestões)
 
 - [ ] Adicionar badges de build, cobertura e SonarQube no `README.md`.
 - [ ] Automatizar deploy real (e.g., Vercel, Render, Heroku ou Docker Compose + VPS).
-- [ ] Criar teste end-to-end básico com `supertest` ou `Playwright`.
+- [x] Criar teste end-to-end básico com `supertest` ou `Playwright`.
 
-## Licença
+## 📜 Licença
 
 Este projeto está licenciado sob a licença [MIT](https://www.google.com/search?q=https://github.com/KleilsonSantos/Mongo-RestFull-API/blob/main/LICENSE).
 
-### 📬 Contato
-
----
+## 📬 Contato
 
 - 📧 Email: kleilson@icloud.com
 - 🔗 LinkedIn: [linkedin.com/in/kleilson-dev-full-stack](https://linkedin.com/in/kleilson-dev-full-stack)
