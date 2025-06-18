@@ -56,8 +56,6 @@ Ela permite operações CRUD (Create, Read, Update, Delete) de usuários e filme
 
 ## 📌 **Funcionalidades**
 
-# 🚀 Features and Tools Overview
-
 ## 🔒 Authentication
 - **JWT Authentication**: Users can authenticate and obtain a JWT token to access protected resources.
 
@@ -200,11 +198,6 @@ O arquivo `docker-compose.yml` já está configurado para subir um contêiner co
 ✅ Persistência de dados via `volumes`
 ```
 
-### 📌 Pré-requisitos:
-
-- **Docker** instalado em sua máquina. Caso não tenha, baixe e instale pelo site oficial: [Docker](https://www.docker.com/)
-- **Docker Compose** instalado (já incluso no Docker Desktop)
-
 ### 1️⃣ Requisitos
 
     Docker instalado → Download Docker
@@ -275,7 +268,7 @@ Para configurar o logger, siga as instruções abaixo:
 ```bash
 npm install winston
 ```
-# 🪵 Advanced Logging System
+## 🪵 Advanced Logging System
 
 ## Overview
 This logger is designed to provide a robust and flexible logging mechanism for applications running in **Node.js**. It supports various log levels, colorized console output in development environments, and file-based logging for production environments. The system helps in monitoring, debugging, and analyzing application behavior effectively.
@@ -373,8 +366,6 @@ Logger.http("📡 Requisição HTTP recebida com sucesso!");
 Logger.exceptions("❗️ Exceção nao tratada!");
 Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
 ```
-
-## 📜 Configuração do Swagger
 
 # 📚 Swagger Integration
 
@@ -525,7 +516,7 @@ Ferramentas utilizadas para desenvolvimento e tipagem:
 - **SonarQube**: Análise de qualidade de código.
 
 
-# 📊 Análise Técnica: Estrutura de CI/CD com GitHub Actions
+## 📊 Análise Técnica: Estrutura de CI/CD com GitHub Actions
 
 Este documento apresenta uma análise crítica e estratégica da estrutura de CI/CD adotada neste projeto, destacando os benefícios, boas práticas aplicadas e o impacto profissional que isso representa.
 
