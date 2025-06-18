@@ -1,12 +1,12 @@
 {
   "name": "mongo-rest-api",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "MongoDB REST API - With Node.js, Express and TypeScript",
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development ts-node -r ./src/config/load-env.ts src/server/server.ts",
     "env": "tsx src/config/load-env.ts",
-    "prestart": "npm run start:ts &&npm run build:webpack",
+    "prestart": "npm run start:ts && npm run build:webpack",
     "start:webpack": "webpack serve --config webpack.config.js",
     "start:ts": "ts-node-dev --respawn --transpile-only src/server/server.ts",
     "build:ts": "rimraf dist && tsc",

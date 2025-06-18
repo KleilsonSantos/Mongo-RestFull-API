@@ -1,47 +1,77 @@
-# Mongo Rest API 🚀 _(Em Desenvolvimento 🚧)_
+ <h1 align="center">🚀 API REST Profissional | Node.js + TypeScript + MongoDB 🍃</h3>
 
-![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white) 🍃
-![Express](https://img.shields.io/badge/-Express-000000?style=for-the-badge&logo=express&logoColor=white) 🚂
-![JWT](https://img.shields.io/badge/-JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white) 🔐
-![Winston](https://img.shields.io/badge/-Winston-000000?style=for-the-badge&logo=winston&logoColor=white) 🐺
-![Morgan](https://img.shields.io/badge/-Morgan-000000?style=for-the-badge&logo=morgan&logoColor=white) 📝
-![Logger](https://img.shields.io/badge/-Logger-000000?style=for-the-badge&logo=logger&logoColor=white) 📜
-![Swagger](https://img.shields.io/badge/-Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black) 📝
-![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white) 🍃
-![Mongoose](https://img.shields.io/badge/-Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white) 🐍
-![Docker](https://img.shields.io/badge/-Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white) 🐳
-![Docker Compose](https://img.shields.io/badge/-Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white) 📦
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) 📘
+<div align="center">
+<p align="center">
+
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnNnd3RnN3FpZDNseG4xcjh0OGJ6bXV6eDJmNWhwZXZmZXRsMXpkcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GZgWC4ViLxPYJhWy1B/giphy.gif" alt="API REST com MongoDB" width="600"/>
+  <br>
+  <strong>API REST com TypeScript e MongoDB</strong><br>
+  <p align="center">
+  <em>Autenticação JWT • Documentação Swagger • Docker • CI/CD • Logs Estruturados</em>
+</p>
+
+<p ><h3 align="center">🚀 _(Em Desenvolvimento 🚧)_</h3></p>
+</p>
+</div>
+
+## 🛠️ Tecnologias Utilizadas
+
+<div align="center">
+  
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Winston](https://img.shields.io/badge/Winston-000000?style=for-the-badge&logo=winston&logoColor=white)
+![Morgan](https://img.shields.io/badge/Morgan-000000?style=for-the-badge&logo=morgan&logoColor=white)
+![API REST](https://img.shields.io/badge/API-REST-FF6B6B?style=for-the-badge)
+  ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge)
+</div>
 
 
-## Estrutura do Projeto
+## 📌 Descrição
+
+Esta é uma **API RESTful** robusta, construída com **TypeScript**, **Express** e **MongoDB**, projetada para gerenciar filmes e usuários. Ela oferece funcionalidades completas de **CRUD (Criar, Ler, Atualizar, Deletar)** para ambas as entidades, além de um sistema de **autenticação e autorização robusto** utilizando **JWT (JSON Web Tokens)** para proteger as rotas da API.
+
+
+## 🗂️ Estrutura do Projeto
 
 ```plaintext
 meu-projeto
-├──  src
-│   ├──  config
+├── src
+│   ├── config
 │   │   ├── db.ts
 │   │   ├── logger.ts
-│   │   ├── swagger.ts
-│   ├──  controllers
+│   │   └── swagger.ts
+│   ├── controllers
 │   │   ├── user-controller.ts
-│   │   ├── movie-controller.ts
-│   ├──  enum
-│   │   ├── UserRole.enum
-│   ├──  middlewares
+│   │   └── movie-controller.ts
+│   ├── enum
+│   │   └── UserRole.enum.ts
+│   ├── middlewares
 │   │   ├── authMiddleware.ts
 │   │   ├── morgan.middleware.ts
 │   │   ├── swaggerAuth.ts
 │   ├──  models
+│   │   ├── morgan.middleware.ts
+│   │   └── swaggerAuth.ts
+│   ├── models
 │   │   ├── User.ts
 │   │   ├── Movie.ts
-│   │   ├── Payload.interface.ts
-│   ├──  routes
+│   │   └── Payload.interface.ts
+│   ├── routes
 │   │   ├── router.ts
 │   │   ├── user-router.ts
-│   ├──  utils
-│   │   ├── generate-token.ts
-│   ├── server.ts
+│   │   └── movie-router.ts # Adicionado para consistência
+│   ├── utils
+│   │   └── generate-token.ts
+│   └── server.ts
 ├── .env
 ├── .gitignore
 ├── package.json
@@ -49,94 +79,82 @@ meu-projeto
 └── README.md
 ```
 
-## 📌 **Descrição**
+## 🚀 Visão Geral das Funcionalidades e Ferramentas
 
-Esta é uma **API RESTful** construída com **TypeScript**, **Express** e **MongoDB** para gerenciar filmes e usuários.  
-Ela permite operações CRUD (Create, Read, Update, Delete) de usuários e filmes, além de autenticação JWT.
+### 🔒 Autenticação e Autorização
 
-## 📌 **Funcionalidades**
+- **Autenticação JWT**: Usuários podem autenticar e obter um token JWT para acessar recursos protegidos.
+- **Autorização Baseada em Papéis**: Diferentes níveis de acesso para usuários (e.g., administradores vs. usuários comuns) podem ser implementados e controlados através de papéis (se aplicável).
 
-## 🔒 Authentication
-- **JWT Authentication**: Users can authenticate and obtain a JWT token to access protected resources.
+### 👥 Gerenciamento de Dados
 
----
+- **Usuários**: Operações CRUD completas para gerenciamento de usuários.
+- **Filmes**: Operações CRUD completas para gerenciamento de filmes.
 
-## 👥 User and Movie Management
-- **Users**: 👤 Create, 🧐 Read, ✏️ Update, and 🗑️ Delete users.
-- **Movies**: 🎥 Create, 📖 Read, ✏️ Update, and 🗑️ Delete movies.
+### 📝 Documentação
 
----
+- **Documentação Swagger**: Documentação interativa e detalhada da API, facilitando o entendimento e teste dos endpoints.
 
-## 📚 Documentation
-- **Swagger Documentation**: 📝 Detailed API documentation with Swagger.
+### 📈 Monitoramento e Logs
 
----
+- **Métricas Prometheus**: Monitoramento de requisições HTTP e uso de memória para análise de performance e saúde da aplicação.
+- **Logger Avançado (Winston e Morgan)**: Geração de logs detalhados para depuração, auditoria e monitoramento em diferentes níveis (info, warn, error, debug, http).
 
-## 📈 Metrics and Logging
-- **Prometheus Metrics**: 📊 Monitor HTTP requests and 🧠 memory usage.
-- **Advanced Logger**: 📜 Detailed logging with 🪵 Winston and 📑 Morgan.
+### 🛠️ Desenvolvimento e Deploy
 
----
+- **Docker**: Containerização da aplicação para ambientes de desenvolvimento e produção consistentes.
+- **Docker Compose**: Configuração simplificada de múltiplos serviços Docker para orquestração de ambiente.
 
-## 🛠️ Development and Deployment
-- **Docker**: 🐳 Development and production environments with Docker.
-- **Docker Compose**: ⚙️ Configuring development environments with Docker Compose.
+### 💎 Qualidade de Código e CI/CD
 
----
-
-## 💎 Code Quality and CI/CD
-- **TypeScript**: 📜 Write high-quality code with static typing.
-- **MongoDB**: 💾 NoSQL database for data storage.
-- **Mongoose**: 🧩 ORM for interacting with MongoDB.
-- **CI/CD**: 🔄 Continuous integration with GitHub Actions.
-- **SonarQube**: 🔍 Code quality analysis and 🧪 test coverage.
-- **Husky**: 🐶 Git hooks to ensure quality before commits and pushes.
+- **TypeScript**: Utilização de tipagem estática para maior segurança e manutenibilidade do código.
+- **MongoDB**: Banco de dados NoSQL flexível e escalável.
+- **Mongoose**: ODM (Object Data Modeling) para MongoDB, facilitando a interação com o banco de dados.
+- **CI/CD (GitHub Actions)**: Fluxo de trabalho automatizado para integração contínua, garantindo que o código seja testado e validado a cada push.
+- **SonarQube**: Análise de qualidade de código estática e medição de cobertura de testes para identificar e corrigir problemas.
+- **Husky**: Ganchos de Git (pre-commit, pre-push) para impor padrões de código e executar testes antes de cada commit/push.
 
 
-## ⚙️ **Configuração**
+## 📄 Principais Arquivos
 
-### 1️⃣ **Variáveis de Ambiente**
+- `package.json`: Gerenciamento de dependências e scripts do projeto.
+- `tsconfig.json`: Configurações do compilador TypeScript.
+- `src/server.ts`: Ponto de entrada da aplicação e configuração do servidor Express.
+- `src/routes/router.ts`: Agrega todas as rotas da API.
+- `src/routes/user-router.ts`: Define as rotas relacionadas aos usuários.
+- `src/routes/movie-router.ts`: Define as rotas relacionadas aos filmes.
+- `src/controllers/user-controller.ts`: Lógica de negócio para operações de usuário.
+- `src/controllers/movie-controller.ts`: Lógica de negócio para operações de filme.
+- `src/models/User.ts`: Definição do esquema e modelo Mongoose para usuários.
+- `src/models/Movie.ts`: Definição do esquema e modelo Mongoose para filmes.
+- `src/models/Payload.interface.ts`: Interface para o payload do token JWT.
+- `src/middlewares/authMiddleware.ts`: Middleware para autenticação JWT.
+- `src/middlewares/morgan.middleware.ts`: Middleware para logging de requisições HTTP.
+- `src/config/db.ts`: Configuração da conexão com o banco de dados.
+- `src/config/logger.ts`: Configuração do logger Winston.
+- `src/config/swagger.ts`: Configuração do Swagger para documentação da API.
+- `src/utils/generate-token.ts`: Função utilitária para gerar tokens JWT.
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+## ⚙️ Configuração
+
+### 1️⃣ Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
 
 ```env
-# Configuration Variables
-
-## API Settings
-```env
-# Port on which the API will run
 PORT=3000
-
-# Base URL for the API
 API_URL=/api/v1
-
-# Current environment (development, production, etc.)
 NODE_ENV=development
-
-# Local MongoDB connection string
 MONGODB_URI=mongodb://localhost:27017/nome-do-banco
-
-# MongoDB database name
 DB_NAME=myFirstDataBase
-
-# MongoDB user credentials
 DB_USER=seu_usuario
 DB_PASS=sua_senha
-
-# MongoDB Atlas connection URI
 DB_URI=mongodb+srv://seu_usuario:sua_senha@cluster.mongodb.net/seu_banco?retryWrites=true&w=majority
-
-# Admin credentials for MongoDB initialization
 MONGO_INITDB_ROOT_USERNAME=admin
 MONGO_INITDB_ROOT_PASSWORD=1234
-
-# Secret key used to sign JWT tokens
 JWT_SECRET=sua-chave-secreta
-
-# Expiration time for JWT tokens
 JWT_EXPIRES_IN=1h
-
-# API key for Swagger documentation access
 SWAGGER_API_KEY=sua-api-key
 ```
 
@@ -160,177 +178,99 @@ SWAGGER_API_KEY=sua-api-key
 - `src/config/swagger.ts`: Arquivo de configuração do Swagger.
 - `src/utils/generate-token.ts`: Arquivo de configuração da função generateToken.
 
+
+
 ## 🚀 Instalação
 
-### 🛠️ 1. Clonar o Repositório
+Para configurar e rodar o projeto localmente, siga os passos abaixo:
+
+### 1\. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/seu-projeto.git
-cd seu-projeto
+git clone [https://github.com/KleilsonSantos/Mongo-RestFull-API.git](https://github.com/KleilsonSantos/Mongo-RestFull-API.git)
+cd Mongo-RestFull-API
 ```
 
-## 📦 2. Instalar Dependências
+### 2\. Instalar Dependências
 
-Para instalar o projeto, execute o seguinte comando:
+Certifique-se de ter o Node.js e o npm (ou Yarn) instalados em sua máquina.
 
 ```bash
 npm install
+# ou
+yarn install
 ```
 
-## 🏗 3. Rodar o Servidor
+### 3\. Rodar o Servidor
 
-Para rodar o servidor, execute o seguinte comando:
+Após a instalação das dependências e a configuração do arquivo `.env`:
 
-```bash
-npm run dev
-```
+- **Ambiente de Desenvolvimento:**
+  Com `ts-node-dev` para recarregar automaticamente as alterações.
+  ```bash
+  npm run dev
+  # ou
+  yarn dev
+  ```
+- **Ambiente de Produção:**
+  Primeiro compile o código TypeScript para JavaScript, depois inicie o servidor.
+  ```bash
+  npm run build
+  npm start
+  # ou
+  yarn build
+  yarn start
+  ```
 
-## 🐳 Configuração do Docker
+
+## 🐳 Docker e Docker Compose
 
 Para facilitar a execução do banco de dados **MongoDB** em um ambiente isolado, utilizamos **Docker** e **Docker Compose**.
 
-### ⚙️ Configuração do `docker-compose.yml`:
+### Pré-requisitos
 
-O arquivo `docker-compose.yml` já está configurado para subir um contêiner com o **MongoDB**. Ele contém:
-```
-✅ Imagem oficial do MongoDB
-✅ Mapeamento de portas (`27017:27017`)
-✅ Persistência de dados via `volumes`
-```
+- Docker instalado ([Guia de instalação do Docker](https://docs.docker.com/get-docker/))
+- Docker Compose instalado (geralmente incluso no Docker Desktop)
 
-### 1️⃣ Requisitos
+### Executando com Docker Compose
 
-    Docker instalado → Download Docker
-    Docker Compose instalado (já vem no Docker Desktop)
-
-### 2️⃣ Executando o Docker Compose
+O arquivo `docker-compose.yml` (que deve ser criado, se ainda não existir) já pode estar configurado para subir um contêiner com o **MongoDB**. Para construir a imagem Docker e iniciar os serviços definidos, execute:
 
 ```bash
-docker build -t mongo-rest-api .
-docker-compose up -d
+docker-compose up --build -d
 ```
 
-### 🏗️ 3. Rodar o Servidor
+- `--build`: Reconstrói as imagens dos serviços.
+- `-d`: Executa os contêineres em segundo plano (detached mode).
 
-#### Ambiente de Desenvolvimento:
-```bash
-npm run dev
-```
 
-#### Ambiente de Produção:
-```bash
-npm run build
-npm start
-```
+## 🪵 Sistema de Logs
 
-### ✅ Explicação:
+A API utiliza as bibliotecas **Winston** e **Morgan** para um sistema de logs completo e configurável, que inclui:
 
-    up → Sobe os containers
-    -d → Roda em background
+- **Níveis de Log**: Geração de logs detalhados em diferentes níveis (info, warn, error, debug, http).
+- **Armazenamento de Arquivos**: Logs persistidos em arquivos separados por nível de severidade na pasta `logs/`.
+- **Saída no Console**: Logs coloridos no console durante o desenvolvimento para melhor depuração.
+- **Tratamento de Exceções**: Captura e registro de exceções não tratadas (`exceptions.log`) e rejeições de promessas (`rejections.log`).
 
-## 📜 Configuração de Logger
-
-Para garantir um monitoramento eficaz e um **debugging** mais eficiente, utilizamos o **Winston**, uma biblioteca de logging robusta e flexível para **Node.js**.
-
-### 🔥 Recursos do Logger:
-
-```plaintext
-✅ **Geração de logs detalhados (info, warn, error, debug, http)**
-✅ **Armazenamento de logs em arquivos separados**
-✅ **Saída colorida no console durante o desenvolvimento**
-✅ **Registros de exceções e rejeições de promessas**
-```
-
-### 📌 Pré-requisitos:
-
-Certifique-se de instalar o **Winston** no projeto antes de utilizá-lo:
-
-🏗️ Estrutura dos Logs:
-
-Os logs são armazenados na pasta logs/, e separados por nível de severidade:
+**Estrutura dos Logs:**
 
 ```plaintext
 📂 logs/
-├── all.log # Todos os logs
-├── error.log # Erros críticos
-├── warn.log # Avisos importantes
-├── info.log # Informações gerais
-├── debug.log # Logs detalhados para debugging
-├── http.log # Logs de requisições HTTP
-├── exceptions.log # Logs de exceções não tratadas
-├── rejections.log # Logs de rejeições de Promises
+├── all.log       # Contém todos os logs.
+├── error.log     # Exclusivo para logs de erro críticos.
+├── warn.log      # Logs de avisos importantes.
+├── info.log      # Informações gerais.
+├── debug.log     # Logs detalhados para depuração.
+├── http.log      # Registra todas as requisições HTTP.
+├── exceptions.log # Logs de exceções não tratadas.
+├── rejections.log # Logs de rejeições de Promises.
 ```
 
-### 🚀 Como configurar o Logger:
+**Como Utilizar:**
 
-Para configurar o logger, siga as instruções abaixo:
+Basta importar o logger e chamar os métodos conforme necessário.
 
-```bash
-npm install winston
-```
-## 🪵 Advanced Logging System
-
-## Overview
-This logger is designed to provide a robust and flexible logging mechanism for applications running in **Node.js**. It supports various log levels, colorized console output in development environments, and file-based logging for production environments. The system helps in monitoring, debugging, and analyzing application behavior effectively.
-
----
-
-## 📜 Features
-### 🌍 Environment Awareness
-- Automatically detects the environment (`NODE_ENV`) and adjusts logging levels accordingly:
-  - **Development**: Enables detailed logs including `debug` messages.
-  - **Production**: Focuses on higher-level logs like `info` and `error`.
-
-### 📁 Directory Management
-- Automatically creates a `logs` directory if it doesn't exist to store log files.
-
-### 🚦 Log Levels
-Defines multiple levels of logging for granular control:
-- **error**: Critical issues that require immediate attention (🛑).
-- **warn**: Potential problems or warnings (⚠️).
-- **info**: General information and process updates (ℹ️).
-- **http**: HTTP request details for monitoring (🌐).
-- **debug**: Detailed debugging information (🐞).
-
-### 🎨 Log Formatting and Colors
-- Timestamps (`YYYY-MM-DD HH:mm:ss:ms`) for every log entry.
-- Custom color-coded log levels for better readability in the console:
-  - **error**: Red 🔴
-  - **warn**: Yellow 🟡
-  - **info**: Green 🟢
-  - **http**: Magenta 🟣
-  - **debug**: Cyan 🔵
-
-### 🚚 Log Storage
-- Stores logs in dedicated files based on levels:
-  - **all.log**: Contains all log entries.
-  - **error.log**: Captures only `error` level logs.
-  - **debug.log**: Contains `debug` messages for troubleshooting.
-  - **info.log**: Logs general information.
-  - **warn.log**: Logs warnings.
-  - **http.log**: Tracks HTTP requests.
-
-### 💻 Console Output (Development Only)
-- Provides real-time, colorized log output to the console during development for improved debugging.
-
-### 🛑 Exception and Rejection Handlers
-- Captures uncaught exceptions and rejected promises for analysis:
-  - **exceptions.log**: Logs uncaught exceptions.
-  - **rejections.log**: Logs promise rejections.
-
----
-
-## ✨ Benefits
-- **Improved Debugging**: Detailed logs and granular control simplify troubleshooting.
-- **Error Tracking**: Logs critical issues separately to prioritize fixes.
-- **Monitoring**: Tracks HTTP requests and application metrics.
-- **Environment-Specific Behavior**: Tailors logging output to suit development and production needs.
-- **File Organization**: Keeps logs organized and easily accessible.
-
----
-
-## 🚀 Usage
-Simply import the logger into your project:
 ```javascript
 import Logger from './path/to/logger';
 
@@ -338,7 +278,7 @@ import Logger from './path/to/logger';
 Logger.info('Application started successfully');
 Logger.error('Database connection failed');
 Logger.debug('Fetching data from API');
-
+```
 
 1. Instale o **Winston**:
 2. Crie um arquivo `logger.ts` na pasta `src/config` com o seguinte conteúdo:
@@ -367,242 +307,141 @@ Logger.exceptions("❗️ Exceção nao tratada!");
 Logger.rejections("⚠️ Rejeicao de promisse nao tratada!");
 ```
 
-# 📚 Swagger Integration
-
-## Overview
-The Swagger integration in your project enables comprehensive and interactive API documentation using **Swagger UI** and **swagger-jsdoc**. It ensures your API is easily understood and accessible to developers and stakeholders, while adding secure access control to the documentation.
-
----
-
-## 📜 Features
-### ⚙️ Configuration
-- **OpenAPI 3.0 Specification**: Defines your API using the latest OpenAPI standards.
-- **Info Section**: Includes metadata like:
-  - Title: *API Node + Express + MongoDB + Mongoose + TypeScript + JWT + Swagger + Docker*.
-  - Version: *1.0.2*.
-  - Description: *API Documentation*.
-
-### 📁 Documentation Source
-- Automatically scans and includes routes (`./src/routers/*.ts`) and controllers (`./src/controllers/*.ts`) in the documentation.
-
-### 🔒 Middleware Authentication
-- Adds access control to the Swagger UI:
-  - Uses a custom authentication middleware (`swaggerAuthMiddleware`) to restrict access.
-
-### 🛠️ Setup and Hosting
-- **Swagger UI Hosting**: Serves the documentation at the `/api/v1/api-docs` endpoint.
-- **Dynamic Documentation**: Provides an interactive interface for testing and exploring API endpoints.
-
----
-
-## ✨ Benefits
-- **Enhanced Accessibility**: Simplifies understanding of API routes and usage for developers.
-- **Interactive API Testing**: Allows real-time testing directly from the documentation.
-- **Secure Access**: Ensures only authorized users can access the API documentation.
-- **Streamlined Workflow**: Automatically includes all relevant files for documentation.
-
----
-
-## 🚀 Usage
-
-Simply call the `setupSwagger` function in your app initialization to configure and serve the documentation:
-```javascript
-import setupSwagger from './path/to/swagger-setup';
-import express from 'express';
-
-const app = express();
-
-// Example usage
-setupSwagger(app);
-
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
-});
+O logger cria automaticamente a pasta `logs/` caso ela não exista.
 
 
-Para configurar o Swagger, execute o seguinte comando:
+## 📝 Documentação Swagger
 
-```bash
-npm run build
-```
+A integração do Swagger no projeto oferece uma documentação de API abrangente e interativa, utilizando **Swagger UI** e **swagger-jsdoc**. Isso garante que sua API seja facilmente compreendida e acessível a desenvolvedores e partes interessadas, ao mesmo tempo em que adiciona controle de acesso seguro à documentação.
 
-Depois, execute o seguinte comando:
+**Funcionalidades:**
 
-```bash
-npm run dev
-```
+- **Especificação OpenAPI 3.0**: Define sua API usando os padrões OpenAPI mais recentes.
+- **Informações da API**: Inclui metadados como Título, Versão e Descrição.
+- **Origem da Documentação**: Escaneia e inclui rotas e controladores relevantes (`./src/routes/*.ts`, `./src/controllers/*.ts`) automaticamente na documentação.
+- **Autenticação por Middleware**: Restringe o acesso ao Swagger UI usando um middleware de autenticação (`swaggerAuthMiddleware`).
+- **Hospedagem da UI**: Serve a documentação interativa no endpoint `/api/v1/api-docs`.
 
-## 📜 **Documentação da API**
+**Acesse a documentação interativa da API via Swagger:**
 
-A documentação da API está disponível em:  
-[http://localhost:3000/api/v1/api-docs](http://localhost:3000/api/v1/api-docs)
+- **URL:** `http://localhost:3000/api/v1/api-docs` (A porta pode variar dependendo da sua configuração).
+- Teste e visualize os endpoints diretamente pela interface do usuário.
+- A documentação é protegida por uma **API Key** que deve ser configurada na variável de ambiente `SWAGGER_API_KEY`.
 
----
 
-## 📊 **Métricas Prometheus**
+## 📊 Métricas Prometheus
 
-A API coleta métricas de desempenho, como:
-- Total de requisições HTTP.
-- Duração das requisições.
-- Uso de memória.
+A API coleta métricas de desempenho para monitoramento via Prometheus, facilitando a análise e identificação de gargalos. As métricas estão disponíveis em:
 
-As métricas estão disponíveis em:  
-[http://localhost:3000/metrics](http://localhost:3000/metrics)
+- **URL:** `http://localhost:3000/metrics`
 
----
+As métricas incluem:
 
-## 📌 Endpoints
+- **Requisições HTTP**: Total de requisições, duração e erros.
+- **Uso de Memória**: Consumo de memória da aplicação.
 
-### 🧑‍💻 Usuários
+## 📚 Endpoints da API
 
-| Método     | Rota                | Descrição                |
-| ---------- | ------------------- | ------------------------ |
-| **POST**   | `/api/v1/login`     | Login do usuário         |
-| **POST**   | `/api/v1/create/user`    | Criar usuário            |
-| **GET**    | `/api/v1/users`     | Listar usuários          |
-| **GET**    | `/api/v1/users/:id` | Buscar usuário por ID    |
-| **PUT**    | `/api/v1/users/:id` | Atualizar usuário por ID |
-| **DELETE** | `/api/v1/users/:id` | Deletar usuário por ID   |
+### Autenticação
 
-## 📌 Endpoints
+| Método | Rota                 | Descrição                 |
+| ------ | -------------------- | ------------------------- |
+| POST   | `/api/v1/auth/login` | Realizar login de usuário |
 
-### 🎬 Filmes
+### Usuários
 
-| Método     | Rota                 | Descrição              |
-| ---------- | -------------------- | ---------------------- |
-| **POST**   | `/api/v1/create/movie`     | Criar novo filme       |
-| **GET**    | `/api/v1/movies`     | Listar filmes          |
-| **GET**    | `/api/v1/movies/:id` | Buscar filme por ID    |
-| **PUT**    | `/api/v1/movies/:id` | Atualizar filme por ID |
-| **DELETE** | `/api/v1/movies/:id` | Deletar filme por ID   |
+| Método | Rota                | Descrição                      |
+| ------ | ------------------- | ------------------------------ |
+| POST   | `/api/v1/users`     | Criar um novo usuário          |
+| GET    | `/api/v1/users`     | Listar todos os usuários       |
+| GET    | `/api/v1/users/:id` | Buscar um usuário por ID       |
+| PUT    | `/api/v1/users/:id` | Atualizar um usuário existente |
+| DELETE | `/api/v1/users/:id` | Remover um usuário             |
 
-## 📦 Dependências
+### Filmes
 
-As seguintes bibliotecas são utilizadas no projeto:
+| Método | Rota                 | Descrição                    |
+| ------ | -------------------- | ---------------------------- |
+| POST   | `/api/v1/movies`     | Criar um novo filme          |
+| GET    | `/api/v1/movies`     | Listar todos os filmes       |
+| GET    | `/api/v1/movies/:id` | Buscar um filme por ID       |
+| PUT    | `/api/v1/movies/:id` | Atualizar um filme existente |
+| DELETE | `/api/v1/movies/:id` | Remover um filme             |
 
-- **config**: `^3.3.12` – Gerenciamento de configurações
-- **dotenv**: `^16.4.7` – Carregamento de variáveis de ambiente
-- **express**: `^4.21.2` – Framework web para Node.js
-- **express-validator**: `^7.2.1` – Middleware para validação de requisições
-- **mongoose**: `^8.12.1` – ODM para MongoDB
-- **morgan**: `^1.10.0` – Middleware para logs de requisições
-- **winston**: `^3.17.0` – Biblioteca para logging
 
-## 🛠️ Dependências de Desenvolvimento
+## 📦 Dependências e Ferramentas
 
-Ferramentas utilizadas para desenvolvimento e tipagem:
+O projeto utiliza as seguintes bibliotecas e ferramentas:
 
-- **@types/config**: `^3.3.5` – Tipagens para a biblioteca config
-- **@types/express**: `^5.0.0` – Tipagens para Express
-- **@types/mongoose**: `^5.11.96` – Tipagens para Mongoose
-- **@types/morgan**: `^1.9.9` – Tipagens para Morgan
-- **@types/node**: `^22.13.9` – Tipagens para Node.js
-- **ts-node-dev**: `^2.0.0` – Reinicialização automática do servidor em TypeScript
-- **typescript**: `^5.8.2` – Compilador TypeScript
+### Dependências Principais
 
-## 🛠️ **Ferramentas e Tecnologias**
+- **config**: Gerenciamento de configurações.
+- **dotenv**: Carregamento de variáveis de ambiente.
+- **express**: Framework web para Node.js.
+- **express-validator**: Middleware para validação de requisições.
+- **mongoose**: ODM (Object Data Modeling) para MongoDB.
+- **morgan**: Middleware para logs de requisições HTTP.
+- **winston**: Biblioteca robusta para logging.
+- **jsonwebtoken**: Para autenticação baseada em tokens (JWT).
+- **swagger-ui-express**: Integração do Swagger UI com Express.
+- **swagger-jsdoc**: Geração de documentação Swagger a partir de comentários JSDoc.
 
-- **Node.js**: Plataforma para execução de JavaScript no servidor.
-- **Express**: Framework web minimalista para Node.js.
-- **TypeScript**: Superset de JavaScript com tipagem estática.
+### Dependências de Desenvolvimento
+
+- **@types/** (config, express, mongoose, morgan, node): Tipagens para TypeScript.
+- **ts-node-dev**: Reinicialização automática do servidor em TypeScript.
+- **typescript**: Compilador TypeScript.
+
+### Ferramentas Adicionais
+
+- **Node.js**: Plataforma de execução.
 - **MongoDB**: Banco de dados NoSQL.
-- **Mongoose**: ODM para MongoDB.
-- **JWT**: Autenticação baseada em tokens.
-- **Winston**: Gerenciamento de logs.
-- **Morgan**: Middleware para logs HTTP.
-- **Swagger**: Documentação interativa da API.
+- **Docker**: Containerização de aplicações.
+- **Docker Compose**: Orquestração de ambientes Docker.
 - **Prometheus**: Monitoramento de métricas.
-- **Docker**: Contêineres para desenvolvimento e produção.
-- **SonarQube**: Análise de qualidade de código.
+- **SonarQube**: Análise de qualidade de código estática e cobertura de testes.
+- **Husky**: Ganchos de Git para automação de tarefas (`pre-commit`, `pre-push`).
+- **GitHub Actions**: Plataforma de CI/CD para automação de workflows.
 
 
-## 📊 Análise Técnica: Estrutura de CI/CD com GitHub Actions
+## 🔄 CI/CD com GitHub Actions
 
-Este documento apresenta uma análise crítica e estratégica da estrutura de CI/CD adotada neste projeto, destacando os benefícios, boas práticas aplicadas e o impacto profissional que isso representa.
+Este projeto integra um pipeline de **Integração Contínua (CI)** e **Entrega Contínua (CD)** utilizando **GitHub Actions**. O objetivo é profissionalizar o processo de desenvolvimento, garantindo qualidade e automação:
 
----
+### Arquitetura do Workflow
 
-## 🚀 Objetivo
+O projeto utiliza dois arquivos principais no GitHub Actions para modularidade:
 
-Tornar este projeto pessoal mais profissional, aplicando práticas reais de DevOps e Engenharia de Software:
+- `.github/workflows/ci-core.yml`: Responsável por lint, Prettier, Testes (Jest + Supertest) e SonarQube.
+- `.github/workflows/deploy.yml`: Gerencia o deploy automatizado, acionado após um CI bem-sucedido via `workflow_run`.
 
-- Automatizar testes, lint, análise de qualidade e deploy.
-- Aplicar padrões de modularidade e legibilidade nos workflows.
-- Demonstrar maturidade técnica e compromisso com qualidade.
+### Boas Práticas Aplicadas
 
----
+- **CI Modular**: Utiliza `needs` e `workflow_run` para pipelines reutilizáveis e separação de responsabilidades.
+- **Testes Automatizados**: Implementa testes com Jest e Supertest, com cobertura reportada no formato `lcov` para SonarQube.
+- **Análise Estática**: Garante consistência e qualidade de código com ESLint e Prettier.
+- **Qualidade de Código**: Integração com SonarQube para detectar code smells, duplicações e complexidade.
+- **Contêineres Consistentes**: Uso de Docker para ambientes de teste e produção consistentes.
+- **Git Hooks**: Husky impede commits e pushes que violem padrões de qualidade ou testes.
+- **Logging Profissional**: Padrão de logs com Morgan e Winston para debug e produção.
 
-## 🧱 Arquitetura do Workflow
+### Impacto Profissional
 
-Este projeto utiliza dois arquivos principais no GitHub Actions:
+A adoção dessas práticas reflete:
 
-| Arquivo | Finalidade |
-|--------|------------|
-| `.github/workflows/ci-core.yml` | Lint, Prettier, Testes (Jest + Supertest) e SonarQube |
-| `.github/workflows/deploy.yml`  | Deploy automatizado com `workflow_run` pós CI bem-sucedido |
-
----
-
-## ✅ Boas Práticas Aplicadas
-
-### 🎯 CI Modular com `needs` e `workflow_run`
-- Permite pipelines reutilizáveis e separação de responsabilidades.
-- Melhora a manutenção e a legibilidade dos workflows.
-
-### 🧪 Testes Automatizados com Cobertura
-- Utilização de Jest e Supertest.
-- Cobertura reportada no formato `lcov` para SonarQube.
-
-### 🔍 Análise Estática com ESLint + Prettier
-- Garante consistência e qualidade de código.
-- Impede erros simples antes de chegar à produção.
-
-### 🧠 SonarQube para Qualidade de Código
-- Detecta code smells, duplicações e complexidade.
-- Integra com cobertura de testes.
-
-### 🐳 Docker para Ambientes Consistentes
-- Facilita testes locais e preparação para produção real.
-
-### 🦮 Husky para Git Hooks
-- Impede commits quebrados (pre-commit lint/test).
-- Cria uma camada de segurança antes do push.
-
-### 📄 Logging com Morgan + Winston
-- Padrão profissional de logs para debug e produção.
-
----
-
-## 📈 **CI/CD com GitHub Actions**
-
-O projeto utiliza **GitHub Actions** para:
-- Lint e formatação de código.
-- Execução de testes automatizados.
-- Análise de qualidade com SonarQube.
-- Deploy automatizado.
-
----
-
-## 🧠 O Que Isso Reflete Sobre o Profissional
-
-| Competência | Evidência |
-|------------|-----------|
-| ✔️ Maturidade Técnica | Organização da pipeline, automações e separação de responsabilidades. |
-| ✔️ Qualidade de Código | ESLint, Prettier e SonarQube integrados ao ciclo de vida. |
-| ✔️ Visão DevOps | Uso de Docker, workflows automatizados e deploy contínuo. |
-| ✔️ Confiabilidade | Testes com Jest e Supertest com cobertura. |
-| ✔️ Colaboração Profissional | Husky e Git standards mantêm o projeto pronto para múltiplos contribuidores. |
-
----
+- **Maturidade Técnica**: Demonstra organização e automação no ciclo de vida do projeto.
+- **Qualidade de Código**: Compromisso com altos padrões de qualidade e manutenção.
+- **Visão DevOps**: Aplicação de princípios de DevOps através de automação e contêineres.
+- **Confiabilidade**: Garante a estabilidade da aplicação através de testes contínuos.
+- **Colaboração**: Facilita a contribuição e o onboarding de novos desenvolvedores.
 
 ## 🏆 Impacto no GitHub
 
-- Aumenta credibilidade do repositório.
-- Transforma projeto pessoal em **portfólio técnico real**.
+- Aumenta a credibilidade do repositório.
+- Transforma o projeto pessoal em um **portfólio técnico real**.
 - Atrai recrutadores, contribuidores e parceiros.
-- Facilita onboarding e manutenção contínua.
+- Facilita o onboarding e a manutenção contínua.
 
----
 
 ## 📌 Próximos Passos (Sugestões)
 
@@ -610,15 +449,21 @@ O projeto utiliza **GitHub Actions** para:
 - [ ] Automatizar deploy real (e.g., Vercel, Render, Heroku ou Docker Compose + VPS).
 - [ ] Criar teste end-to-end básico com `supertest` ou `Playwright`.
 
----
-
-> 💡 Se você chegou até aqui e achou útil, não esqueça de deixar uma ⭐ no projeto!
-
-
 ## Licença
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhe
+Este projeto está licenciado sob a licença [MIT](https://www.google.com/search?q=https://github.com/KleilsonSantos/Mongo-RestFull-API/blob/main/LICENSE).
 
-## 👤 **Autor**
+### 📬 Contato
 
-[Kleilson Santos](https://github.com/KleilsonSantos)
+---
+
+- 📧 Email: kleilson@icloud.com
+- 🔗 LinkedIn: [linkedin.com/in/kleilson-dev-full-stack](https://linkedin.com/in/kleilson-dev-full-stack)
+- 💻 GitHub: [Kleilson Santos](https://github.com/KleilsonSantos)
+
+<p align="center">
+  <b>⭐️ Se este projeto te ajudou, deixe uma estrela!</b><br><br>
+  <img src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" width="120"/>
+</p>
+
+<p align="center"><b>⚡ Construa com segurança, teste com propósito, automatize com clareza.<br>by Kleilson Santos 🚀</b></p>

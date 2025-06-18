@@ -1,106 +1,102 @@
 # ======================================
 # 💻 Operating System Files
 # ======================================
-.DS_Store           # 🍏 macOS system file
-Thumbs.db           # 🪟 Windows thumbnail cache
+.DS_Store
+Thumbs.db
 
 # ======================================
 # 📦 Dependency Directories
 # ======================================
-node_modules/       # 📦 Node.js dependencies
-bower_components/   # 📦 Bower dependencies
-web_modules/        # 📦 Snowpack dependencies
-dependency-check-bin # 📦 Dependency-Check CLI
+node_modules/
+bower_components/
+web_modules/
+dependency-check-bin
 
 # ======================================
 # 🧪 Test Coverage & Reports
 # ======================================
-coverage/           # 📈 Test coverage output
-*.lcov              # 📊 LCov coverage reports
-.nyc_output         # 🧪 nyc test output
-test-report.html    # 📊 Test report
-stats.json          # 📊 Webpack build stats
+coverage
+*.lcov
+.nyc_output
+test-report.html    
+stats.json
 
 # ======================================
 # 📝 Logs & Temporary Files
 # ======================================
-*.log               # 📄 Log files
-*.tmp               # ⏱️ Temporary files
-*.bak               # 🧱 Backup files
-*.swp               # 🌀 Swap files (e.g., Vim)
-npm-debug.log*      # 🪲 npm debug logs
-yarn-debug.log*     # 🧶 yarn debug logs
-yarn-error.log*     # ❌ yarn error logs
-lerna-debug.log*    # 🛠️ Lerna debug logs
-.pnpm-debug.log*    # 📦 pnpm debug logs
+*.log
+*.tmp
+*.bak
+*.swp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # ======================================
 # 🛠️ Build & Compiled Output
 # ======================================
-dist/*               # 🚀 Production build
-build/              # 🏭 Compiled output
-out/                # 🧳 Next.js export directory
-.docusaurus/        # 📚 Docusaurus generated files
-.serverless/        # ☁️ Serverless framework output
+dist/*
+build/
+out/
+.docusaurus/
+.serverless/
 
 # ======================================
 # 🔁 Cache & Intermediate Storage
 # ======================================
-.cache/             # 🧠 General cache (used by various tools)
-.parcel-cache/      # 📦 Parcel cache
-.grunt/             # 🧱 Grunt intermediate storage
-.pnp.*              # 📦 Yarn Plug'n'Play files
-.yarn/cache/        # 🧶 Yarn cache
-.yarn/unplugged/    # 🔌 Yarn unplugged packages
+.cache/
+.parcel-cache/
+.grunt/
+.pnp.*
+.yarn/cache/
+.yarn/unplugged/
 .yarn/build-state.yml
 .yarn/install-state.gz
-lib-cov/            # 🧪 Instrumented lib coverage
-.dynamodb/          # 📂 Local DynamoDB files
-.fusebox/           # 🔥 FuseBox cache
-.tern-port          # 🔗 TernJS port file
+lib-cov/
+.dynamodb/
+.fusebox/
+.tern-port
 
 # ======================================
 # 🧠 IDE & Editor Files
 # ======================================
-.vscode/            # 🧪 VS Code config
-.idea/              # 🧠 JetBrains IDE config
-*.code-workspace    # 🧷 VS Code workspaces
-.vscode-test/       # 🧪 VSCode extension testing
-.husky              # 🧹 Husky hooks
+.vscode/
+.idea/
+*.code-workspace
+.vscode-test/
+.husky
 
 # ======================================
 # 🧬 Environment & Secrets
 # ======================================
-.env                # 🌱 Environment file
-.env.local          # 🌿 Local override env
-.env.development.local
-.env.test
-.env.test.local
-.env.production.local
+.env
+.env.*
 .secrets
 
 # ======================================
 # 🔐 Lock Files (optional)
 # ======================================
-package-lock.json   # 📦 npm lock file
-yarn.lock           # 🧶 yarn lock file
+package-lock.json
+yarn.lock
 
 # ======================================
 # 📤 Packed Files
 # ======================================
-*.tgz               # 📦 Output of npm pack
+*.tgz
 
 # ======================================
 # 🐳 Docker
 # ======================================
-volumes/            # 📦 Persisted volumes
-portainer_data/     # 📊 Portainer volume
-docker-compose.override.yml # 🧩 Override files
+volumes/
+portainer_data/
+docker-compose.override.yml
 
 # ======================================
 # 🔍 Diagnostic Reports
 # ======================================
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json  # 🧾 Node diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # ======================================
 # 🧠 Linting & Analysis Tools
