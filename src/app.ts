@@ -20,7 +20,6 @@ app.use(apiUrl, router); // 🌐 Use main router for API endpoints
 // 📊 Swagger
 setupSwagger(app);
 
-
 // ⚠️ Global Middleware error handling
 app.use(errorMiddleware);
 

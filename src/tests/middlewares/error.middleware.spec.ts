@@ -15,7 +15,7 @@ describe('🧰 Middleware: errorMiddleware', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    req = {method: 'GET', path: '/api/test'};
+    req = { method: 'GET', path: '/api/test' };
     res = {
       statusCode: 200,
       status: jest.fn().mockReturnThis(),
@@ -27,7 +27,7 @@ describe('🧰 Middleware: errorMiddleware', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
- it('🪵 should log the error and return 500 with generic message', () => {
+  it('🪵 should log the error and return 500 with generic message', () => {
     errorMiddleware(mockError, req as Request, res as Response, next);
 
     const jsonResponse = (res.json as jest.Mock).mock.calls[0][0];
@@ -58,8 +58,10 @@ describe('🧰 Middleware: errorMiddleware', () => {
 
     errorMiddleware(mockError, req as Request, res as Response, next);
 
-    expect(Logger.error).toHaveBeenCalledWith(expect.stringContaining('UNKNOWN UNKNOWN'), expect.any(Object));
+    expect(Logger.error).toHaveBeenCalledWith(
+      expect.stringContaining('UNKNOWN UNKNOWN'),
+      expect.any(Object),
+    );
     expect(next).toHaveBeenCalled();
   });
-
 });

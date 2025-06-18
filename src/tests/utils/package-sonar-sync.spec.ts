@@ -41,19 +41,25 @@ describe('📦 Package Sonar Sync Tests', () => {
     it('❌ should throw error when package.json file is missing', async () => {
       (fs.readFile as jest.Mock).mockRejectedValue(new Error('File not found'));
 
-      await expect(getPackageVersion()).rejects.toThrow('Failed to parse package.json: File not found');
+      await expect(getPackageVersion()).rejects.toThrow(
+        'Failed to parse package.json: File not found',
+      );
     });
 
     it('❌ should handle unexpected string error', async () => {
       (fs.readFile as jest.Mock).mockRejectedValue('Unexpected string error');
 
-      await expect(getPackageVersion()).rejects.toThrow('Failed to parse package.json: Unknown error');
+      await expect(getPackageVersion()).rejects.toThrow(
+        'Failed to parse package.json: Unknown error',
+      );
     });
 
     it('❌ should handle unexpected numeric error', async () => {
       (fs.readFile as jest.Mock).mockRejectedValue(404);
 
-      await expect(getPackageVersion()).rejects.toThrow('Failed to parse package.json: Unknown error');
+      await expect(getPackageVersion()).rejects.toThrow(
+        'Failed to parse package.json: Unknown error',
+      );
     });
   });
 
