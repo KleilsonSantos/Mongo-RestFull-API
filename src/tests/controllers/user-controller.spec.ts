@@ -146,80 +146,79 @@ describe('🎬 User Controller Tests', () => {
   });
 
   describe('🎞️ GET /api/v1/users', () => {
-  it('✅ should return 200 and list all users', async () => {
-    (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
-    (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
+    it('✅ should return 200 and list all users', async () => {
+      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
+      (UserModel.find as jest.Mock).mockResolvedValue(responseUsers);
 
-    const response = await request(app)
-      .get('/api/v1/users')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ email: userAdmin.email }); // 👈 obrigatório agora
+      const response = await request(app)
+        .get('/api/v1/users')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ email: userAdmin.email }); // 👈 obrigatório agora
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ data: { users: responseUsers } });
-    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-      expect.stringContaining(responseAllUsers),
-    );
-  });
-
-  it('❌ should return 403 when the user is not an admin', async () => {
-    (UserModel.findOne as jest.Mock).mockResolvedValue({ role: 'USER' });
-
-    const response = await request(app)
-      .get('/api/v1/users')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ email: 'nao.admin@example.com' }); // 👈 obrigatório agora
-
-    expect(response.status).toBe(403);
-    expect(response.body).toEqual({
-      message: 'Access denied, role mismatch. Only admins are allowed.',
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ data: { users: responseUsers } });
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+        expect.stringContaining(responseAllUsers),
+      );
     });
-    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-      expect.stringContaining(responseUsersForbidden),
-    );
-  });
 
-  it('🔍 should return 404 when no users are found', async () => {
-    (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
-    (UserModel.find as jest.Mock).mockResolvedValue([]);
+    it('❌ should return 403 when the user is not an admin', async () => {
+      (UserModel.findOne as jest.Mock).mockResolvedValue({ role: 'USER' });
 
-    const response = await request(app)
-      .get('/api/v1/users')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ email: userAdmin.email }); // 👈 obrigatório agora
+      const response = await request(app)
+        .get('/api/v1/users')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ email: 'nao.admin@example.com' }); // 👈 obrigatório agora
 
-    expect(response.status).toBe(404);
-    expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
-      expect.stringContaining(responseUsersNotFound),
-    );
-  });
-
-  it('💥 should return 500 when a database error occurs while retrieving users', async () => {
-    jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
-    const errorId = Date.now();
-
-    (Logger.error as jest.Mock).mockResolvedValue(() => {
-      throw new Error('Error ID: ' + errorId);
+      expect(response.status).toBe(403);
+      expect(response.body).toEqual({
+        message: 'Access denied, role mismatch. Only admins are allowed.',
+      });
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+        expect.stringContaining(responseUsersForbidden),
+      );
     });
-    (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
-    (UserModel.find as jest.Mock).mockRejectedValue(leanMethod);
 
-    const response = await request(app)
-      .get('/api/v1/users')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ email: userAdmin.email }); // 👈 obrigatório agora
+    it('🔍 should return 404 when no users are found', async () => {
+      (UserModel.findOne as jest.Mock).mockResolvedValue(userAdmin);
+      (UserModel.find as jest.Mock).mockResolvedValue([]);
 
-    expect(response.status).toBe(500);
-    expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
-      '❌ Error ID: ' + errorId + ' | GET /api/v1/users',
-    );
+      const response = await request(app)
+        .get('/api/v1/users')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ email: userAdmin.email }); // 👈 obrigatório agora
+
+      expect(response.status).toBe(404);
+      expect((Logger.info as jest.Mock).mock.calls[0][0]).toEqual(
+        expect.stringContaining(responseUsersNotFound),
+      );
+    });
+
+    it('💥 should return 500 when a database error occurs while retrieving users', async () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() => 1712345678900);
+      const errorId = Date.now();
+
+      (Logger.error as jest.Mock).mockResolvedValue(() => {
+        throw new Error('Error ID: ' + errorId);
+      });
+      (UserModel.findOne as jest.Mock).mockRejectedValue(userExample);
+      (UserModel.find as jest.Mock).mockRejectedValue(leanMethod);
+
+      const response = await request(app)
+        .get('/api/v1/users')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ email: userAdmin.email }); // 👈 obrigatório agora
+
+      expect(response.status).toBe(500);
+      expect((Logger.error as jest.Mock).mock.calls[0][0]).toEqual(
+        '❌ Error ID: ' + errorId + ' | GET /api/v1/users',
+      );
+    });
   });
-});
-
 
   describe('🎯 GET /api/v1/users/:id', () => {
     it('🎯 should return 200 when retrieving a user by valid id', async () => {

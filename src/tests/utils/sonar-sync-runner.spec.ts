@@ -12,7 +12,6 @@ jest.mock('../../utils/package-sonar-sync', () => ({
 }));
 
 describe('🚀 sonar-sync-runner', () => {
-
   describe('🔍 Run Async Catch Block', () => {
     beforeEach(() => {
       jest.clearAllMocks();
