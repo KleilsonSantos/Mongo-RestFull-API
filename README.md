@@ -441,10 +441,6 @@ Depois, execute o seguinte comando:
 npm run dev
 ```
 
-## Documentação
-
-A documentação da API está disponível em http://localhost:3000/api/v1/api-docs.
-
 ## 📜 **Documentação da API**
 
 A documentação da API está disponível em:  
